@@ -10,6 +10,9 @@ namespace LaminasBootstrap5\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
 
+use function sprintf;
+use function trim;
+
 /**
  * Class Alert
  * @package LaminasBootstrap5\View\Helper
@@ -18,72 +21,72 @@ class Alert extends AbstractHelper
 {
     private string $format = '<div class="alert alert-%s %s" role="alert">%s%s</div>';
 
-    public function info(string $alert, bool $isDismissable = false): string
+    public function info(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'info', $isDismissable);
+        return $this->render($alert, 'primary', $isDismissible);
     }
 
-    public function render(string $alert, string $class = '', bool $isDismissable = false): string
+    public function render(string $alert, string $class = '', bool $isDismissible = false): string
     {
         $closeButton      = '';
-        $dismissableClass = '';
-        if ($isDismissable) {
+        $dismissibleClass = '';
+        if ($isDismissible) {
             $closeButton
                               = '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                    </button>';
-            $dismissableClass = 'alert-dismissible fade show';
+            $dismissibleClass = 'alert-dismissible fade show';
         }
-        $class = \trim($class);
+        $class = trim($class);
 
-        return \sprintf(
+        return sprintf(
             $this->format,
             $class,
-            $dismissableClass,
+            $dismissibleClass,
             $closeButton,
             $alert
         );
     }
 
-    public function danger(string $alert, bool $isDismissable = false): string
+    public function danger(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'danger', $isDismissable);
+        return $this->render($alert, 'danger', $isDismissible);
     }
 
-    public function success(string $alert, bool $isDismissable = false): string
+    public function success(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'success', $isDismissable);
+        return $this->render($alert, 'success', $isDismissible);
     }
 
-    public function warning(string $alert, bool $isDismissable = false): string
+    public function warning(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'warning', $isDismissable);
+        return $this->render($alert, 'warning', $isDismissible);
     }
 
-    public function primary(string $alert, bool $isDismissable = false): string
+    public function primary(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'primay', $isDismissable);
+        return $this->render($alert, 'primary', $isDismissible);
     }
 
-    public function secondary(string $alert, bool $isDismissable = false): string
+    public function secondary(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'secondary', $isDismissable);
+        return $this->render($alert, 'secondary', $isDismissible);
     }
 
-    public function light(string $alert, bool $isDismissable = false): string
+    public function light(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'light', $isDismissable);
+        return $this->render($alert, 'light', $isDismissible);
     }
 
-    public function dark(string $alert, bool $isDismissable = false): string
+    public function dark(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'dark', $isDismissable);
+        return $this->render($alert, 'dark', $isDismissible);
     }
 
-    public function __invoke(string $alert = null, string $class = 'info', bool $isDismissable = false)
+    public function __invoke(string $alert = null, string $class = 'info', bool $isDismissible = false)
     {
         if (null !== $alert) {
-            return $this->render($alert, $class, $isDismissable);
+            return $this->render($alert, $class, $isDismissible);
         }
 
         return $this;

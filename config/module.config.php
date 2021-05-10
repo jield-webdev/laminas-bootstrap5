@@ -15,6 +15,13 @@ return [
     'view_helpers'               => [
         'aliases'    => [
 
+            //Add some BC changes with previous module
+            'ztbalert'         => 'lbs5alert',
+            'zf3b4alert'       => 'lbs5alert',
+            'zf3b4navigation'  => 'lbs5navigation',
+            'ztbformelement'   => 'lb5sformelement',
+            'filterbarelement' => 'lbs5filterbarelement',
+
             'lbs5navigation'       => Helper\Navigation::class,
             'lbs5filterbarelement' => View\Helper\FilterBarElement::class,
             'lb5sformelement'      => View\Helper\FormElement::class,

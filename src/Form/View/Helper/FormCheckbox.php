@@ -11,7 +11,7 @@ use Laminas\Form\ElementInterface;
 
 final class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $element->setAttribute('class', 'custom-control-input');
 

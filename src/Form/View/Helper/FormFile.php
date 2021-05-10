@@ -13,7 +13,7 @@ use Laminas\Form\View\Helper;
 
 final class FormFile extends Helper\FormFile
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $element->setAttribute('class', 'form-control-file');
 

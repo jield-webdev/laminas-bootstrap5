@@ -14,7 +14,6 @@ use LaminasBootstrap5\View\Helper\Navigation;
 
 /**
  * Class NavigationHelperFactory
- *
  * @package LaminasBootstrap5\Navigation\View
  */
 final class NavigationHelperFactory implements FactoryInterface

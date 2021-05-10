@@ -45,7 +45,7 @@ class FilterBarElement extends FormElement
                 <ul class="navbar-nav mr-auto">
                      %s                   
                 </ul>
-                <div class="form-inline">
+                <div class="input-group">
                         %s
                         %s
                         %s

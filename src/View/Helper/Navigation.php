@@ -21,6 +21,9 @@ class Navigation extends LaminasNavigation
 
     protected array $defaultPluginManagerHelpers
         = [
+            'zf3b4menu'    => Helper\Navigation\Menu::class, //Legacy
+            'zf3b4submenu'    => Helper\Navigation\Menu::class, //legacy
+
             'lbs5menu'    => Helper\Navigation\Menu::class,
             'lbs5submenu' => Helper\Navigation\SubMenu::class,
         ];

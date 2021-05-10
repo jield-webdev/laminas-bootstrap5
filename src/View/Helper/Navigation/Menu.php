@@ -5,11 +5,16 @@
 
 namespace LaminasBootstrap5\View\Helper\Navigation;
 
-use RecursiveIteratorIterator;
 use Laminas\Navigation\AbstractContainer;
 use Laminas\Navigation\Page\AbstractPage;
 use Laminas\Navigation\Page\Mvc;
+use Laminas\View\Helper\EscapeHtml;
+use Laminas\View\Helper\EscapeHtmlAttr;
 use Laminas\View\Helper\Navigation\Menu as LaminasMenu;
+use RecursiveIteratorIterator;
+
+use function count;
+use function str_repeat;
 
 /**
  * Helper for rendering menus from navigation containers
@@ -18,10 +23,8 @@ class Menu extends LaminasMenu
 {
     /**
      * CSS class to use for the ul element
-     *
-     * @var string
      */
-    protected $ulClass = 'nav';
+    protected string $ulClass = 'nav';
 
     protected function renderNormalMenu(
         AbstractContainer $container,
@@ -33,21 +36,22 @@ class Menu extends LaminasMenu
         $escapeLabels,
         $addClassToListItem,
         $liActiveClass
-    ): string {
+    ): string
+    {
         $html = '';
 
         // find deepest active
         $found = $this->findActive($container, $minDepth, $maxDepth);
 
-        /* @var $escaper \Laminas\View\Helper\EscapeHtmlAttr */
+        /* @var $escaper EscapeHtmlAttr */
         $escaper = $this->view->plugin('escapeHtmlAttr');
 
         if ($found) {
             /** @var Mvc $foundPage */
-            $foundPage = $found['page'];
+            $foundPage  = $found['page'];
             $foundDepth = $found['depth'];
         } else {
-            $foundPage = null;
+            $foundPage  = null;
             $foundDepth = null;
         }
 
@@ -65,7 +69,7 @@ class Menu extends LaminasMenu
         $prevDepth = -1;
         /** @var Mvc $page */
         foreach ($iterator as $page) {
-            $depth = $iterator->getDepth();
+            $depth    = $iterator->getDepth();
             $isActive = $page->isActive(true);
             if ($depth < $minDepth || !$this->accept($page)) {
                 // page is below minDepth or not accepted by acl/visibility
@@ -96,8 +100,8 @@ class Menu extends LaminasMenu
             }
 
             // make sure indentation is correct
-            $depth -= $minDepth;
-            $myIndent = $indent . \str_repeat('    ', $depth + 1);
+            $depth    -= $minDepth;
+            $myIndent = $indent . str_repeat('    ', $depth + 1);
             if ($depth > $prevDepth) {
                 // start new ul tag
                 if ($ulClass && $depth == 0) {
@@ -154,7 +158,7 @@ class Menu extends LaminasMenu
             // done iterating container; close open ul/li tags
             for ($i = $prevDepth + 1; $i > 0; $i--) {
                 $myIndent = $indent . str_repeat('        ', $i - 1);
-                $html .= $myIndent . '    </li>' . PHP_EOL . $myIndent . '</ul>' . PHP_EOL;
+                $html     .= $myIndent . '    </li>' . PHP_EOL . $myIndent . '</ul>' . PHP_EOL;
             }
             $html = rtrim($html, PHP_EOL);
         }
@@ -173,12 +177,12 @@ class Menu extends LaminasMenu
         $class[] = $page->getClass();
 
         if (!$isChild && $page->hasPages(true)) {
-            $attribs['data-toggle'] = 'dropdown';
+            $attribs['data-toggle']   = 'dropdown';
             $attribs['aria-haspopup'] = 'true';
             $attribs['aria-expanded'] = 'false';
-            $attribs['role'] = 'button';
-            $attribs['id'] = md5($page->getTitle());
-            $class[] = 'dropdown-toggle';
+            $attribs['role']          = 'button';
+            $attribs['id']            = md5($page->getId() . $page->getTitle());
+            $class[]                  = 'dropdown-toggle';
         }
 
         if ($isChild) {
@@ -195,23 +199,23 @@ class Menu extends LaminasMenu
             if (!$isChild && $page->hasPages(true)) {
                 $href = '#';
             }
-            $attribs['href'] = $href;
+            $attribs['href']   = $href;
             $attribs['target'] = $page->getTarget();
         } else {
             $element = 'span';
         }
 
-        if (\count($class) > 0) {
+        if (count($class) > 0) {
             $attribs['class'] = trim(implode(' ', $class));
         }
 
-        $html = '<' . $element . $this->htmlAttribs($attribs) . '>';
+        $html  = '<' . $element . $this->htmlAttribs($attribs) . '>';
         $label = $this->translate($page->getLabel(), $page->getTextDomain());
 
         if ($escapeLabel === true) {
-            /** @var \Laminas\View\Helper\EscapeHtml $escaper */
+            /** @var EscapeHtml $escaper */
             $escaper = $this->view->plugin('escapeHtml');
-            $html .= $escaper($label);
+            $html    .= $escaper($label);
         } else {
             $html .= $label;
         }

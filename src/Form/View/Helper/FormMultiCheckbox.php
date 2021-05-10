@@ -21,7 +21,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
 {
     private string $template = '<div class="form-check %s">%s%s%s%s</div>';
 
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $name = static::getName($element);
 
@@ -51,7 +51,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
         array $options,
         array $selectedOptions,
         array $attributes
-    )
+    ): string
     {
         $escapeHtmlHelper      = $this->getEscapeHtmlHelper();
         $labelHelper           = $this->getLabelHelper();

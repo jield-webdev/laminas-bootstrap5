@@ -17,7 +17,7 @@ use Laminas\Form\View\Helper;
  */
 final class FormTextarea extends Helper\FormTextarea
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $element->setAttribute('class', 'form-control');
 

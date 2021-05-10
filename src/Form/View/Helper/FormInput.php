@@ -13,7 +13,7 @@ use Laminas\Form\View\Helper;
 
 final class FormInput extends Helper\FormInput
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $element->setAttribute('class', 'form-control');
 

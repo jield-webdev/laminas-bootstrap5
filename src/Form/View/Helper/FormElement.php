@@ -41,31 +41,19 @@ class FormElement extends Helper\FormElement
             'select'         => 'lbs5formselect',
             'multi_checkbox' => 'lbs5formmulticheckbox',
         ];
-    /**
-     * @var TranslatorInterface
-     */
+
+    
     protected TranslatorInterface $translator;
     protected bool $inline = false;
     protected bool $formElementOnly = false;
-    /**
-     * @var Helper\FormLabel
-     */
-    private $formLabel;
-    /**
-     * @var EscapeHtml
-     */
-    private $escapeHtml;
-    /**
-     * @var FormDescription
-     */
-    private $formDescription;
-    /**
-     * @var Helper\FormElementErrors
-     */
-    private $formElementErrors;
+    private Helper\FormLabel $formLabel;
+    private EscapeHtml $escapeHtml;
+    private FormDescription $formDescription;
+    private Helper\FormElementErrors $formElementErrors;
     private string $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
+    
     private string $formElementOnlyWrapper = '%s%s';
-    private string $horizontalWrapper = '<div class="form-group row">%s<div class="col-sm-9">%s%s%s</div></div>';
+    private string $horizontalWrapper = '<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>';
     private string $radioWrapper = '<fieldset class="form-group">
                                 <div class="row">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
@@ -82,7 +70,7 @@ class FormElement extends Helper\FormElement
                                         %s
                                         %s                                
                              </div>';
-    private string $checkboxWrapper = '<div class="form-group row">
+    private string $checkboxWrapper = '<div class="row mb-3">
                                     <div class="col-form-label col-sm-3 pt-0">%s</div>
                                     <div class="col-sm-9">
                                         %s
@@ -96,7 +84,7 @@ class FormElement extends Helper\FormElement
                                         %s
                                         %s
                                     </div>';
-    private string $singleCheckboxWrapper = '<div class="form-group row">
+    private string $singleCheckboxWrapper = '<div class="row mb-3">
                                                 <div class="col-sm-9 offset-sm-3">
                                                     <div class="custom-control custom-switch">
                                                         %s
