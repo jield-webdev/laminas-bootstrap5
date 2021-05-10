@@ -1,0 +1,60 @@
+{
+  "name": "jield-webdev/laminas-bootstrap5",
+  "description": "Laminas Module that provides helper functions for Bootstrap 5",
+  "type": "library",
+  "keywords": [
+    "bootstrap",
+    "module",
+    "zf"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jield-webdev/laminas-bootstrap5",
+  "authors": [
+    {
+      "name": "Johan van der Heide",
+      "email": "info@jield.nl",
+      "homepage": "https://jield.nl"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "laminas/laminas-servicemanager": "^3.6",
+    "laminas/laminas-navigation": "^2.10",
+    "laminas/laminas-form": "^2.15",
+    "laminas/laminas-view": "^2.12",
+    "laminas/laminas-i18n": "^2.11"
+  },
+  "require-dev": {
+    "iteaoffice/testing": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Zf3Bootstrap4\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev",
+      "dev-develop": "1.1-dev"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@php-lint",
+      "@phpstan",
+      "@cs",
+      "@test"
+    ],
+    "fix": [
+      "@cbf",
+      "@cs-fix"
+    ],
+    "php-lint": "./vendor/bin/parallel-lint module",
+    "phpstan": "./vendor/bin/phpstan analyse src/ --level=1",
+    "cs": "./vendor/bin/phpcs -n -p --standard=PSR2 --extensions=php,twig src",
+    "cbf": "./vendor/bin/phpcbf src --standard=PSR2",
+    "cs-fix": "./vendor/bin/php-cs-fixer fix -v src",
+    "test": "./vendor/bin/phpunit"
+  }
+}
