@@ -34,6 +34,7 @@ return [
         ],
         'invokables' => [
             'lbs5formdescription'   => View\Helper\FormDescription::class,
+            'lbs5formdatetimelocal' => View\Helper\FormDateTimeLocal::class,
             'lbs5forminput'         => View\Helper\FormInput::class,
             'lbs5formfile'          => View\Helper\FormFile::class,
             'lbs5formradio'         => View\Helper\FormRadio::class,

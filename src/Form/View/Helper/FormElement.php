@@ -35,6 +35,7 @@ class FormElement extends Helper\FormElement
             'checkbox'       => 'lbs5formcheckbox',
             'file'           => 'lbs5formfile',
             'textarea'       => 'lbs5formtextarea',
+            'datetime-local' => 'lbs5formdatetimelocal',
             'radio'          => 'lbs5formradio',
             'datetime'       => 'lbs5forminput',
             'date'           => 'lbs5forminput',
@@ -42,7 +43,7 @@ class FormElement extends Helper\FormElement
             'multi_checkbox' => 'lbs5formmulticheckbox',
         ];
 
-    
+
     protected TranslatorInterface $translator;
     protected bool $inline = false;
     protected bool $formElementOnly = false;
@@ -51,7 +52,7 @@ class FormElement extends Helper\FormElement
     private FormDescription $formDescription;
     private Helper\FormElementErrors $formElementErrors;
     private string $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
-    
+
     private string $formElementOnlyWrapper = '%s%s';
     private string $horizontalWrapper = '<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>';
     private string $radioWrapper = '<fieldset class="form-group">
