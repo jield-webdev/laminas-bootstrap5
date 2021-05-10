@@ -30,10 +30,18 @@
   },
   "autoload": {
     "psr-4": {
-      "Zf3Bootstrap4\\": "src"
+      "LaminasBootstrap5\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaminasBootstrap5Test\\": "tests/LaminasBootstrap5Test"
     }
   },
   "extra": {
+    "laminas": {
+      "module": "LaminasBootstrap5"
+    },
     "branch-alias": {
       "dev-master": "1.0-dev",
       "dev-develop": "1.1-dev"
