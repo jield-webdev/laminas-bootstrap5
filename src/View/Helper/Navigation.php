@@ -17,9 +17,9 @@ use LaminasBootstrap5\View\Helper;
  */
 class Navigation extends LaminasNavigation
 {
-    protected string $defaultProxy = 'lbs5menu';
+    protected $defaultProxy = 'lbs5menu';
 
-    protected array $defaultPluginManagerHelpers
+    protected $defaultPluginManagerHelpers
         = [
             'zf3b4menu'    => Helper\Navigation\Menu::class, //Legacy
             'zf3b4submenu'    => Helper\Navigation\Menu::class, //legacy

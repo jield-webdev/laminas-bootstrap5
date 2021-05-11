@@ -24,7 +24,7 @@ use function sprintf;
  */
 class FormElement extends Helper\FormElement
 {
-    protected array $typeMap
+    protected $typeMap
         = [
             'text'           => 'lbs5forminput',
             'email'          => 'lbs5forminput',

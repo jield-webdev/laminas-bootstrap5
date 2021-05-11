@@ -1,6 +1,9 @@
 <?php
 /**
- * ZfcTwitterBootstrap
+ * Jield BV all rights reserved
+ *
+ * @author      Dr. ir. Johan van der Heide <info@jield.nl>
+ * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
  */
 
 namespace LaminasBootstrap5\View\Helper\Navigation;
@@ -24,7 +27,7 @@ class Menu extends LaminasMenu
     /**
      * CSS class to use for the ul element
      */
-    protected string $ulClass = 'nav';
+    protected $ulClass = 'nav';
 
     protected function renderNormalMenu(
         AbstractContainer $container,
@@ -177,7 +180,7 @@ class Menu extends LaminasMenu
         $class[] = $page->getClass();
 
         if (!$isChild && $page->hasPages(true)) {
-            $attribs['data-toggle']   = 'dropdown';
+            $attribs['data-bs-toggle']   = 'dropdown';
             $attribs['aria-haspopup'] = 'true';
             $attribs['aria-expanded'] = 'false';
             $attribs['role']          = 'button';
