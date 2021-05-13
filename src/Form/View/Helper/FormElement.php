@@ -56,7 +56,7 @@ class FormElement extends Helper\FormElement
     private string $formElementOnlyWrapper = '%s%s';
     private string $horizontalWrapper = '<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>';
     private string $radioWrapper = '<fieldset class="form-group">
-                                <div class="row">
+                                <div class="row mb-3">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
                                     <div class="col-sm-9">
                                         %s
@@ -79,7 +79,7 @@ class FormElement extends Helper\FormElement
                                         %s
                                     </div>
                              </div>';
-    private string $inlineCheckboxWrapper = '<div class="form-group">
+    private string $inlineCheckboxWrapper = '<div class="form-group mb-3">
                                     <strong class="col-form-label">%s</strong>
                                         %s
                                         %s
