@@ -22,15 +22,17 @@ return [
             'ztbformelement'   => 'lb5sformelement',
             'filterbarelement' => 'lbs5filterbarelement',
 
-            'lbs5navigation'       => Helper\Navigation::class,
-            'lbs5filterbarelement' => View\Helper\FilterBarElement::class,
-            'lb5sformelement'      => View\Helper\FormElement::class,
+            'lbs5navigation'          => Helper\Navigation::class,
+            'lbs5filterbarelement'    => View\Helper\FilterBarElement::class,
+            'lbs5filtercolumnelement' => View\Helper\FilterColumnElement::class,
+            'lb5sformelement'         => View\Helper\FormElement::class,
 
         ],
         'factories'  => [
-            Helper\Navigation::class            => Navigation\View\NavigationHelperFactory::class,
-            View\Helper\FormElement::class      => ConfigAbstractFactory::class,
-            View\Helper\FilterBarElement::class => ConfigAbstractFactory::class,
+            Helper\Navigation::class               => Navigation\View\NavigationHelperFactory::class,
+            View\Helper\FormElement::class         => ConfigAbstractFactory::class,
+            View\Helper\FilterBarElement::class    => ConfigAbstractFactory::class,
+            View\Helper\FilterColumnElement::class => ConfigAbstractFactory::class,
         ],
         'invokables' => [
             'lbs5formdescription'   => View\Helper\FormDescription::class,
@@ -46,11 +48,15 @@ return [
         ],
     ],
     ConfigAbstractFactory::class => [
-        View\Helper\FormElement::class      => [
+        View\Helper\FormElement::class         => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ],
-        View\Helper\FilterBarElement::class => [
+        View\Helper\FilterBarElement::class    => [
+            'ViewHelperManager',
+            \Laminas\I18n\Translator\TranslatorInterface::class
+        ],
+        View\Helper\FilterColumnElement::class => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ]

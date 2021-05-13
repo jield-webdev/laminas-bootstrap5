@@ -9,6 +9,10 @@ namespace LaminasBootstrap5\Form\View\Helper;
 
 use Laminas\Form\ElementInterface;
 
+/**
+ * Class FormCheckbox
+ * @package LaminasBootstrap5\Form\View\Helper
+ */
 final class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 {
     public function render(ElementInterface $element): string
