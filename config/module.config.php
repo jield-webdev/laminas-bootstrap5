@@ -16,16 +16,18 @@ return [
         'aliases'    => [
 
             //Add some BC changes with previous module
-            'ztbalert'         => 'lbs5alert',
-            'zf3b4alert'       => 'lbs5alert',
-            'zf3b4navigation'  => 'lbs5navigation',
-            'ztbformelement'   => 'lb5sformelement',
-            'filterbarelement' => 'lbs5filterbarelement',
+            'ztbalert'             => 'lbs5alert',
+            'zf3b4alert'           => 'lbs5alert',
+            'zf3b4navigation'      => 'lbs5navigation',
+            'zf3b4formdescription' => 'lbs5formdescription',
+            'zf3b4formselect'      => 'lbs5formselect',
+            'ztbformelement'       => 'lbs5formelement',
+            'filterbarelement'     => 'lbs5filterbarelement',
 
             'lbs5navigation'          => Helper\Navigation::class,
             'lbs5filterbarelement'    => View\Helper\FilterBarElement::class,
             'lbs5filtercolumnelement' => View\Helper\FilterColumnElement::class,
-            'lb5sformelement'         => View\Helper\FormElement::class,
+            'lbs5formelement'         => View\Helper\FormElement::class,
 
         ],
         'factories'  => [

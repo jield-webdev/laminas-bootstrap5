@@ -19,8 +19,8 @@ use function sprintf;
  */
 final class FormDescription extends AbstractHelper
 {
-    private string $inlineWrapper = '<small class="form-text text-muted">%s</small>';
-    private string $blockWrapper = '<small class="form-text text-muted">%s</small>';
+    private string $inlineWrapper = '<small class="form-text">%s</small>';
+    private string $blockWrapper = '<small class="form-text">%s</small>';
 
     public function __invoke(
         ElementInterface $element = null,

@@ -19,11 +19,8 @@ use Search\Form\SearchResult;
  */
 class FilterBarElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, bool $inline = false, bool $formElementOnly = false)
+    public function __invoke(ElementInterface $element = null, $type = false, bool $formElementOnly = false)
     {
-        $this->inline          = $inline;
-        $this->formElementOnly = $formElementOnly;
-
         if ($element) {
             return $this->renderFilterBar($element);
         }
@@ -35,20 +32,22 @@ class FilterBarElement extends FormElement
     {
         $wrapper = '
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand">Filter</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filterBar"
-                    aria-controls="filterBar" aria-expanded="false" aria-label="Toggle Filter">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="filterBar">
-                <ul class="navbar-nav mr-auto">
-                     %s                   
-                </ul>
-                <div class="input-group">
-                        %s
-                        %s
-                        %s
+            <div class="container-fluid">
+                <a class="navbar-brand">Filter</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filterBar"
+                        aria-controls="filterBar" aria-expanded="false" aria-label="Toggle Filter">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="filterBar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                         %s                   
+                    </ul>
+                    <div class="d-flex">
+                            %s
+                            %s
+                            %s
+                    </div>
                 </div>
             </div>
         </nav>
@@ -72,11 +71,7 @@ class FilterBarElement extends FormElement
             });
         </script>
         
-        <style type="text/css">
-            .dropdown-item > label > input {
-                margin-right: 0.3rem;  
-            }
-        </style>
+
     ';
 
         return \sprintf(
@@ -95,7 +90,7 @@ class FilterBarElement extends FormElement
         $facetWrapper
             = '<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-%d" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
                         </a>                        
                         <div class="dropdown-menu inactive dropdown-menu-filter-bar" area-labelledby="searchDropdown-%d">
@@ -144,6 +139,10 @@ class FilterBarElement extends FormElement
                 return $formMultiCheckbox->render($element);
             case 'text':
             case 'search':
+                $element->setAttribute(
+                    'class',
+                    'form-control me-2 ' . $element->getAttribute('class')
+                );
                 return $this->renderHelper('lbs5forminput', $element);
             case 'button':
                 $element->setAttribute(

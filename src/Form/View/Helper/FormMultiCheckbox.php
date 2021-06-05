@@ -153,7 +153,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
 
             $inlineClass = '';
             if ($element->getOption('inline')) {
-                $inlineClass = 'form-check-inline';
+               // $inlineClass = 'form-check-inline';
             }
 
             switch ($labelPosition) {

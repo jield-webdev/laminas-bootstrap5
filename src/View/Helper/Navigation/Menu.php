@@ -185,13 +185,13 @@ class Menu extends LaminasMenu
             $attribs['aria-expanded'] = 'false';
             $attribs['role']          = 'button';
             $attribs['id']            = md5($page->getId() . $page->getTitle());
-            $class[]                  = 'dropdown-toggle';
+            $class[]                  = 'dropdown-toggle px-2';
         }
 
         if ($isChild) {
             $class[] = 'dropdown-item';
         } else {
-            $class[] = 'nav-link';
+            $class[] = 'nav-link link-dark';
         }
 
         // does page have a href?

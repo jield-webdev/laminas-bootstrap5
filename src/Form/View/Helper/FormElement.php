@@ -15,7 +15,6 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\View\Helper\EscapeHtml;
 use Laminas\View\HelperPluginManager;
 
-use function md5;
 use function sprintf;
 
 /**
@@ -24,6 +23,12 @@ use function sprintf;
  */
 class FormElement extends Helper\FormElement
 {
+    public const TYPE_HORIZONTAL     = 'horizontal';
+    public const TYPE_INLINE         = 'inline';
+    public const TYPE_DEFAULT        = 'default';
+    public const TYPE_FLOATING_LABEL = 'floating_label';
+    public const TYPE_ELEMENT_ONLY   = 'element_only';
+
     protected $typeMap
         = [
             'text'           => 'lbs5forminput',
@@ -45,61 +50,15 @@ class FormElement extends Helper\FormElement
 
 
     protected TranslatorInterface $translator;
-    protected bool $inline = false;
+    protected string $type = self::TYPE_HORIZONTAL;
+    /** @deprecated */
     protected bool $formElementOnly = false;
     private Helper\FormLabel $formLabel;
     private EscapeHtml $escapeHtml;
-    private FormDescription $formDescription;
+    //private FormDescription $formDescription;
+    //Remove typehint for Forward compatibility
+    private $formDescription;
     private Helper\FormElementErrors $formElementErrors;
-    private string $inlineWrapper = '<div class="form-group">%s%s%s%s</div>';
-
-    private string $formElementOnlyWrapper = '%s%s';
-    private string $horizontalWrapper = '<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>';
-    private string $radioWrapper = '<fieldset class="form-group">
-                                <div class="row mb-3">
-                                    <legend class="col-form-label col-sm-3 pt-0">%s</legend>
-                                    <div class="col-sm-9">
-                                        %s
-                                        %s
-                                        %s
-                                    </div>
-                                </div>
-                             </fieldset>';
-    private string $inlineRadioWrapper = '<div class="form-group">
-                                    <strong class="col-form-label">%s</strong>
-                                        %s
-                                        %s
-                                        %s                                
-                             </div>';
-    private string $checkboxWrapper = '<div class="row mb-3">
-                                    <div class="col-form-label col-sm-3 pt-0">%s</div>
-                                    <div class="col-sm-9">
-                                        %s
-                                        %s
-                                        %s
-                                    </div>
-                             </div>';
-    private string $inlineCheckboxWrapper = '<div class="form-group mb-3">
-                                    <strong class="col-form-label">%s</strong>
-                                        %s
-                                        %s
-                                        %s
-                                    </div>';
-    private string $singleCheckboxWrapper = '<div class="row mb-3">
-                                                <div class="col-sm-9 offset-sm-3">
-                                                    <div class="custom-control custom-switch">
-                                                        %s
-                                                        %s
-                                                        %s
-                                                        %s                                                       
-                                                    </div>
-                                                    
-                                                </div>    
-                                            </div>';
-    private string $inlineSingleCheckboxWrapper = '<div class="custom-control custom-checkbox">
-                                        %s
-                                        %s
-                                    </div>';
 
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
@@ -111,10 +70,18 @@ class FormElement extends Helper\FormElement
         $this->translator = $translator;
     }
 
-    public function __invoke(ElementInterface $element = null, bool $inline = false, bool $formElementOnly = false)
+    public function __invoke(ElementInterface $element = null, $type = self::TYPE_HORIZONTAL, bool $formElementOnly = false)
     {
-        $this->inline          = $inline;
-        $this->formElementOnly = $formElementOnly;
+        //We previously has the type a boolean with $inline
+        if ($type === true) {
+            $type = self::TYPE_DEFAULT;
+        }
+
+        if ($formElementOnly) {
+            $type = self::TYPE_ELEMENT_ONLY;
+        }
+
+        $this->type = $type;
 
         if ($element) {
             return $this->render($element);
@@ -147,51 +114,24 @@ class FormElement extends Helper\FormElement
             $description     = $this->parseDescription($element);
             $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
-            $wrapper = $this->horizontalWrapper;
-
-            if ($this->inline) {
-                $wrapper = $this->inlineWrapper;
+            if ($this->type === self::TYPE_ELEMENT_ONLY) {
+                return sprintf('%s%s', $renderedElement, $error);
             }
 
             switch ($type) {
                 case 'radio':
-                    $wrapper = $this->radioWrapper;
-
-                    if ($this->inline) {
-                        $wrapper = $this->inlineRadioWrapper;
-                    }
-                    break;
+                    return $this->getRadioElement($label, $renderedElement, $error, $description);
                 case 'multi_checkbox':
-                    $wrapper = $this->checkboxWrapper;
-
-                    if ($this->inline) {
-                        $wrapper = $this->inlineCheckboxWrapper;
-                    }
-                    break;
+                    return $this->getMultiCheckboxElement($label, $renderedElement, $error, $description);
                 case 'checkbox':
-                    $wrapper = $this->singleCheckboxWrapper;
-
-                    if ($this->inline) {
-                        $wrapper = $this->inlineSingleCheckboxWrapper;
-                    }
-
-                    $label = '<label class="custom-control-label" for="' . md5($element->getName()) . '">' . $label
-                        . '</label>';
-                    return sprintf($wrapper, $renderedElement, $label, $error, $description);
-
-                    break;
+                    return $this->getCheckboxElement($renderedElement, $error, $description);
                 case 'submit':
                 case 'button':
                     return $renderedElement;
-                default:
-                    $label = $this->parseLabel($element);
             }
 
-            if ($this->formElementOnly) {
-                return sprintf($this->formElementOnlyWrapper, $renderedElement, $error);
-            }
-
-            return sprintf($wrapper, $label, $renderedElement, $error, $description);
+            $label = $this->parseLabel($element);
+            return $this->getDefaultElement($label, $renderedElement, $error, $description);
         }
 
         return null;
@@ -199,10 +139,7 @@ class FormElement extends Helper\FormElement
 
     private function findLabel(ElementInterface $element): ?string
     {
-        $label = $element->getLabel();
-        if (null !== $element->getAttribute('label')) {
-            $label = $element->getAttribute('label');
-        }
+        $label = $element->getAttribute('label') ?? $element->getLabel();
 
         if (null !== ($translator = $this->formLabel->getTranslator())) {
             $label = $translator->translate($label);
@@ -230,6 +167,60 @@ class FormElement extends Helper\FormElement
         return $this->formElementErrors->__invoke($element);
     }
 
+    private function getRadioElement(string $label, string $element, ?string $error, string $description): string
+    {
+        switch ($this->type) {
+            case self::TYPE_HORIZONTAL:
+            default:
+                return sprintf('<fieldset class="row mb-3">
+                                    <legend class="col-form-label col-sm-3 pt-0">%s</legend>
+                                    <div class="col-sm-9">
+                                        %s
+                                        %s
+                                        %s
+                                    </div>
+                             </fieldset>', $label, $element, $error, $description);
+            case self::TYPE_DEFAULT:
+                return sprintf('%s%s%s%s', $label, $element, $error, $description);
+        }
+    }
+
+    private function getMultiCheckboxElement(string $label, string $element, ?string $error, string $description): string
+    {
+        switch ($this->type) {
+            case self::TYPE_HORIZONTAL:
+            default:
+                return sprintf('<fieldset class="row mb-3">
+                                    <legend class="col-form-label col-sm-3 pt-0">%s</legend>
+                                    <div class="col-sm-9">
+                                        %s
+                                        %s
+                                        %s
+                                    </div>
+                             </fieldset>', $label, $element, $error, $description);
+            case self::TYPE_DEFAULT:
+                return sprintf('<div class="mb-3"><label class="form-label"><strong>%s</strong></label>%s%s%s</div>', $label, $element, $error, $description);
+        }
+    }
+
+    private function getCheckboxElement(string $element, ?string $error, string $description): string
+    {
+        switch ($this->type) {
+            case self::TYPE_HORIZONTAL:
+            default:
+                return sprintf('<div class="row mb-3">
+                                    <div class="col-sm-9 offset-sm-3">
+                                        %s
+                                        %s
+                                        %s
+                                    </div>
+                             </div>', $element, $error, $description);
+            case self::TYPE_DEFAULT:
+                return sprintf('<div class="mb-3">%s%s%s</div>', $element, $error, $description);
+        }
+
+    }
+
     protected function parseLabel(ElementInterface $element): string
     {
         $label = $this->findLabel($element);
@@ -240,7 +231,7 @@ class FormElement extends Helper\FormElement
 
         $openTagAttributes = ['for' => $element->getName()];
 
-        if (!$this->inline) {
+        if ($this->type === self::TYPE_HORIZONTAL) {
             $openTagAttributes['class'] = 'col-sm-3 col-form-label';
         }
 
@@ -252,5 +243,22 @@ class FormElement extends Helper\FormElement
         }
 
         return $openTag . $label . $this->formLabel->closeTag();
+    }
+
+    private function getDefaultElement($label, $element, $error, $description): string
+    {
+        switch ($this->type) {
+            case self::TYPE_HORIZONTAL:
+            default:
+                return sprintf('<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>', $label, $element, $error, $description);
+            case self::TYPE_INLINE:
+            case self::TYPE_DEFAULT:
+                return sprintf('%s%s%s%s', $label, $element, $error, $description);
+            case self::TYPE_ELEMENT_ONLY:
+                return sprintf('%s%s%s', $element, $error, $description);
+            case self::TYPE_FLOATING_LABEL:
+                return sprintf('<div class="form-floating mb-3">%s%s%s%s</div>', $element, $label, $error, $description);
+        }
+
     }
 }
