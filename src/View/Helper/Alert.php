@@ -23,7 +23,7 @@ class Alert extends AbstractHelper
 
     public function info(string $alert, bool $isDismissible = false): string
     {
-        return $this->render($alert, 'primary', $isDismissible);
+        return $this->render($alert, 'info', $isDismissible);
     }
 
     public function render(string $alert, string $class = '', bool $isDismissible = false): string
