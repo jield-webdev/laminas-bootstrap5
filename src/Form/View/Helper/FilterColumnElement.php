@@ -18,7 +18,7 @@ use Search\Form\SearchResult;
  */
 class FilterColumnElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, bool $inline = false, bool $formElementOnly = false)
+    public function __invoke(ElementInterface $element = null, $type = self::TYPE_HORIZONTAL, bool $formElementOnly = false)
     {
         $this->inline          = false;
         $this->formElementOnly = $formElementOnly;
