@@ -65,11 +65,8 @@ class FormElement extends Helper\FormElement
         $this->translator = $translator;
     }
 
-    public function __invoke(
-        ElementInterface $element = null,
-        $type = self::TYPE_HORIZONTAL,
-        bool $formElementOnly = false
-    ) {
+    public function __invoke(ElementInterface $element = null, $type = self::TYPE_HORIZONTAL, bool $formElementOnly = false)
+    {
         //We previously has the type a boolean with $inline
         if ($type === true) {
             $type = self::TYPE_DEFAULT;
@@ -121,9 +118,6 @@ class FormElement extends Helper\FormElement
                     return $this->getRadioElement($label, $renderedElement, $error, $description);
                 case 'multi_checkbox':
                     return $this->getMultiCheckboxElement($label, $renderedElement, $error, $description);
-                case 'number':
-                case 'datetime-local':
-                    return $this->getShortElement($label, $renderedElement, $error, $description);
                 case 'checkbox':
                     return $this->getCheckboxElement($renderedElement, $error, $description);
                 case 'submit':
@@ -173,90 +167,34 @@ class FormElement extends Helper\FormElement
         switch ($this->type) {
             case self::TYPE_HORIZONTAL:
             default:
-                return sprintf(
-                    '<fieldset class="row mb-3">
+                return sprintf('<fieldset class="row mb-3">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
                                     <div class="col-sm-9">
                                         %s
                                         %s
                                         %s
                                     </div>
-                             </fieldset>',
-                    $label,
-                    $element,
-                    $error,
-                    $description
-                );
+                             </fieldset>', $label, $element, $error, $description);
             case self::TYPE_DEFAULT:
                 return sprintf('%s%s%s%s', $label, $element, $error, $description);
         }
     }
 
-    private function getMultiCheckboxElement(
-        string $label,
-        string $element,
-        ?string $error,
-        string $description
-    ): string {
+    private function getMultiCheckboxElement(string $label, string $element, ?string $error, string $description): string
+    {
         switch ($this->type) {
             case self::TYPE_HORIZONTAL:
             default:
-                return sprintf(
-                    '<fieldset class="row mb-3">
+                return sprintf('<fieldset class="row mb-3">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
                                     <div class="col-sm-9">
                                         %s
                                         %s
                                         %s
                                     </div>
-                             </fieldset>',
-                    $label,
-                    $element,
-                    $error,
-                    $description
-                );
+                             </fieldset>', $label, $element, $error, $description);
             case self::TYPE_DEFAULT:
-                return sprintf(
-                    '<div class="mb-3"><label class="form-label"><strong>%s</strong></label>%s%s%s</div>',
-                    $label,
-                    $element,
-                    $error,
-                    $description
-                );
-        }
-    }
-
-    private function getShortElement(
-        string $label,
-        string $element,
-        ?string $error,
-        string $description
-    ): string {
-        switch ($this->type) {
-            case self::TYPE_HORIZONTAL:
-            default:
-                return sprintf(
-                    '<fieldset class="row mb-3">
-                                    <legend class="col-form-label col-sm-3 pt-0">%s</legend>
-                                    <div class="col-sm-9">
-                                        <div class="w-25">%s</div>
-                                        %s
-                                        %s
-                                    </div>
-                             </fieldset>',
-                    $label,
-                    $element,
-                    $error,
-                    $description
-                );
-            case self::TYPE_DEFAULT:
-                return sprintf(
-                    '<div class="mb-3"><label class="form-label"><strong>%s</strong></label>%s%s%s</div>',
-                    $label,
-                    $element,
-                    $error,
-                    $description
-                );
+                return sprintf('<div class="mb-3"><label class="form-label"><strong>%s</strong></label>%s%s%s</div>', $label, $element, $error, $description);
         }
     }
 
@@ -265,21 +203,17 @@ class FormElement extends Helper\FormElement
         switch ($this->type) {
             case self::TYPE_HORIZONTAL:
             default:
-                return sprintf(
-                    '<div class="row mb-3">
+                return sprintf('<div class="row mb-3">
                                     <div class="col-sm-9 offset-sm-3">
                                         %s
                                         %s
                                         %s
                                     </div>
-                             </div>',
-                    $element,
-                    $error,
-                    $description
-                );
+                             </div>', $element, $error, $description);
             case self::TYPE_DEFAULT:
                 return sprintf('<div class="mb-3">%s%s%s</div>', $element, $error, $description);
         }
+
     }
 
     protected function parseLabel(ElementInterface $element): string
@@ -311,26 +245,15 @@ class FormElement extends Helper\FormElement
         switch ($this->type) {
             case self::TYPE_HORIZONTAL:
             default:
-                return sprintf(
-                    '<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>',
-                    $label,
-                    $element,
-                    $error,
-                    $description
-                );
+                return sprintf('<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>', $label, $element, $error, $description);
             case self::TYPE_INLINE:
             case self::TYPE_DEFAULT:
                 return sprintf('%s%s%s%s', $label, $element, $error, $description);
             case self::TYPE_ELEMENT_ONLY:
                 return sprintf('%s%s%s', $element, $error, $description);
             case self::TYPE_FLOATING_LABEL:
-                return sprintf(
-                    '<div class="form-floating mb-3">%s%s%s%s</div>',
-                    $element,
-                    $label,
-                    $error,
-                    $description
-                );
+                return sprintf('<div class="form-floating mb-3">%s%s%s%s</div>', $element, $label, $error, $description);
         }
+
     }
 }

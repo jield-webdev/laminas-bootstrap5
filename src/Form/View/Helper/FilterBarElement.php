@@ -44,9 +44,11 @@ class FilterBarElement extends FormElement
                          %s                   
                     </ul>
                     <div class="d-flex">
+                    <div class="input-group">
                             %s
                             %s
                             %s
+                            </div>
                     </div>
                 </div>
             </div>
@@ -141,7 +143,7 @@ class FilterBarElement extends FormElement
             case 'search':
                 $element->setAttribute(
                     'class',
-                    'form-control me-2 ' . $element->getAttribute('class')
+                    'form-control ' . $element->getAttribute('class')
                 );
                 return $this->renderHelper('lbs5forminput', $element);
             case 'button':
