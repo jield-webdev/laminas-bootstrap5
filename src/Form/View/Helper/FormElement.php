@@ -48,16 +48,12 @@ class FormElement extends Helper\FormElement
             'multi_checkbox' => 'lbs5formmulticheckbox',
         ];
 
-    protected TranslatorInterface $translator;
-    protected string              $type = self::TYPE_HORIZONTAL;
-    /** @deprecated */
-    protected bool           $formElementOnly = false;
-    private Helper\FormLabel $formLabel;
-    private EscapeHtml       $escapeHtml;
-    //private FormDescription $formDescription;
-    //Remove typehint for Forward compatibility
-    private                          $formDescription;
-    private Helper\FormElementErrors $formElementErrors;
+    protected TranslatorInterface     $translator;
+    protected string                  $type = self::TYPE_HORIZONTAL;
+    private ?Helper\FormLabel         $formLabel;
+    private ?EscapeHtml               $escapeHtml;
+    private ?FormDescription          $formDescription;
+    private ?Helper\FormElementErrors $formElementErrors;
 
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
