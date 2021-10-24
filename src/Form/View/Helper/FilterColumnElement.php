@@ -1,16 +1,13 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
-use LaminasBootstrap5\Form\View\Helper\FormMultiCheckbox;
 use Laminas\Form\ElementInterface;
-use Search\Form\SearchResult;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
+
+use function implode;
+use function sprintf;
 
 /**
  * Class FilterColumnElement
@@ -18,11 +15,11 @@ use Search\Form\SearchResult;
  */
 class FilterColumnElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, $type = self::TYPE_HORIZONTAL, bool $formElementOnly = false)
-    {
-        $this->inline          = false;
-        $this->formElementOnly = $formElementOnly;
-
+    public function __invoke(
+        ElementInterface $element = null,
+        $type = self::TYPE_HORIZONTAL,
+        bool $formElementOnly = false
+    ) {
         if ($element) {
             return $this->renderFilterBar($element);
         }
@@ -30,7 +27,7 @@ class FilterColumnElement extends FormElement
         return $this;
     }
 
-    private function renderFilterBar(SearchResult $element)
+    private function renderFilterBar(Form $element)
     {
         $wrapper = '%s                       
         
@@ -56,34 +53,29 @@ class FilterColumnElement extends FormElement
             });
         </script>';
 
-        return \sprintf(
+        return sprintf(
             $wrapper,
             $this->renderFacets($element),
         );
     }
 
-    private function renderFacets(SearchResult $element): string
+    private function renderFacets(Form $element): string
     {
         $facets = [];
 
         $facetWrapper = ' <strong>%s</strong> %s';
 
-
-        $counter = 1;
-        /** @var MultiCheckbox $facet */
+        /** @var Fieldset $facet */
         foreach ($element->get('facet') as $facet) {
-            $facets[] = \sprintf($facetWrapper, $facet->getLabel(), $this->renderRaw($facet));
-            $counter++;
+            $facets[] = sprintf($facetWrapper, $facet->getLabel(), $this->renderRaw($facet));
         }
 
-        return \implode(PHP_EOL, $facets);
+        return implode(PHP_EOL, $facets);
     }
 
     private function renderRaw(ElementInterface $element): ?string
     {
         $type = $element->getAttribute('type');
-
-        $element->setAttribute('class', 'testsadf');
 
         switch ($type) {
             case 'multi_checkbox':

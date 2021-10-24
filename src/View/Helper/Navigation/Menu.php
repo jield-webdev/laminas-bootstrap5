@@ -89,7 +89,7 @@ class Menu extends LaminasMenu
                     } elseif ($foundPage->getParent()->hasPage($page)) {
                         // page is a sibling of the active page...
                         if (!$foundPage->hasPages(!$this->renderInvisible)
-                            || is_int($maxDepth) && $foundDepth + 1 > $maxDepth
+                            || (is_int($maxDepth) && $foundDepth + 1 > $maxDepth)
                         ) {
                             // accept if active page has no children, or the
                             // children are too deep to be rendered

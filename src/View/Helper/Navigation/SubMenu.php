@@ -55,7 +55,7 @@ class SubMenu extends LaminasMenu
         $escapeLabels,
         $addClassToListItem,
         $liActiveClass
-    ) {
+    ): string {
         $html = '<ul class="nav-sub-menu ' . $ulClass . '">';
 
         // find deepest active

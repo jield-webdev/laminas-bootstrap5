@@ -1,10 +1,4 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 namespace LaminasBootstrap5\View\Helper;
 
@@ -19,11 +13,8 @@ class Navigation extends LaminasNavigation
 {
     protected $defaultProxy = 'lbs5menu';
 
-    protected $defaultPluginManagerHelpers
+    protected array $defaultPluginManagerHelpers
         = [
-            'zf3b4menu'    => Helper\Navigation\Menu::class, //Legacy
-            'zf3b4submenu'    => Helper\Navigation\Menu::class, //legacy
-
             'lbs5menu'    => Helper\Navigation\Menu::class,
             'lbs5submenu' => Helper\Navigation\SubMenu::class,
         ];

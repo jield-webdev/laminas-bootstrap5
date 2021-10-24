@@ -1,10 +1,4 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use LaminasBootstrap5\Form\View;
@@ -16,13 +10,9 @@ return [
         'aliases'    => [
 
             //Add some BC changes with previous module
-            'ztbalert'             => 'lbs5alert',
-            'zf3b4alert'           => 'lbs5alert',
-            'zf3b4navigation'      => 'lbs5navigation',
-            'zf3b4formdescription' => 'lbs5formdescription',
-            'zf3b4formselect'      => 'lbs5formselect',
-            'ztbformelement'       => 'lbs5formelement',
-            'filterbarelement'     => 'lbs5filterbarelement',
+            'ztbalert'         => 'lbs5alert',
+            'ztbformelement'   => 'lbs5formelement',
+            'filterbarelement' => 'lbs5filterbarelement',
 
             'lbs5navigation'          => Helper\Navigation::class,
             'lbs5filterbarelement'    => View\Helper\FilterBarElement::class,
@@ -54,7 +44,8 @@ return [
         View\Helper\FormElement::class         => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
-        ], View\Helper\FormCheckbox::class     => [
+        ],
+        View\Helper\FormCheckbox::class        => [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ],

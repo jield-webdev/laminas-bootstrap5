@@ -1,10 +1,4 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
@@ -12,6 +6,15 @@ use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
 use Laminas\Form\View\Helper;
+
+use function array_key_exists;
+use function array_merge;
+use function count;
+use function implode;
+use function in_array;
+use function is_scalar;
+use function md5;
+use function method_exists;
 
 /**
  * Class FormMultiCheckbox
@@ -35,19 +38,19 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
         $rendered = $this->renderOptions($element, $options, $selectedOptions, $attributes);
 
         // Render hidden element
-        $useHiddenElement = \method_exists($element, 'useHiddenElement') && $element->useHiddenElement()
+        $useHiddenElement = method_exists($element, 'useHiddenElement') && $element->useHiddenElement()
             ? $element->useHiddenElement()
             : $this->useHiddenElement;
 
         if ($useHiddenElement) {
-            $rendered = $this->renderHiddenElement($element, $attributes) . $rendered;
+            $rendered = $this->renderHiddenElement($element) . $rendered;
         }
 
         return $rendered;
     }
 
     protected function renderOptions(
-        MultiCheckboxElement $element,
+        ElementInterface $element,
         array $options,
         array $selectedOptions,
         array $attributes
@@ -73,7 +76,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
 
         foreach ($options as $key => $optionSpec) {
             $count++;
-            if ($count > 1 && \array_key_exists('id', $attributes)) {
+            if ($count > 1 && array_key_exists('id', $attributes)) {
                 unset($attributes['id']);
             }
 
@@ -82,11 +85,11 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
             $inputAttributes = $attributes;
             $labelAttributes = $globalLabelAttributes;
             $selected        = (isset($inputAttributes['selected'])
-                && $inputAttributes['type'] != 'radio'
+                && $inputAttributes['type'] !== 'radio'
                 && $inputAttributes['selected']);
             $disabled        = (isset($inputAttributes['disabled']) && $inputAttributes['disabled']);
 
-            if (\is_scalar($optionSpec)) {
+            if (is_scalar($optionSpec)) {
                 $optionSpec = [
                     'label' => $optionSpec,
                     'value' => $key
@@ -106,20 +109,20 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
                 $disabled = $optionSpec['disabled'];
             }
             if (isset($optionSpec['label_attributes'])) {
-                $labelAttributes = \array_merge($labelAttributes, $optionSpec['label_attributes']);
+                $labelAttributes = array_merge($labelAttributes, $optionSpec['label_attributes']);
             }
             if (isset($optionSpec['attributes'])) {
-                $inputAttributes = \array_merge($inputAttributes, $optionSpec['attributes']);
+                $inputAttributes = array_merge($inputAttributes, $optionSpec['attributes']);
             }
 
-            if (\in_array($value, $selectedOptions)) {
+            if (in_array($value, $selectedOptions)) {
                 $selected = true;
             }
 
-            $elementId                = \md5($element->getName() . $label);
+            $elementId                = md5($element->getName() . $label);
             $inputAttributes['class'] = 'form-check-input';
 
-            if (\count($element->getMessages()) > 0) {
+            if (count($element->getMessages()) > 0) {
                 $inputAttributes['class'] = 'form-check-input is-invalid';
             }
 
@@ -169,7 +172,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
             $combinedMarkup[] = $markup;
         }
 
-        return \implode($this->getSeparator(), $combinedMarkup);
+        return implode($this->getSeparator(), $combinedMarkup);
     }
 
     public function setTemplate(string $template): self

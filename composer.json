@@ -19,10 +19,11 @@
   "minimum-stability": "dev",
   "require": {
     "php": "^7.4 || ^8.0",
-    "laminas/laminas-servicemanager": "^3.6",
-    "laminas/laminas-navigation": "^2.10",
-    "laminas/laminas-form": "^2.15",
-    "laminas/laminas-view": "^2.12",
+    "laminas/laminas-form": "^3.1",
+    "laminas/laminas-navigation": "^2.12",
+    "laminas/laminas-view": "^2.14",
+    "laminas/laminas-modulemanager": "^2.11",
+    "laminas/laminas-servicemanager": "^3.10",
     "laminas/laminas-i18n": "^2.11"
   },
   "require-dev": {
@@ -31,11 +32,6 @@
   "autoload": {
     "psr-4": {
       "LaminasBootstrap5\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "LaminasBootstrap5Test\\": "tests/LaminasBootstrap5Test"
     }
   },
   "extra": {
@@ -58,7 +54,7 @@
       "@cbf",
       "@cs-fix"
     ],
-    "php-lint": "./vendor/bin/parallel-lint module",
+    "php-lint": "./vendor/bin/parallel-lint src",
     "phpstan": "./vendor/bin/phpstan analyse src/ --level=1",
     "cs": "./vendor/bin/phpcs -n -p --standard=PSR2 --extensions=php,twig src",
     "cbf": "./vendor/bin/phpcbf src --standard=PSR2",

@@ -1,16 +1,10 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
 use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
-use Search\Form\SearchResult;
+use Laminas\Form\Form;
 
 /**
  * Class FilterBarElement
@@ -28,7 +22,7 @@ class FilterBarElement extends FormElement
         return $this;
     }
 
-    private function renderFilterBar(SearchResult $element)
+    private function renderFilterBar(Form $element)
     {
         $wrapper = '
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,7 +79,7 @@ class FilterBarElement extends FormElement
         );
     }
 
-    private function renderFacets(SearchResult $element): string
+    private function renderFacets(Form $element): string
     {
         $facets = [];
 
@@ -95,7 +89,7 @@ class FilterBarElement extends FormElement
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
                         </a>                        
-                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" area-labelledby="searchDropdown-%d">
+                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" aria-labelledby="searchDropdown-%d">
                             %s
                              <div class="dropdown-divider"></div>
                              <div class="dropdown-item">
