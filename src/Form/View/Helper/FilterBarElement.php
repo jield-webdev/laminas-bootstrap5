@@ -28,7 +28,7 @@ class FilterBarElement extends FormElement
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand">Filter</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filterBar"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filterBar"
                         aria-controls="filterBar" aria-expanded="false" aria-label="Toggle Filter">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -86,14 +86,16 @@ class FilterBarElement extends FormElement
         $facetWrapper
             = '<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-%d" role="button"
-                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           data-bs-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
                         </a>                        
-                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" aria-labelledby="searchDropdown-%d">
+                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" 
+                        aria-labelledby="searchDropdown-%d">
                             %s
                              <div class="dropdown-divider"></div>
                              <div class="dropdown-item">
-                             <input type="submit" name="search" class="btn btn-outline-success ml-2 my-2 my-sm-0" value="Search">
+                             <input type="submit" name="search" class="btn btn-outline-success ms-2 my-2 my-sm-0" 
+                             value="Search">
                              </div>
                             
                         </div>   
@@ -133,6 +135,12 @@ class FilterBarElement extends FormElement
                 );
 
                 return $formMultiCheckbox->render($element);
+            case 'select':
+                //Get the helper
+                /** @var FormMultiCheckbox $formMultiCheckbox */
+                $formMultiCheckbox = $this->getView()->plugin('lbs5formselect');
+
+                return $formMultiCheckbox->render($element);
             case 'text':
             case 'search':
                 $element->setAttribute(
@@ -143,14 +151,14 @@ class FilterBarElement extends FormElement
             case 'button':
                 $element->setAttribute(
                     'class',
-                    'ml-2 my-2 my-sm-0 ' . $element->getAttribute('class')
+                    'ms-2 my-2 my-sm-0 ' . $element->getAttribute('class')
                 );
                 $element->setAttribute('id', 'searchButton');
                 if ($element->getName() === 'reset') {
                     $element->setAttribute('id', 'resetButton');
                     $element->setAttribute(
                         'class',
-                        'ml-2 my-2 my-sm-0 ' . $element->getAttribute('class')
+                        'ms-2 my-2 my-sm-0 ' . $element->getAttribute('class')
                     );
                 }
                 return $this->renderHelper('formbutton', $element);

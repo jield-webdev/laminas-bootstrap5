@@ -1,4 +1,5 @@
-composer.lock
+/composer.lock
 .idea
 vendor/
 bin/
+/composer.phar
