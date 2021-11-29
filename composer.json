@@ -24,10 +24,10 @@
     "laminas/laminas-view": "^2.14",
     "laminas/laminas-modulemanager": "^2.11",
     "laminas/laminas-servicemanager": "^3.10",
-    "laminas/laminas-i18n": "^2.11"
+    "laminas/laminas-i18n": "^2.12"
   },
   "require-dev": {
-    "iteaoffice/testing": "^2.1"
+    "iteaoffice/testing": "^2.0 || ^3.1-dev"
   },
   "autoload": {
     "psr-4": {
