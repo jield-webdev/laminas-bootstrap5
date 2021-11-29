@@ -16,7 +16,7 @@ final class FormSelect extends Helper\FormSelect
     public function render(ElementInterface $element): string
     {
         if (null === $element->getAttribute('class')) {
-            $element->setAttribute('class', 'form-control');
+            $element->setAttribute('class', 'form-select');
         }
 
         if (count($element->getMessages()) > 0) {
