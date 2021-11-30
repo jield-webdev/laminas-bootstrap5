@@ -6,6 +6,9 @@ use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Form;
 
+use function implode;
+use function sprintf;
+
 /**
  * Class FilterBarElement
  *
@@ -70,7 +73,7 @@ class FilterBarElement extends FormElement
 
     ';
 
-        return \sprintf(
+        return sprintf(
             $wrapper,
             $this->renderFacets($element),
             $this->renderRaw($element->get('query')),
@@ -106,11 +109,11 @@ class FilterBarElement extends FormElement
         $counter = 1;
         /** @var MultiCheckbox $facet */
         foreach ($element->get('facet') as $facet) {
-            $facets[] = \sprintf($facetWrapper, $counter, $facet->getLabel(), $counter, $this->renderRaw($facet));
+            $facets[] = sprintf($facetWrapper, $counter, $facet->getLabel(), $counter, $this->renderRaw($facet));
             $counter++;
         }
 
-        return \implode(PHP_EOL, $facets);
+        return implode(PHP_EOL, $facets);
     }
 
     private function renderRaw(ElementInterface $element): ?string
@@ -149,17 +152,9 @@ class FilterBarElement extends FormElement
                 );
                 return $this->renderHelper('lbs5forminput', $element);
             case 'button':
-                $element->setAttribute(
-                    'class',
-                    'ms-2 my-2 my-sm-0 ' . $element->getAttribute('class')
-                );
                 $element->setAttribute('id', 'searchButton');
                 if ($element->getName() === 'reset') {
                     $element->setAttribute('id', 'resetButton');
-                    $element->setAttribute(
-                        'class',
-                        'ms-2 my-2 my-sm-0 ' . $element->getAttribute('class')
-                    );
                 }
                 return $this->renderHelper('formbutton', $element);
             default:
