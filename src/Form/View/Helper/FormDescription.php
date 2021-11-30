@@ -20,8 +20,7 @@ final class FormDescription extends AbstractHelper
         ElementInterface $element = null,
         string $blockWrapper = null,
         string $inlineWrapper = null
-    )
-    {
+    ) {
         if ($element) {
             return $this->render($element, $blockWrapper, $inlineWrapper);
         }

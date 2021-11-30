@@ -8,14 +8,12 @@
 
 namespace LaminasBootstrap5\View\Helper\Navigation;
 
-use RecursiveIteratorIterator;
-
-use Laminas\View\Helper\Navigation\Menu as LaminasMenu;
-use Laminas\Navigation\Navigation;
 use Laminas\Navigation\AbstractContainer;
+use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Page\AbstractPage;
-use Laminas\View;
-use Laminas\View\Exception;
+use Laminas\View\Helper\EscapeHtml;
+use Laminas\View\Helper\Navigation\Menu as LaminasMenu;
+use RecursiveIteratorIterator;
 
 /**
  * Helper for rendering menus from navigation containers
@@ -139,7 +137,7 @@ class SubMenu extends LaminasMenu
                 $liClasses[] = $page->getClass();
             }
 
-            $liClass = empty($liClasses) ? '' : ' class="' . implode(' ', $liClasses) . '"';
+            $liClass = ' class="' . implode(' ', $liClasses) . '"';
 
             $html .= $myIndent . '    <li' . $liClass . '>' . PHP_EOL
                 . $myIndent . '        ' . $this->htmlify($page, $escapeLabels, $addClassToListItem) . PHP_EOL;
@@ -196,7 +194,7 @@ class SubMenu extends LaminasMenu
         $label = $this->translate($page->getLabel(), $page->getTextDomain());
 
         if ($escapeLabel === true) {
-            /** @var \Laminas\View\Helper\EscapeHtml $escaper */
+            /** @var EscapeHtml $escaper */
             $escaper = $this->view->plugin('escapeHtml');
             $html .= $escaper($label);
         } else {

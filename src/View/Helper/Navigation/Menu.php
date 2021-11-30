@@ -39,8 +39,7 @@ class Menu extends LaminasMenu
         $escapeLabels,
         $addClassToListItem,
         $liActiveClass
-    ): string
-    {
+    ): string {
         $html = '';
 
         // find deepest active
@@ -107,7 +106,7 @@ class Menu extends LaminasMenu
             $myIndent = $indent . str_repeat('    ', $depth + 1);
             if ($depth > $prevDepth) {
                 // start new ul tag
-                if ($ulClass && $depth == 0) {
+                if ($ulClass && $depth === 0) {
                     $ulClass = ' class="' . $escaper($ulClass) . '"';
                 } else {
                     $ulClass = '';
@@ -137,7 +136,7 @@ class Menu extends LaminasMenu
             if ($addClassToListItem && $page->getClass()) {
                 $liClasses[] = $page->getClass();
             }
-            $liClass = empty($liClasses) ? '' : ' class="' . $escaper(implode(' ', $liClasses)) . '"';
+            $liClass = ' class="' . $escaper(implode(' ', $liClasses)) . '"';
 
             if ($depth < $prevDepth) {
                 $html .= '       ' . $myIndent . '</div>' . PHP_EOL;
@@ -180,12 +179,12 @@ class Menu extends LaminasMenu
         $class[] = $page->getClass();
 
         if (!$isChild && $page->hasPages(true)) {
-            $attribs['data-bs-toggle']   = 'dropdown';
-            $attribs['aria-haspopup'] = 'true';
-            $attribs['aria-expanded'] = 'false';
-            $attribs['role']          = 'button';
-            $attribs['id']            = md5($page->getId() . $page->getTitle());
-            $class[]                  = 'dropdown-toggle px-2';
+            $attribs['data-bs-toggle'] = 'dropdown';
+            $attribs['aria-haspopup']  = 'true';
+            $attribs['aria-expanded']  = 'false';
+            $attribs['role']           = 'button';
+            $attribs['id']             = md5($page->getId() . $page->getTitle());
+            $class[]                   = 'dropdown-toggle px-2';
         }
 
         if ($isChild) {

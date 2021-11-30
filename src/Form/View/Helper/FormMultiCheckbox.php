@@ -2,7 +2,6 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
-use Laminas\Form\Element\MultiCheckbox as MultiCheckboxElement;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
 use Laminas\Form\View\Helper;
@@ -54,8 +53,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
         array $options,
         array $selectedOptions,
         array $attributes
-    ): string
-    {
+    ): string {
         $escapeHtmlHelper      = $this->getEscapeHtmlHelper();
         $labelHelper           = $this->getLabelHelper();
         $labelClose            = $labelHelper->closeTag();
@@ -155,9 +153,6 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
             $labelOpen = $labelHelper->openTag($labelAttributes);
 
             $inlineClass = '';
-            if ($element->getOption('inline')) {
-               // $inlineClass = 'form-check-inline';
-            }
 
             switch ($labelPosition) {
                 case self::LABEL_PREPEND:
