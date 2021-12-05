@@ -89,7 +89,7 @@ class FilterBarElement extends FormElement
         $facetWrapper
             = '<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-%d" role="button"
-                           data-bs-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
                         </a>                        
                         <div class="dropdown-menu inactive dropdown-menu-filter-bar" 
