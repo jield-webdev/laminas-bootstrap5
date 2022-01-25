@@ -184,7 +184,7 @@ class Menu extends LaminasMenu
         if ($isChild) {
             $class[] = 'dropdown-item';
         } else {
-            $class[] = 'nav-link text-dark';
+            $class[] = 'nav-link';
         }
 
         // does page have a href?
