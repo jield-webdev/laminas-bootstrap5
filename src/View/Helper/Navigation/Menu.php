@@ -1,10 +1,4 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 namespace LaminasBootstrap5\View\Helper\Navigation;
 
@@ -85,7 +79,7 @@ class Menu extends LaminasMenu
                     if ($foundPage->hasPage($page)) {
                         // accept if page is a direct child of the active page
                         $accept = true;
-                    } elseif ($foundPage->getParent()->hasPage($page)) {
+                    } elseif ($foundPage->getParent()?->hasPage($page)) {
                         // page is a sibling of the active page...
                         if (!$foundPage->hasPages(!$this->renderInvisible)
                             || (is_int($maxDepth) && $foundDepth + 1 > $maxDepth)
@@ -115,7 +109,7 @@ class Menu extends LaminasMenu
                 if ($depth === 0) {
                     $html .= $myIndent . '<ul' . $ulClass . '>' . PHP_EOL;
                 } else {
-                    $html .= $myIndent . '<div class="dropdown-menu" area-labelled-by="menu-' . md5($page->getTitle())
+                    $html .= $myIndent . '<div class="dropdown-menu" area-labelled-by="menu-' . $page->getId()
                         . '">' . PHP_EOL;
                 }
             }
@@ -183,14 +177,14 @@ class Menu extends LaminasMenu
             $attribs['aria-haspopup']  = 'true';
             $attribs['aria-expanded']  = 'false';
             $attribs['role']           = 'button';
-            $attribs['id']             = md5($page->getId() . $page->getTitle());
+            $attribs['id']             = $page->getId();
             $class[]                   = 'dropdown-toggle px-2';
         }
 
         if ($isChild) {
             $class[] = 'dropdown-item';
         } else {
-            $class[] = 'nav-link link-dark';
+            $class[] = 'nav-link text-dark';
         }
 
         // does page have a href?

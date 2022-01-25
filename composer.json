@@ -18,16 +18,16 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.4 || ^8.0",
-    "laminas/laminas-form": "^3.1",
-    "laminas/laminas-navigation": "^2.12",
-    "laminas/laminas-view": "^2.14",
-    "laminas/laminas-modulemanager": "^2.11",
-    "laminas/laminas-servicemanager": "^3.10",
-    "laminas/laminas-i18n": "^2.12"
+    "php": "^8.0 || ^8.1",
+    "laminas/laminas-form": "^3.2",
+    "laminas/laminas-navigation": "^2.14",
+    "laminas/laminas-view": "^2.20",
+    "laminas/laminas-modulemanager": "^2.12",
+    "laminas/laminas-servicemanager": "^3.11",
+    "laminas/laminas-i18n": "^2.14"
   },
   "require-dev": {
-    "iteaoffice/testing": "^2.0 || ^3.1-dev"
+    "iteaoffice/testing": "^3.1-dev"
   },
   "autoload": {
     "psr-4": {

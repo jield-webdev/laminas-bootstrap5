@@ -1,10 +1,4 @@
 <?php
-/**
- * Jield BV all rights reserved
- *
- * @author      Dr. ir. Johan van der Heide <info@jield.nl>
- * @copyright   Copyright (c) 2021 Jield BV (https://jield.nl)
- */
 
 namespace LaminasBootstrap5\View\Helper\Navigation;
 
@@ -113,7 +107,7 @@ class SubMenu extends LaminasMenu
             if ($depth === 1 && $page->hasChildren()) {
                 // start new ul tag
                 $page->isDropdown = true;
-                $html .= $myIndent . '' . PHP_EOL;
+                $html             .= $myIndent . PHP_EOL;
             } elseif ($prevDepth > $depth) {
                 $html .= $myIndent . '    </li>' . PHP_EOL;
             } else {
