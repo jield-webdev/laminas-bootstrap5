@@ -157,6 +157,8 @@ class FilterBarElement extends FormElement
                     $element->setAttribute('id', 'resetButton');
                 }
                 return $this->renderHelper('formbutton', $element);
+            case 'submit':
+                return $this->renderHelper('formsubmit', $element);
             default:
                 return $this->renderHelper($type, $element);
         }
