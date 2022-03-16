@@ -15,8 +15,7 @@ class Navigation extends LaminasNavigation
 
     protected array $defaultPluginManagerHelpers
         = [
-            'lbs5menu'    => Helper\Navigation\Menu::class,
-            'lbs5submenu' => Helper\Navigation\SubMenu::class,
+            'lbs5menu' => Helper\Navigation\Menu::class,
         ];
 
     public function getPluginManager(): LaminasNavigation\PluginManager

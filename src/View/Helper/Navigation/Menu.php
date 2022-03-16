@@ -10,7 +10,6 @@ use Laminas\View\Helper\EscapeHtmlAttr;
 use Laminas\View\Helper\Navigation\Menu as LaminasMenu;
 use RecursiveIteratorIterator;
 
-use function count;
 use function str_repeat;
 
 /**
@@ -33,22 +32,21 @@ class Menu extends LaminasMenu
         $escapeLabels,
         $addClassToListItem,
         $liActiveClass
-    ): string {
+    ) {
         $html = '';
 
         // find deepest active
         $found = $this->findActive($container, $minDepth, $maxDepth);
 
-        /* @var $escaper EscapeHtmlAttr */
         $escaper = $this->view->plugin('escapeHtmlAttr');
+        assert($escaper instanceof EscapeHtmlAttr);
+
+        $foundPage  = null;
+        $foundDepth = 0;
 
         if ($found) {
-            /** @var Mvc $foundPage */
             $foundPage  = $found['page'];
             $foundDepth = $found['depth'];
-        } else {
-            $foundPage  = null;
-            $foundDepth = null;
         }
 
         // create iterator
@@ -63,23 +61,35 @@ class Menu extends LaminasMenu
 
         // iterate container
         $prevDepth = -1;
+
         /** @var Mvc $page */
-        foreach ($iterator as $page) {
+        foreach ($iterator as $key => $page) {
             $depth    = $iterator->getDepth();
             $isActive = $page->isActive(true);
+
+            if ($depth === 0) {
+                $page->setClass(trim('nav-link ' . $page->getClass()));
+            } elseif ($depth > 0) {
+                $page->setClass(trim('dropdown-item ' . $page->getClass()));
+            }
+
+            if ($page->getParent()?->hasChildren() && $depth === 0) {
+                $page->setClass(trim('dropdown-toggle ' . $page->getClass()));
+                $page->setId($key);
+                $page->setOptions(['role' => 'button', 'data-bs-toggle' => 'dropdown', 'aria-expanded' => false]);
+            }
+
             if ($depth < $minDepth || !$this->accept($page)) {
                 // page is below minDepth or not accepted by acl/visibility
                 continue;
-            }
-
-            if ($onlyActive && !$isActive) {
+            } elseif ($onlyActive && !$isActive) {
                 // page is not active itself, but might be in the active branch
                 $accept = false;
                 if ($foundPage) {
                     if ($foundPage->hasPage($page)) {
                         // accept if page is a direct child of the active page
                         $accept = true;
-                    } elseif ($foundPage->getParent()?->hasPage($page)) {
+                    } elseif ($foundPage->getParent()->hasPage($page)) {
                         // page is a sibling of the active page...
                         if (!$foundPage->hasPages(!$this->renderInvisible)
                             || (is_int($maxDepth) && $foundDepth + 1 > $maxDepth)
@@ -97,54 +107,48 @@ class Menu extends LaminasMenu
 
             // make sure indentation is correct
             $depth    -= $minDepth;
-            $myIndent = $indent . str_repeat('    ', $depth + 1);
+            $myIndent = $indent . str_repeat('        ', $depth);
             if ($depth > $prevDepth) {
                 // start new ul tag
                 if ($ulClass && $depth === 0) {
                     $ulClass = ' class="' . $escaper($ulClass) . '"';
                 } else {
-                    $ulClass = '';
+                    $ulClass = ' class="dropdown-menu" aria-labelledby="' . $key . '"';
                 }
-
-                if ($depth === 0) {
-                    $html .= $myIndent . '<ul' . $ulClass . '>' . PHP_EOL;
-                } else {
-                    $html .= $myIndent . '<div class="dropdown-menu" area-labelled-by="menu-' . $page->getId()
-                        . '">' . PHP_EOL;
+                $html .= $myIndent . '<ul' . $ulClass . '>' . PHP_EOL;
+            } elseif ($prevDepth > $depth) {
+                // close li/ul tags until we're at current depth
+                for ($i = $prevDepth; $i > $depth; $i--) {
+                    $ind  = $indent . str_repeat('        ', $i);
+                    $html .= $ind . '    </li>' . PHP_EOL;
+                    $html .= $ind . '</ul>' . PHP_EOL;
                 }
+                // close previous li tag
+                $html .= $myIndent . '    </li>' . PHP_EOL;
+            } else {
+                // close previous li tag
+                $html .= $myIndent . '    </li>' . PHP_EOL;
             }
 
-            // render li tag and page
             $liClasses = ['nav-item'];
+
+
+            if ($depth === 0 && $page->getParent()->hasChildren()) {
+                $liClasses[] = 'dropdown';
+            }
 
             // Is page active?
             if ($isActive) {
                 $liClasses[] = $liActiveClass;
             }
 
-            if ($page->hasPages() && $maxDepth !== 0) {
-                $liClasses[] = 'dropdown';
-            }
-
             // Add CSS class from page to <li>
             if ($addClassToListItem && $page->getClass()) {
                 $liClasses[] = $page->getClass();
             }
-            $liClass = ' class="' . $escaper(implode(' ', $liClasses)) . '"';
-
-            if ($depth < $prevDepth) {
-                $html .= '       ' . $myIndent . '</div>' . PHP_EOL;
-
-                if ($depth === 0) {
-                    $html .= '    ' . '</li>' . PHP_EOL;
-                }
-            }
-
-            $html .= $myIndent
-                . ($depth === 0 ? '    <li' . $liClass . '>' : '')
-                . $myIndent . $this->htmlify($page, $escapeLabels, $depth > 0, $maxDepth !== 0)
-                . PHP_EOL;
-
+            $liClass = empty($liClasses) ? '' : ' class="' . $escaper(implode(' ', $liClasses)) . '"';
+            $html    .= $myIndent . '    <li' . $liClass . '>' . PHP_EOL
+                . $myIndent . '        ' . $this->htmlify($page, $escapeLabels, $addClassToListItem) . PHP_EOL;
 
             // store as previous depth for next iteration
             $prevDepth = $depth;
@@ -154,7 +158,8 @@ class Menu extends LaminasMenu
             // done iterating container; close open ul/li tags
             for ($i = $prevDepth + 1; $i > 0; $i--) {
                 $myIndent = $indent . str_repeat('        ', $i - 1);
-                $html     .= $myIndent . '    </li>' . PHP_EOL . $myIndent . '</ul>' . PHP_EOL;
+                $html     .= $myIndent . '    </li>' . PHP_EOL
+                    . $myIndent . '</ul>' . PHP_EOL;
             }
             $html = rtrim($html, PHP_EOL);
         }
@@ -162,7 +167,7 @@ class Menu extends LaminasMenu
         return $html;
     }
 
-    public function htmlify(AbstractPage $page, $escapeLabel = true, $isChild = false, $showDropdown = true): string
+    public function htmlify(AbstractPage $page, $escapeLabel = true, $addClassToListItem = false)
     {
         // get attribs for element
         $attribs = [
@@ -170,39 +175,28 @@ class Menu extends LaminasMenu
             'title' => $this->translate($page->getTitle(), $page->getTextDomain()),
         ];
 
-        $class[] = $page->getClass();
-
-        if (!$isChild && $page->hasPages(true)) {
-            $attribs['data-bs-toggle'] = 'dropdown';
-            $attribs['aria-haspopup']  = 'true';
-            $attribs['aria-expanded']  = 'false';
-            $attribs['role']           = 'button';
-            $attribs['id']             = $page->getId();
-            $class[]                   = 'dropdown-toggle px-2';
+        if (null !== $page->get('role')) {
+            $attribs['role'] = $page->get('role');
+        }
+        if (null !== $page->get('data-bs-toggle')) {
+            $attribs['data-bs-toggle'] = $page->get('data-bs-toggle');
+        }
+        if (null !== $page->get('area-expanded')) {
+            $attribs['area-expanded'] = $page->get('area-expanded');
         }
 
-        if ($isChild) {
-            $class[] = 'dropdown-item';
-        } else {
-            $class[] = 'nav-link';
+        if ($addClassToListItem === false) {
+            $attribs['class'] = $page->getClass();
         }
 
         // does page have a href?
         $href = $page->getHref();
-
         if ($href) {
-            $element = 'a';
-            if (!$isChild && $page->hasPages(true)) {
-                $href = '#';
-            }
+            $element           = 'a';
             $attribs['href']   = $href;
             $attribs['target'] = $page->getTarget();
         } else {
             $element = 'span';
-        }
-
-        if (count($class) > 0) {
-            $attribs['class'] = trim(implode(' ', $class));
         }
 
         $html  = '<' . $element . $this->htmlAttribs($attribs) . '>';
@@ -217,7 +211,6 @@ class Menu extends LaminasMenu
         }
 
         $html .= '</' . $element . '>';
-
         return $html;
     }
 }
