@@ -14,7 +14,7 @@ use function md5;
  * Class FormCheckbox
  * @package LaminasBootstrap5\Form\View\Helper
  */
-final class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
+final class FormCheckbox extends Helper\FormCheckbox
 {
     private Helper\FormLabel $formLabel;
 
@@ -27,7 +27,7 @@ final class FormCheckbox extends \Laminas\Form\View\Helper\FormCheckbox
 
     public function render(ElementInterface $element): string
     {
-        $element->setAttribute('class', 'form-check-input');
+        $element->setAttribute('class', 'form-check-input ' . $element->getAttribute('class'));
 
         if (count($element->getMessages()) > 0) {
             $element->setAttribute('class', 'form-check-input is-invalid');
