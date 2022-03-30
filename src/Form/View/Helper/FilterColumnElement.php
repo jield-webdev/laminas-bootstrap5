@@ -19,7 +19,7 @@ class FilterColumnElement extends FormElement
         ElementInterface $element = null,
         $type = self::TYPE_HORIZONTAL,
         bool $formElementOnly = false
-    ) {
+    ): FilterColumnElement|string|FormElement|static {
         if ($element) {
             return $this->renderFilterBar($element);
         }
@@ -27,15 +27,18 @@ class FilterColumnElement extends FormElement
         return $this;
     }
 
-    private function renderFilterBar(Form $element)
+    private function renderFilterBar(Form|ElementInterface $form): string
     {
         $wrapper = '%s                       
         
         <script type="text/javascript">
-            $(\'.form-check-search > input[type="checkbox"]\').on(\'click\', function(e) {
+            $(\'.form-check-search > input[type="checkbox"]\').on(\'click\', function() {
                 $(\'#search\').submit();
             });
-        
+            $(\'.form-check-search\').on(\'click\', function() {
+                $(\'#search\').submit(); //yesno/andor
+            });
+
             $(function () {
                 $(\'#searchButton\').on(\'click\', function () {
                     $(\'#search\').submit();
@@ -44,6 +47,9 @@ class FilterColumnElement extends FormElement
                     $(\'.form-check-search > input[type="checkbox"]\').each(function () {
                         this.removeAttribute(\'checked\');
                     });
+                    $(".form-check-search").each(function () {
+                        this.removeAttribute("checked");
+                    });                    
                     $(\'.form-check-search > input[type="radio"]\').each(function () {
                         this.removeAttribute(\'checked\');
                     });
@@ -55,19 +61,41 @@ class FilterColumnElement extends FormElement
 
         return sprintf(
             $wrapper,
-            $this->renderFacets($element),
+            $this->renderFacets($form),
         );
     }
 
-    private function renderFacets(Form $element): string
+    private function renderFacets(Form $form): string
     {
+        if (!$form->has('facet')) {
+            return 'no facets found';
+        }
+
         $facets = [];
 
-        $facetWrapper = ' <strong>%s</strong> %s';
-
         /** @var Fieldset $facet */
-        foreach ($element->get('facet') as $facet) {
-            $facets[] = sprintf($facetWrapper, $facet->getLabel(), $this->renderRaw($facet));
+        foreach ($form->get('facet')->getFieldsets() as $facet) {
+            $facets[] = sprintf('<strong>%s</strong>', $facet->get('values')->getLabel());
+
+            if ($facet->has('yesNo')) {
+                $facet->get('yesNo')->setAttribute('class', 'form-check-search form-check-yes-no');
+                $facet->get('yesNo')->setLabel('Yes');
+                if ($facet->get('yesNo')->getValue() === 'no') {
+                    $facet->get('yesNo')->setLabel('No');
+                }
+                $facets[] = $this->renderRaw($facet->get('yesNo'));
+            }
+
+            if ($facet->has('andOr')) {
+                $facet->get('andOr')->setAttribute('class', 'form-check-search form-check-and-or');
+                $facet->get('andOr')->setLabel('Or');
+                if ($facet->get('andOr')->getValue() === 'and') {
+                    $facet->get('andOr')->setLabel('And');
+                }
+                $facets[] = $this->renderRaw($facet->get('andOr'));
+            }
+
+            $facets[] = $this->renderRaw($facet->get('values'));
         }
 
         return implode(PHP_EOL, $facets);
@@ -81,16 +109,22 @@ class FilterColumnElement extends FormElement
             case 'multi_checkbox':
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
-                $formMultiCheckbox = $this->getView()->plugin('lbs5formmulticheckbox');
+                $formMultiCheckbox = $this->getView()?->plugin('lbs5formmulticheckbox');
                 $formMultiCheckbox->setTemplate(
                     '<div class="form-check form-check-search" data-other="%s">%s%s%s%s</div>'
                 );
 
                 return $formMultiCheckbox->render($element);
+            case 'checkbox':
+                //Get the helper
+                /** @var FormCheckbox $formMultiCheckbox */
+                $formMultiCheckbox = $this->getView()?->plugin('lbs5formcheckbox');
+
+                return $formMultiCheckbox->render($element);
             case 'radio':
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
-                $formMultiCheckbox = $this->getView()->plugin('lbs5formradio');
+                $formMultiCheckbox = $this->getView()?->plugin('lbs5formradio');
                 $formMultiCheckbox->setTemplate(
                     '<div class="form-check form-check-search %s">%s%s%s%s</div>'
                 );
