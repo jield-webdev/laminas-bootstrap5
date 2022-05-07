@@ -79,9 +79,9 @@ class FilterColumnElement extends FormElement
 
             if ($facet->has('yesNo')) {
                 $facet->get('yesNo')->setAttribute('class', 'form-check-search form-check-yes-no');
-                $facet->get('yesNo')->setLabel('Yes');
+                $facet->get('yesNo')->setLabel('Include');
                 if ($facet->get('yesNo')->getValue() === 'no') {
-                    $facet->get('yesNo')->setLabel('No');
+                    $facet->get('yesNo')->setLabel('Exclude');
                 }
                 $facets[] = $this->renderRaw($facet->get('yesNo'));
             }
