@@ -23,7 +23,7 @@
     "laminas/laminas-navigation": "^2.14",
     "laminas/laminas-view": "^2.21",
     "laminas/laminas-modulemanager": "^2.12",
-    "laminas/laminas-servicemanager": "^3.11",
+    "laminas/laminas-servicemanager": "^3.12",
     "laminas/laminas-i18n": "^2.16"
   },
   "require-dev": {

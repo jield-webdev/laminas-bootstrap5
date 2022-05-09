@@ -2,18 +2,13 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
-use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
+use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
 
 use function implode;
 use function sprintf;
 
-/**
- * Class FilterBarElement
- *
- * @package LaminasBootstrap5\Form\View\Helper
- */
 class FilterBarElement extends FormElement
 {
     public function __invoke(ElementInterface $element = null, $type = false, bool $formElementOnly = false)
@@ -30,7 +25,6 @@ class FilterBarElement extends FormElement
         $wrapper = '
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand">Filter</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filterBar"
                         aria-controls="filterBar" aria-expanded="false" aria-label="Toggle Filter">
                     <span class="navbar-toggler-icon"></span>
@@ -82,7 +76,7 @@ class FilterBarElement extends FormElement
         );
     }
 
-    private function renderFacets(Form $element): string
+    private function renderFacets(Form $form): string
     {
         $facets = [];
 
@@ -92,25 +86,49 @@ class FilterBarElement extends FormElement
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
                         </a>                        
-                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" 
-                        aria-labelledby="searchDropdown-%d">
+                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" aria-labelledby="searchDropdown-%d">
                             %s
-                             <div class="dropdown-divider"></div>
-                             <div class="dropdown-item">
-                             <input type="submit" name="search" class="btn btn-outline-success ms-2 my-2 my-sm-0" 
-                             value="Search">
-                             </div>
-                            
-                        </div>   
-                                             
+                            %s
+                            %s
+                                                                        
                     </li>';
 
 
-        $counter = 1;
-        /** @var MultiCheckbox $facet */
-        foreach ($element->get('facet') as $facet) {
-            $facets[] = sprintf($facetWrapper, $counter, $facet->getLabel(), $counter, $this->renderRaw($facet));
-            $counter++;
+        /** @var Fieldset $facet */
+        foreach ($form->get('facet')->getFieldsets() as $counter => $facet) {
+            $yesNo = '';
+            if ($facet->has('yesNo')) {
+                $facet->get('yesNo')->setAttribute('class', 'form-check-search form-check-yes-no');
+                $facet->get('yesNo')->setLabel('Include');
+                if ($facet->get('yesNo')->getValue() === 'no') {
+                    $facet->get('yesNo')->setLabel('Exclude');
+                }
+                $yesNo = '<div class="dropdown-item"><div class="form-check">' . $this->renderRaw(
+                    $facet->get('yesNo')
+                ) . '</div></div>';
+            }
+
+            $andOr = '';
+            if ($facet->has('andOr')) {
+                $facet->get('andOr')->setAttribute('class', 'form-check-search form-check-and-or');
+                $facet->get('andOr')->setLabel('Or');
+                if ($facet->get('andOr')->getValue() === 'and') {
+                    $facet->get('andOr')->setLabel('And');
+                }
+                $andOr = '<div class="dropdown-item"><div class="form-check">' . $this->renderRaw(
+                    $facet->get('andOr')
+                ) . '</div></div>';
+            }
+
+            $facets[] = sprintf(
+                $facetWrapper,
+                $counter,
+                $facet->get('values')->getLabel(),
+                $counter,
+                $yesNo,
+                $andOr,
+                $this->renderRaw($facet->get('values'))
+            );
         }
 
         return implode(PHP_EOL, $facets);
@@ -119,6 +137,7 @@ class FilterBarElement extends FormElement
     private function renderRaw(ElementInterface $element): ?string
     {
         $type = $element->getAttribute('type');
+
         switch ($type) {
             case 'multi_checkbox':
                 //Get the helper
@@ -142,6 +161,12 @@ class FilterBarElement extends FormElement
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('lbs5formselect');
+
+                return $formMultiCheckbox->render($element);
+            case 'checkbox':
+                //Get the helper
+                /** @var FormCheckbox $formMultiCheckbox */
+                $formMultiCheckbox = $this->getView()?->plugin('lbs5formcheckbox');
 
                 return $formMultiCheckbox->render($element);
             case 'text':
