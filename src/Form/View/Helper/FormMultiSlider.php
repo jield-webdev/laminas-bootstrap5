@@ -2,7 +2,6 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
-use Laminas\Form\Element\Range;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\Helper;
 
@@ -21,6 +20,8 @@ final class FormMultiSlider extends Helper\FormText
         if (count($element->getMessages()) > 0) {
             $element->setAttribute('class', $element->getAttribute('class') . ' is-invalid');
         }
+
+        $element->setAttribute('class', $element->getAttribute('class') . ' form-multi-slider');
 
         $element->setAttribute('id', $id);
 
