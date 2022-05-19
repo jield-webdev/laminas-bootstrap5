@@ -5,6 +5,7 @@ namespace LaminasBootstrap5\Form\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
+use Search\ValueObject\FacetField;
 
 use function implode;
 use function sprintf;
@@ -30,9 +31,14 @@ class FilterColumnElement extends FormElement
     private function renderFilterBar(Form|ElementInterface $form): string
     {
         $wrapper = '%s                       
-        
+        <style>
+        .bs-tooltip-bottom, .bs-tooltop-top { display: none;}
+        </style>
         <script type="text/javascript">
             $(\'.form-check-search > input[type="checkbox"]\').on(\'click\', function() {
+                $(\'#search\').submit();
+            });
+            $(\'.form-multi-slider\').on(\'change\', function() {
                 $(\'#search\').submit();
             });
             $(\'.form-check-search\').on(\'click\', function() {
@@ -107,6 +113,16 @@ class FilterColumnElement extends FormElement
 
         switch ($type) {
             case 'multi_checkbox':
+                //Based om the type we can choose to render a multi-checkbox as a slider
+                if ($element->getOption('type') === FacetField::TYPE_SLIDER) {
+                    //Get the helper
+                    /** @var FormMultiCheckbox $formMultiCheckbox */
+                    $formMultiCheckbox = $this->getView()?->plugin('lbs5formmultislider');
+
+                    return $formMultiCheckbox->render($element);
+                }
+
+
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()?->plugin('lbs5formmulticheckbox');
