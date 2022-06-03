@@ -28,21 +28,21 @@ final class FormMultiSlider extends Helper\FormText
         //Grab the raw values (keys)
         $rawValueOptions = array_keys($element->getValueOptions());
 
+
         //Sort values from low to high
         sort($rawValueOptions);
 
-        $ticks = implode(', ', $rawValueOptions);
+        $minValue = reset($rawValueOptions);
+        $maxValue = end($rawValueOptions);
+
         $value = $element->getValue(); //The SearchFormResult helper transforms the result into an array
 
-        if (null === $value) {
-            $value = $ticks;
-        }
-
         $element->setAttribute('data-provide', 'slider');
-        $element->setAttribute('data-slider-ticks', "[" . $ticks . "]");
-        $element->setAttribute('data-slider-ticks-labels', "[" . $ticks . "]");
-        $element->setAttribute('data-slider-value', "[" . $value . "]");
-        $element->setAttribute('data-slider-lock-to-ticks', true);
+        $element->setAttribute('data-slider-min', $minValue);
+        $element->setAttribute('data-slider-max', $maxValue);
+        $element->setAttribute('data-slider-ticks', "[" . $minValue . ",". $maxValue ."]");
+        $element->setAttribute('data-slider-ticks-labels', "[" . $minValue . ",". $maxValue ."]");
+        $element->setAttribute('data-slider-value', "[" . $value . ",". $value ."]");
 
         return parent::render($element);
     }
