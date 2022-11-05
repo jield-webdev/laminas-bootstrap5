@@ -24,14 +24,23 @@
     "laminas/laminas-view": "^2.21",
     "laminas/laminas-modulemanager": "^2.12",
     "laminas/laminas-servicemanager": "^3.12",
-    "laminas/laminas-i18n": "^2.16"
+    "laminas/laminas-i18n": "^2.16",
+    "jield-webdev/laminas-assetmanager": "^2.1"
   },
   "require-dev": {
-    "iteaoffice/testing": "^3.1-dev"
+    "iteaoffice/testing": "^3.5-dev"
   },
   "autoload": {
     "psr-4": {
       "LaminasBootstrap5\\": "src"
+    }
+  },
+  "config": {
+    "vendor-dir": "vendor",
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "composer/package-versions-deprecated": true
     }
   },
   "extra": {

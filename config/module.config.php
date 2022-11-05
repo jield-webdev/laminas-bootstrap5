@@ -58,5 +58,14 @@ return [
             'ViewHelperManager',
             \Laminas\I18n\Translator\TranslatorInterface::class
         ]
+    ],
+    'asset_manager' => [
+        'resolver_configs' => [
+            'map' => [
+                'external/js/form-column.js' => __DIR__ . '/../public/js/form-column.js',
+                'external/js/simple-load-more.js' => __DIR__ . '/../public/js/jquery.simpleLoadMore.min.js',
+                'external/css/form-column.css' => __DIR__ . '/../public/css/form-column.css',
+            ],
+        ],
     ]
 ];

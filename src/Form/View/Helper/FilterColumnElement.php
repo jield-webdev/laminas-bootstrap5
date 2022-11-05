@@ -16,54 +16,48 @@ use function sprintf;
  */
 class FilterColumnElement extends FormElement
 {
+    protected const HEADSCRIPT = 'HeadScript';
+    protected const HEADLINK = 'HeadLink';
+
+    protected bool $rendered = false;
+
     public function __invoke(
         ElementInterface $element = null,
         $type = self::TYPE_HORIZONTAL,
         bool $formElementOnly = false
     ): FilterColumnElement|string|FormElement|static {
         if ($element) {
-            return $this->renderFilterBar($element);
+            return $this->renderFilterColumn($element);
         }
 
         return $this;
     }
 
-    private function renderFilterBar(Form|ElementInterface $form): string
+    protected function getContainer(string $containerName)
     {
+        return $this->view->plugin($containerName);
+    }
+
+    private function appendScript(): void
+    {
+        $this->getContainer(self::HEADSCRIPT)->appendFile('external/js/simple-load-more.js');
+        $this->getContainer(self::HEADSCRIPT)->appendFile('external/js/form-column.js');
+    }
+
+    private function appendStyle(): void
+    {
+        $this->getContainer(self::HEADLINK)->appendStylesheet('external/css/form-column.css');
+    }
+
+    private function renderFilterColumn(Form|ElementInterface $form): string
+    {
+        $this->appendScript();
+        $this->appendStyle();
+
         $wrapper = '%s                       
         <style>
-        .bs-tooltip-bottom, .bs-tooltop-top { display: none;}
-        </style>
-        <script type="text/javascript">
-            $(\'.form-check-search > input[type="checkbox"]\').on(\'click\', function() {
-                $(\'#search\').submit();
-            });
-            $(\'.form-multi-slider\').on(\'change\', function() {
-                $(\'#search\').submit();
-            });
-            $(\'.form-check-search\').on(\'click\', function() {
-                $(\'#search\').submit(); //yesno/andor
-            });
-
-            $(function () {
-                $(\'#searchButton\').on(\'click\', function () {
-                    $(\'#search\').submit();
-                });
-                $(\'#resetButton\').on(\'click\', function () {
-                    $(\'.form-check-search > input[type="checkbox"]\').each(function () {
-                        this.removeAttribute(\'checked\');
-                    });
-                    $(".form-check-search").each(function () {
-                        this.removeAttribute("checked");
-                    });                    
-                    $(\'.form-check-search > input[type="radio"]\').each(function () {
-                        this.removeAttribute(\'checked\');
-                    });
-                    $(\'input[name="query"]\').val(\'\');
-                    $(\'#search\').submit();
-                });
-            });
-        </script>';
+       
+        </style>';
 
         return sprintf(
             $wrapper,
@@ -78,9 +72,9 @@ class FilterColumnElement extends FormElement
         }
 
         $facets = [];
-
         /** @var Fieldset $facet */
-        foreach ($form->get('facet')->getFieldsets() as $facet) {
+        foreach ($form->get('facet')->getFieldsets() as $id => $facet) {
+            $facets[] = '<div class="simple-load-more">';
             $facets[] = sprintf('<strong>%s</strong>', $facet->get('values')->getLabel());
 
             if ($facet->has('yesNo')) {
@@ -102,6 +96,7 @@ class FilterColumnElement extends FormElement
             }
 
             $facets[] = $this->renderRaw($facet->get('values'));
+            $facets[] = '</div>';
         }
 
         return implode(PHP_EOL, $facets);
@@ -121,7 +116,6 @@ class FilterColumnElement extends FormElement
 
                     return $formMultiCheckbox->render($element);
                 }
-
 
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */

@@ -1,0 +1,10 @@
+/**
+ * Simple Load More
+ *
+ * Version: 1.6.2
+ * Author: Zeshan Ahmed
+ * Website: https://zeshanahmed.com/
+ * Github: https://github.com/zeshanshani/simple-load-more/
+ * @license MIT
+ */
+!function(m){m.fn.simpleLoadMore=function(f){var g=m.extend({item:"",count:5,itemsToLoad:5,cssClass:"load-more",showCounter:!1,counterText:"Showing {showing} out of {total}",btnHTML:"",btnText:"View More",btnWrapper:"",btnWrapperClass:"",easing:"fade",easingDuration:400,onLoad:function(){},onNextLoad:function(){},onComplete:function(){}},f);m(this).each(function(n,t){var e=g.item,o=g.count,a=(g.itemsToLoad,g.cssClass),s=g.showCounter,i=g.counterText,l=g.btnHTML,c=g.btnText,r=g.btnWrapper,d=g.btnWrapperClass;r||!1===r||(r='<div class="'+a+"__btn-wrap"+(d?" "+d:"")+'"></div>');var u=this,p=m(this),h=p.find(e),i=m('<p class="'+a+'__counter">'+i+"</p>");s&&p.append(i),l=m(l=l||'<a href="#" class="'+a+'__btn">'+c+"</a>"),f.itemsToLoad&&!isNaN(f.itemsToLoad)||(g.itemsToLoad=g.count),p.addClass(a),h.addClass(a+"__item"),!p.find("."+a+"__btn").length&&h.length>g.count&&p.append(l),l.add(i).html(function(n,t){return t.replace("{showing}",'<span class="'+a+"__count "+a+'__count--showing">'+(o>h.length?h.length:o)+"</span>").replace("{total}",'<span class="'+a+"__count "+a+'__count--total">'+h.length+"</span>")});var _=p.find("."+a+"__btn");_.length||(_=l),h.length>g.count&&h.slice(g.count).hide(),_.wrapAll(r),g.onLoad.call(u,h,_),_.on("click",function(n){n.preventDefault();var t=m(this),e=h.filter(":hidden"),n=e;0<(n=-1!==g.itemsToLoad&&0<g.itemsToLoad?e.slice(0,g.itemsToLoad):n).length&&("fade"===g.easing?n.fadeIn(g.easingDuration):n.slideDown(g.easingDuration)),p.find("."+a+"__count--showing").text(h.filter(":visible").length),e.length<=g.itemsToLoad||-1===g.itemsToLoad?((t.parent("."+a+"__btn-wrap")?t.parent():t).remove(),g.onComplete.call(u)):g.onNextLoad.call(u,h,_)})})}}(jQuery);
