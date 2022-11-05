@@ -2,11 +2,11 @@
 
 namespace LaminasBootstrap5;
 
-use Application\Event\InjectJavascriptAndCss;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
 use Laminas\ServiceManager\ServiceManager;
+use LaminasBootstrap5\Event\InjectJavascriptAndCss;
 
 /**
  * Class Module
