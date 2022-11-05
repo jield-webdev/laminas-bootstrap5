@@ -52,6 +52,14 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
                 'integrity' => 'sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=',
             ]
         );
+        $this->renderer->headScript()->appendFile(
+            '//cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js',
+            'text/javascript',
+            [
+                'crossorigin' => 'anonymous',
+                'integrity' => 'sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3',
+            ]
+        );
 
         $this->renderer->headScript()->appendFile(
             '/laminas-bootstrap5/js/form-submit.js',

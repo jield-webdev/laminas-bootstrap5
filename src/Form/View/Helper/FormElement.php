@@ -17,43 +17,50 @@ use function sprintf;
  */
 class FormElement extends Helper\FormElement
 {
-    public const TYPE_HORIZONTAL     = 'horizontal';
-    public const TYPE_INLINE         = 'inline';
-    public const TYPE_DEFAULT        = 'default';
+    public const TYPE_HORIZONTAL = 'horizontal';
+    public const TYPE_INLINE = 'inline';
+    public const TYPE_DEFAULT = 'default';
     public const TYPE_FLOATING_LABEL = 'floating_label';
-    public const TYPE_ELEMENT_ONLY   = 'element_only';
+    public const TYPE_ELEMENT_ONLY = 'element_only';
+
+    protected bool $isSelectPicker = false;
 
     protected $typeMap
         = [
-            'text'           => 'lbs5forminput',
-            'email'          => 'lbs5forminput',
-            'number'         => 'lbs5forminput',
-            'color'          => 'lbs5forminput',
-            'password'       => 'lbs5forminput',
-            'url'            => 'lbs5forminput',
-            'checkbox'       => 'lbs5formcheckbox',
-            'file'           => 'lbs5formfile',
-            'textarea'       => 'lbs5formtextarea',
+            'text' => 'lbs5forminput',
+            'email' => 'lbs5forminput',
+            'number' => 'lbs5forminput',
+            'color' => 'lbs5forminput',
+            'password' => 'lbs5forminput',
+            'url' => 'lbs5forminput',
+            'checkbox' => 'lbs5formcheckbox',
+            'file' => 'lbs5formfile',
+            'textarea' => 'lbs5formtextarea',
             'datetime-local' => 'lbs5formdatetimelocal',
-            'radio'          => 'lbs5formradio',
-            'datetime'       => 'lbs5forminput',
-            'date'           => 'lbs5forminput',
-            'select'         => 'lbs5formselect',
+            'radio' => 'lbs5formradio',
+            'datetime' => 'lbs5forminput',
+            'date' => 'lbs5forminput',
+            'select' => 'lbs5formselect',
             'multi_checkbox' => 'lbs5formmulticheckbox',
         ];
 
-    protected TranslatorInterface     $translator;
-    protected string                  $type = self::TYPE_HORIZONTAL;
-    private ?Helper\FormLabel         $formLabel;
-    private ?EscapeHtml               $escapeHtml;
-    private ?FormDescription          $formDescription;
+    protected TranslatorInterface $translator;
+
+    protected string $type = self::TYPE_HORIZONTAL;
+
+    private ?Helper\FormLabel $formLabel;
+
+    private ?EscapeHtml $escapeHtml;
+
+    private ?FormDescription $formDescription;
+
     private ?Helper\FormElementErrors $formElementErrors;
 
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
-        $this->formLabel         = $viewHelperManager->get('formlabel');
-        $this->escapeHtml        = $viewHelperManager->get('escapehtml');
-        $this->formDescription   = $viewHelperManager->get('lbs5formdescription');
+        $this->formLabel = $viewHelperManager->get('formlabel');
+        $this->escapeHtml = $viewHelperManager->get('escapehtml');
+        $this->formDescription = $viewHelperManager->get('lbs5formdescription');
         $this->formElementErrors = $viewHelperManager->get('formelementerrors');
 
         $this->translator = $translator;
@@ -84,6 +91,30 @@ class FormElement extends Helper\FormElement
 
     public function render(ElementInterface $element): string
     {
+        if ($this->isSelectPicker) {
+            $this->view->headLink()->appendStylesheet(
+                'laminas-bootstrap5/css/bootstrap-select.min.css'
+            );
+            $this->view->headScript()->appendFile(
+                'laminas-bootstrap5/js/bootstrap-select.min.js',
+                'text/javascript'
+            );
+            $this->view->headLink()->appendStylesheet(
+                'laminas-bootstrap5/css/ajax-bootstrap-select.min.css'
+            );
+            $this->view->headScript()->appendFile(
+                'laminas-bootstrap5/js/ajax-bootstrap-select.min.js',
+                'text/javascript'
+            );
+
+            $this->view->inlineScript()->appendScript(
+                "$('.selectpicker-user').data('abs-ajax-url', $('.selectpicker-user').data('abs-ajax-url'));
+             $('.selectpicker-user').selectpicker().ajaxSelectPicker();",
+                'text/javascript'
+            );
+        }
+
+
         $renderedType = $this->renderType($element);
 
         if ($renderedType !== null) {
@@ -101,10 +132,10 @@ class FormElement extends Helper\FormElement
 
         if (isset($this->typeMap[$type])) {
             //Produce the label
-            $label           = $this->findLabel($element);
+            $label = $this->findLabel($element);
             $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
-            $description     = $this->parseDescription($element);
-            $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
+            $description = $this->parseDescription($element);
+            $error = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
             if ($this->type === self::TYPE_ELEMENT_ONLY) {
                 return sprintf('%s%s', $renderedElement, $error);
@@ -255,7 +286,6 @@ class FormElement extends Helper\FormElement
 
         $openTag = $this->formLabel->openTag($openTagAttributes);
 
-
         if (!$element instanceof LabelAwareInterface || !$element->getLabelOption('disable_html_escape')) {
             $label = $this->escapeHtml->__invoke($label);
         }
@@ -289,5 +319,12 @@ class FormElement extends Helper\FormElement
                     $description
                 );
         }
+    }
+
+    public function setIsSelectPicker(bool $isSelectPicker): FormElement
+    {
+        $this->isSelectPicker = $isSelectPicker;
+
+        return $this;
     }
 }

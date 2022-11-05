@@ -86,7 +86,7 @@ return [
                 'laminas-bootstrap5/css/codemirror.css' => __DIR__ . '/../public/codemirror/codemirror.css',
 
                 'laminas-bootstrap5/js/bootstrap-select.min.js' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
-                'laminas-bootstrap5/css/bootstrap-select.min.css' => __DIR__ . '/../public/bootstrap-select-1.14-dev/css/bootstrap-select.min.css',
+                'laminas-bootstrap5/css/bootstrap-select.min.css' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/css/bootstrap-select.min.css',
                 'laminas-bootstrap5/js/ajax-bootstrap-select.min.js' => __DIR__ . '/../public/ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
                 'laminas-bootstrap5/css/ajax-bootstrap-select.min.css' => __DIR__ . '/../public/ajax-bootstrap-select/dist/css/ajax-bootstrap-select.min.css',
 
