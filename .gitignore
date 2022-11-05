@@ -1,6 +1,6 @@
-/composer.lock
+composer.lock
 .idea
 vendor/
-bin/
-/composer.phar
+composer.phar
 /.php-cs-fixer.cache
+.phpunit.result.cache

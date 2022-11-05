@@ -41,11 +41,11 @@ class Menu extends LaminasMenu
         $escaper = $this->view->plugin('escapeHtmlAttr');
         assert($escaper instanceof EscapeHtmlAttr);
 
-        $foundPage  = null;
+        $foundPage = null;
         $foundDepth = 0;
 
         if ($found) {
-            $foundPage  = $found['page'];
+            $foundPage = $found['page'];
             $foundDepth = $found['depth'];
         }
 
@@ -64,7 +64,7 @@ class Menu extends LaminasMenu
 
         /** @var Mvc $page */
         foreach ($iterator as $key => $page) {
-            $depth    = $iterator->getDepth();
+            $depth = $iterator->getDepth();
             $isActive = $page->isActive(true);
 
             if ($depth === 0) {
@@ -106,7 +106,7 @@ class Menu extends LaminasMenu
             }
 
             // make sure indentation is correct
-            $depth    -= $minDepth;
+            $depth -= $minDepth;
             $myIndent = $indent . str_repeat('        ', $depth);
             if ($depth > $prevDepth) {
                 // start new ul tag
@@ -119,7 +119,7 @@ class Menu extends LaminasMenu
             } elseif ($prevDepth > $depth) {
                 // close li/ul tags until we're at current depth
                 for ($i = $prevDepth; $i > $depth; $i--) {
-                    $ind  = $indent . str_repeat('        ', $i);
+                    $ind = $indent . str_repeat('        ', $i);
                     $html .= $ind . '    </li>' . PHP_EOL;
                     $html .= $ind . '</ul>' . PHP_EOL;
                 }
@@ -131,7 +131,6 @@ class Menu extends LaminasMenu
             }
 
             $liClasses = ['nav-item'];
-
 
             if ($depth === 0 && $page->getParent()->hasChildren()) {
                 $liClasses[] = 'dropdown';
@@ -146,8 +145,8 @@ class Menu extends LaminasMenu
             if ($addClassToListItem && $page->getClass()) {
                 $liClasses[] = $page->getClass();
             }
-            $liClass = empty($liClasses) ? '' : ' class="' . $escaper(implode(' ', $liClasses)) . '"';
-            $html    .= $myIndent . '    <li' . $liClass . '>' . PHP_EOL
+            $liClass = ' class="' . $escaper(implode(' ', $liClasses)) . '"';
+            $html .= $myIndent . '    <li' . $liClass . '>' . PHP_EOL
                 . $myIndent . '        ' . $this->htmlify($page, $escapeLabels, $addClassToListItem) . PHP_EOL;
 
             // store as previous depth for next iteration
@@ -158,7 +157,7 @@ class Menu extends LaminasMenu
             // done iterating container; close open ul/li tags
             for ($i = $prevDepth + 1; $i > 0; $i--) {
                 $myIndent = $indent . str_repeat('        ', $i - 1);
-                $html     .= $myIndent . '    </li>' . PHP_EOL
+                $html .= $myIndent . '    </li>' . PHP_EOL
                     . $myIndent . '</ul>' . PHP_EOL;
             }
             $html = rtrim($html, PHP_EOL);
@@ -171,7 +170,7 @@ class Menu extends LaminasMenu
     {
         // get attribs for element
         $attribs = [
-            'id'    => $page->getId(),
+            'id' => $page->getId(),
             'title' => $this->translate($page->getTitle(), $page->getTextDomain()),
         ];
 
@@ -192,20 +191,20 @@ class Menu extends LaminasMenu
         // does page have a href?
         $href = $page->getHref();
         if ($href) {
-            $element           = 'a';
-            $attribs['href']   = $href;
+            $element = 'a';
+            $attribs['href'] = $href;
             $attribs['target'] = $page->getTarget();
         } else {
             $element = 'span';
         }
 
-        $html  = '<' . $element . $this->htmlAttribs($attribs) . '>';
+        $html = '<' . $element . $this->htmlAttribs($attribs) . '>';
         $label = $this->translate($page->getLabel(), $page->getTextDomain());
 
         if ($escapeLabel === true) {
             /** @var EscapeHtml $escaper */
             $escaper = $this->view->plugin('escapeHtml');
-            $html    .= $escaper($label);
+            $html .= $escaper($label);
         } else {
             $html .= $label;
         }

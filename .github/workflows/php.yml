@@ -15,43 +15,35 @@ jobs:
     strategy:
       matrix:
         dependencies:
-          - "locked"
-        php-version:
-          - "7.4"
-          - "8.0"
-          - "8.1"
-        operating-system:
-          - "ubuntu-latest"
+          - locked
+          - highest
+        php:
+          - 8.1
+          - 8.2
+        include:
+          - php-version: 8.2
+            composer-options: "--ignore-platform-reqs"
 
-    runs-on: ${{ matrix.operating-system }}
+    continue-on-error: ${{ matrix.php == '8.2' }}
+
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: "Checkout code"
+        uses: actions/checkout@v3
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+        uses: shivammathur/setup-php@v2
         with:
-          coverage: "pcov"
-          php-version: "${{ matrix.php-version }}"
+          coverage: "xdebug"
+          php-version: "${{ matrix.php }}"
           ini-values: memory_limit=-1
-          tools: composer:v2
 
-      - name: "Cache dependencies"
-        uses: "actions/cache@v2"
+      - name: "Install composer and dependencies"
+        uses: ramsey/composer-install@v2
         with:
-          path: |
-            ~/.composer/cache
-            vendor
-          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
-          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}"
-
-      - name: "Install highest dependencies"
-        if: ${{ matrix.dependencies == 'highest' }}
-        run: "composer update --no-interaction --no-progress --no-suggest --ignore-platform-req=php"
-
-      - name: "Install locked dependencies"
-        if: ${{ matrix.dependencies == 'locked' }}
-        run: "composer install --no-interaction --no-progress --no-suggest --ignore-platform-req=php"
+          dependency-versions: ${{ matrix.dependencies }}
+          composer-options: ${{ matrix.composer-options }}
 
       - name: Run Lint Checker suite
         run: composer php-lint
@@ -59,3 +51,5 @@ jobs:
       - name: PHPStan test
         run: composer phpstan
 
+      - name: Run test suite
+        run: composer test

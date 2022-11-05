@@ -25,7 +25,8 @@
     "laminas/laminas-modulemanager": "^2.12",
     "laminas/laminas-servicemanager": "^3.12",
     "laminas/laminas-i18n": "^2.16",
-    "jield-webdev/laminas-assetmanager": "^2.1"
+    "jield-webdev/laminas-assetmanager": "^2.1",
+    "jield-webdev/jield-search": "dev-main"
   },
   "require-dev": {
     "iteaoffice/testing": "^3.5-dev"
@@ -33,6 +34,11 @@
   "autoload": {
     "psr-4": {
       "LaminasBootstrap5\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaminasBootstrap5Test\\": "test"
     }
   },
   "config": {

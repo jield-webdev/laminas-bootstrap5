@@ -8,7 +8,6 @@ use LaminasBootstrap5\View\Helper;
 return [
     'view_helpers' => [
         'aliases' => [
-
             //Add some BC changes with previous module
             'ztbalert' => 'lbs5alert',
             'ztbformelement' => 'lbs5formelement',
@@ -62,9 +61,23 @@ return [
     'asset_manager' => [
         'resolver_configs' => [
             'map' => [
-                'external/js/form-column.js' => __DIR__ . '/../public/js/form-column.js',
-                'external/js/simple-load-more.js' => __DIR__ . '/../public/js/jquery.simpleLoadMore.min.js',
-                'external/css/form-column.css' => __DIR__ . '/../public/css/form-column.css',
+                'external/js/filter-column.js' => __DIR__ . '/../public/filter-column/filter-column.js',
+                'external/css/filter-column.css' => __DIR__ . '/../public/filter-column/filter-column.css',
+
+                'external/js/simple-load-more.js' => __DIR__ . '/../public/simple-load-more/jquery.simpleLoadMore.min.js',
+
+                'external/js/moment.js' => __DIR__ . '/../public/date-range-picker/moment.min.js',
+                'external/js/date-range-picker.js' => __DIR__ . '/../public/date-range-picker/daterangepicker.js',
+                'external/css/date-range-picker.css' => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
+
+                'external/js/codemirror.js' => __DIR__ . '/../public/codemirror/codemirror.js',
+                'external/css/codemirror.css' => __DIR__ . '/../public/codemirror/codemirror.css',
+
+                'external/js/bootstrap-select.min.js' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
+                'external/css/bootstrap-select.min.css' => __DIR__ . '/../public/bootstrap-select-1.14-dev/css/bootstrap-select.min.css',
+                'external/js/ajax-bootstrap-select.min.js' => __DIR__ . '/../public/ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
+                'external/css/ajax-bootstrap-select.min.css' => __DIR__ . '/../public/ajax-bootstrap-select/dist/css/ajax-bootstrap-select.min.css',
+
             ],
         ],
     ]
