@@ -26,7 +26,6 @@ return [
             View\Helper\FormCheckbox::class => ConfigAbstractFactory::class,
             View\Helper\FilterBarElement::class => ConfigAbstractFactory::class,
             View\Helper\FilterColumnElement::class => ConfigAbstractFactory::class,
-            \LaminasBootstrap5\Event\InjectJavascriptAndCss::class => ConfigAbstractFactory::class,
         ],
         'invokables' => [
             'lbs5formdescription' => View\Helper\FormDescription::class,
@@ -60,6 +59,11 @@ return [
         ],
         \LaminasBootstrap5\Event\InjectJavascriptAndCss::class => [
             \Laminas\View\Renderer\PhpRenderer::class
+        ]
+    ],
+    'service_manager' => [
+        'factories' => [
+            \LaminasBootstrap5\Event\InjectJavascriptAndCss::class => ConfigAbstractFactory::class,
         ]
     ],
     'asset_manager' => [
