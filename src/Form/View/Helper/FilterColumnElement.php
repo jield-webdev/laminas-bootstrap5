@@ -40,13 +40,13 @@ class FilterColumnElement extends FormElement
 
     private function appendScript(): void
     {
-        $this->getContainer(self::HEADSCRIPT)->appendFile('external/js/simple-load-more.js');
-        $this->getContainer(self::HEADSCRIPT)->appendFile('external/js/form-column.js');
+        $this->getContainer(self::HEADSCRIPT)->appendFile('laminas-bootstrap5/js/simple-load-more.js');
+        $this->getContainer(self::HEADSCRIPT)->appendFile('laminas-bootstrap5/js/filter-column.js');
     }
 
     private function appendStyle(): void
     {
-        $this->getContainer(self::HEADLINK)->appendStylesheet('external/css/form-column.css');
+        $this->getContainer(self::HEADLINK)->appendStylesheet('laminas-bootstrap5/css/filter-column.css');
     }
 
     private function renderFilterColumn(Form|ElementInterface $form): string
