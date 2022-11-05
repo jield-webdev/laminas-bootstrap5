@@ -69,22 +69,26 @@ return [
     'asset_manager' => [
         'resolver_configs' => [
             'map' => [
-                'external/js/filter-column.js' => __DIR__ . '/../public/filter-column/filter-column.js',
-                'external/css/filter-column.css' => __DIR__ . '/../public/filter-column/filter-column.css',
+                'laminas-bootstrap5/js/filter-column.js' => __DIR__ . '/../public/filter-column/filter-column.js',
+                'laminas-bootstrap5/css/filter-column.css' => __DIR__ . '/../public/filter-column/filter-column.css',
 
-                'external/js/simple-load-more.js' => __DIR__ . '/../public/simple-load-more/jquery.simpleLoadMore.min.js',
+                'laminas-bootstrap5/js/form-submit.js' => __DIR__ . '/../public/main/form-submit.js',
+                'laminas-bootstrap5/js/form-datepicker.js' => __DIR__ . '/../public/main/form-datepicker.js',
+                'laminas-bootstrap5/css/style.css' => __DIR__ . '/../public/main/style.css',
 
-                'external/js/moment.js' => __DIR__ . '/../public/date-range-picker/moment.min.js',
-                'external/js/date-range-picker.js' => __DIR__ . '/../public/date-range-picker/daterangepicker.js',
-                'external/css/date-range-picker.css' => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
+                'laminas-bootstrap5/js/simple-load-more.js' => __DIR__ . '/../public/simple-load-more/jquery.simpleLoadMore.min.js',
 
-                'external/js/codemirror.js' => __DIR__ . '/../public/codemirror/codemirror.js',
-                'external/css/codemirror.css' => __DIR__ . '/../public/codemirror/codemirror.css',
+                'laminas-bootstrap5/js/moment.js' => __DIR__ . '/../public/date-range-picker/moment.min.js',
+                'laminas-bootstrap5/js/date-range-picker.js' => __DIR__ . '/../public/date-range-picker/daterangepicker.js',
+                'laminas-bootstrap5/css/date-range-picker.css' => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
 
-                'external/js/bootstrap-select.min.js' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
-                'external/css/bootstrap-select.min.css' => __DIR__ . '/../public/bootstrap-select-1.14-dev/css/bootstrap-select.min.css',
-                'external/js/ajax-bootstrap-select.min.js' => __DIR__ . '/../public/ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
-                'external/css/ajax-bootstrap-select.min.css' => __DIR__ . '/../public/ajax-bootstrap-select/dist/css/ajax-bootstrap-select.min.css',
+                'laminas-bootstrap5/js/codemirror.js' => __DIR__ . '/../public/codemirror/codemirror.js',
+                'laminas-bootstrap5/css/codemirror.css' => __DIR__ . '/../public/codemirror/codemirror.css',
+
+                'laminas-bootstrap5/js/bootstrap-select.min.js' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
+                'laminas-bootstrap5/css/bootstrap-select.min.css' => __DIR__ . '/../public/bootstrap-select-1.14-dev/css/bootstrap-select.min.css',
+                'laminas-bootstrap5/js/ajax-bootstrap-select.min.js' => __DIR__ . '/../public/ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
+                'laminas-bootstrap5/css/ajax-bootstrap-select.min.css' => __DIR__ . '/../public/ajax-bootstrap-select/dist/css/ajax-bootstrap-select.min.css',
 
             ],
         ],
