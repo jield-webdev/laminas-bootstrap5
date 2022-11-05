@@ -19,6 +19,7 @@ $(document).ready(function () {
             this.removeAttribute('checked');
         });
         $('input[name="query"]').val('');
+        $('input[name="dateInterval"]').val('');
         $('#search-form').submit();
     });
 });

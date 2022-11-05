@@ -11,17 +11,14 @@ use Laminas\View\Renderer\PhpRenderer;
 
 class InjectJavascriptAndCss extends AbstractListenerAggregate
 {
-    private PhpRenderer $renderer;
-
-    public function __construct(PhpRenderer $renderer)
+    public function __construct(private readonly PhpRenderer $renderer)
     {
-        $this->renderer = $renderer;
     }
 
     public function attach(EventManagerInterface $events, $priority = 1): void
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, fn() => $this->setHeadLink(), 1000);
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, fn() => $this->setHeadScript(), 1000);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, $this->setHeadLink(...), 1000);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, $this->setHeadScript(...), 1000);
     }
 
     public function setHeadLink(): void

@@ -5,7 +5,7 @@ namespace LaminasBootstrap5\Form\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\Helper;
 
-final class FormDateTimeLocal extends Helper\FormDateTimeLocal
+final class FormDateRange extends Helper\FormDateTimeLocal
 {
     public function render(ElementInterface $element): string
     {

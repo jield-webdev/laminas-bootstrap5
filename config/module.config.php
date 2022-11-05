@@ -80,6 +80,7 @@ return [
 
                 'laminas-bootstrap5/js/moment.js' => __DIR__ . '/../public/date-range-picker/moment.min.js',
                 'laminas-bootstrap5/js/date-range-picker.js' => __DIR__ . '/../public/date-range-picker/daterangepicker.js',
+                'laminas-bootstrap5/js/date-range-picker-main.js' => __DIR__ . '/../public/date-range-picker/main.js',
                 'laminas-bootstrap5/css/date-range-picker.css' => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
 
                 'laminas-bootstrap5/js/codemirror.js' => __DIR__ . '/../public/codemirror/codemirror.js',

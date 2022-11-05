@@ -2,10 +2,10 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
+use Jield\Search\ValueObject\FacetField;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-use Jield\Search\ValueObject\FacetField;
 
 use function implode;
 use function sprintf;

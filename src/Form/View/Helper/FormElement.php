@@ -25,6 +25,8 @@ class FormElement extends Helper\FormElement
 
     protected bool $isSelectPicker = false;
 
+    protected bool $isRendered = false;
+
     protected $typeMap
         = [
             'text' => 'lbs5forminput',
@@ -91,29 +93,32 @@ class FormElement extends Helper\FormElement
 
     public function render(ElementInterface $element): string
     {
-        if ($this->isSelectPicker) {
-            $this->view->headLink()->appendStylesheet(
-                'laminas-bootstrap5/css/bootstrap-select.min.css'
-            );
-            $this->view->headScript()->appendFile(
-                'laminas-bootstrap5/js/bootstrap-select.min.js',
-                'text/javascript'
-            );
-            $this->view->headLink()->appendStylesheet(
-                'laminas-bootstrap5/css/ajax-bootstrap-select.min.css'
-            );
+        if ($this->isSelectPicker && !$this->isRendered) {
+            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/bootstrap-select.min.css');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/bootstrap-select.min.js', 'text/javascript');
+            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/ajax-bootstrap-select.min.css');
             $this->view->headScript()->appendFile(
                 'laminas-bootstrap5/js/ajax-bootstrap-select.min.js',
                 'text/javascript'
             );
 
             $this->view->inlineScript()->appendScript(
-                "$('.selectpicker-user').data('abs-ajax-url', $('.selectpicker-user').data('abs-ajax-url'));
-             $('.selectpicker-user').selectpicker().ajaxSelectPicker();",
+                "$('.selectpicker').data('abs-ajax-url', $('.selectpicker').data('abs-ajax-url'));
+             $('.selectpicker').selectpicker().ajaxSelectPicker();",
                 'text/javascript'
             );
+
+            $this->isRendered = true;
         }
 
+        if ($element->getOption('isDateRange')) {
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/moment.js', 'text/javascript');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/date-range-picker.js', 'text/javascript');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/date-range-picker-main.js', 'text/javascript');
+            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/date-range-picker.css');
+
+            $element->setAttribute('class', 'daterangepicker-element form-control');
+        }
 
         $renderedType = $this->renderType($element);
 
@@ -129,6 +134,7 @@ class FormElement extends Helper\FormElement
     protected function renderType(ElementInterface $element): ?string
     {
         $type = $element->getAttribute('type');
+        $isDateRnage = $element->getOption('isDateRange');
 
         if (isset($this->typeMap[$type])) {
             //Produce the label

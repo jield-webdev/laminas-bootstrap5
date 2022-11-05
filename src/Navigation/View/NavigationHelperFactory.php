@@ -2,9 +2,9 @@
 
 namespace LaminasBootstrap5\Navigation\View;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use LaminasBootstrap5\View\Helper\Navigation;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class NavigationHelperFactory
