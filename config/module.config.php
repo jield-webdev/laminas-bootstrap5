@@ -38,6 +38,7 @@ return [
             'lbs5formselect' => View\Helper\FormSelect::class,
             'lbs5formmulticheckbox' => View\Helper\FormMultiCheckbox::class,
             'lbs5alert' => Helper\Alert::class,
+            'initHightlightJs' => Helper\InitHighlightJS::class,
         ],
     ],
     ConfigAbstractFactory::class => [
@@ -84,6 +85,13 @@ return [
                 'laminas-bootstrap5/css/date-range-picker.css' => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
 
                 'laminas-bootstrap5/js/codemirror.js' => __DIR__ . '/../public/codemirror/codemirror.js',
+                'laminas-bootstrap5/js/codemirror/main.js' => __DIR__ . '/../public/main/form-codemirror.js',
+                'laminas-bootstrap5/js/codemirror/mode/xml.js' => __DIR__ . '/../public/codemirror/mode/xml/xml.js',
+                'laminas-bootstrap5/js/codemirror/mode/html.js' => __DIR__ . '/../public/codemirror/mode/htmlmixed/htmlmixed.js',
+                'laminas-bootstrap5/js/codemirror/mode/css.js' => __DIR__ . '/../public/codemirror/mode/css/css.js',
+                'laminas-bootstrap5/js/codemirror/mode/javascript.js' => __DIR__ . '/../public/codemirror/mode/javascript/javascript.js',
+                'laminas-bootstrap5/js/codemirror/mode/sql.js' => __DIR__ . '/../public/codemirror/mode/sql/sql.js',
+                'laminas-bootstrap5/js/codemirror/mode/markdown.js' => __DIR__ . '/../public/codemirror/mode/markdown/markdown.js',
                 'laminas-bootstrap5/css/codemirror.css' => __DIR__ . '/../public/codemirror/codemirror.css',
 
                 'laminas-bootstrap5/js/bootstrap-select.min.js' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
@@ -91,6 +99,10 @@ return [
                 'laminas-bootstrap5/css/bootstrap-select.min.css' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/css/bootstrap-select.min.css',
                 'laminas-bootstrap5/js/ajax-bootstrap-select.min.js' => __DIR__ . '/../public/ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
                 'laminas-bootstrap5/css/ajax-bootstrap-select.min.css' => __DIR__ . '/../public/ajax-bootstrap-select/dist/css/ajax-bootstrap-select.css',
+
+                'laminas-bootstrap5/css/highlight.js/default.min.css' => __DIR__ . '/../public/highlight.js/default.min.css',
+                'laminas-bootstrap5/css/highlight.js/github.css' => __DIR__ . '/../public/highlight.js/github.css',
+                'laminas-bootstrap5/js/highlight.js/highlight.min.js' => __DIR__ . '/../public/highlight.js/highlight.min.js',
 
             ],
         ],

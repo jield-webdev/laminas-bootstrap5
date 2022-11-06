@@ -93,32 +93,74 @@ class FormElement extends Helper\FormElement
 
     public function render(ElementInterface $element): string
     {
-        if ($this->isSelectPicker && !$this->isRendered) {
-            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/bootstrap-select.min.css');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/bootstrap-select.min.js', 'text/javascript');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/bootstrap-select/main.js', 'text/javascript');
+        if ($element->getAttribute('type') === 'select') {
+            if ($element->getOption('searchable')) {
+                $element->setAttribute('class', 'form-control selectpicker');
+                $element->setAttribute('data-live-search', 'true');
 
-            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/ajax-bootstrap-select.min.css');
-            $this->view->headScript()->appendFile(
-                'laminas-bootstrap5/js/ajax-bootstrap-select.min.js',
-                'text/javascript'
-            );
+                //Enable the selectpicker
+                $this->setIsSelectPicker(true);
+            }
 
-            $this->isRendered = true;
+            if ($this->isSelectPicker && !$this->isRendered) {
+                $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/bootstrap-select.min.css');
+                $this->view->headScript()->appendFile(
+                    'laminas-bootstrap5/js/bootstrap-select.min.js',
+                    'text/javascript'
+                );
+                $this->view->headScript()->appendFile(
+                    'laminas-bootstrap5/js/bootstrap-select/main.js',
+                    'text/javascript'
+                );
+
+                $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/ajax-bootstrap-select.min.css');
+                $this->view->headScript()->appendFile(
+                    'laminas-bootstrap5/js/ajax-bootstrap-select.min.js',
+                    'text/javascript'
+                );
+
+                $this->isRendered = true;
+            }
+
+            if ($this->isSelectPicker) {
+                $element->setAttribute('class', 'form-control selectpicker');
+                $element->setAttribute('data-live-search', 'true');
+            }
         }
 
-        if ($this->isSelectPicker) {
-            $element->setAttribute('class', 'form-control selectpicker');
-            $element->setAttribute('data-live-search', 'true');
-        }
-
-        if ($element->getOption('isDateRange')) {
+        if ($element->getOption('is-date-range')) {
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/moment.js', 'text/javascript');
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/date-range-picker.js', 'text/javascript');
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/date-range-picker-main.js', 'text/javascript');
             $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/date-range-picker.css');
 
             $element->setAttribute('class', 'daterangepicker-element form-control');
+        }
+
+        if ($element->getOption('has-codemirror')) {
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror.js', 'text/javascript');
+
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/xml.js', 'text/javascript');
+            $this->view->headScript()->appendFile(
+                'laminas-bootstrap5/js/codemirror/mode/javascript.js',
+                'text/javascript'
+            );
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/css.js', 'text/javascript');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/sql.js', 'text/javascript');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/html.js', 'text/javascript');
+            $this->view->headScript()->appendFile(
+                'laminas-bootstrap5/js/codemirror/mode/markdown.js',
+                'text/javascript'
+            );
+
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/main.js', 'text/javascript');
+
+            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/codemirror.css');
+
+            $element->setAttribute('class', 'codemirror-element form-control');
+            $element->setAttribute('data-mode', $element->getOption('mode'));
+            $element->setAttribute('data-line-numbers', $element->getOption('line-numbers'));
+            $element->setAttribute('data-height', $element->getOption('height'));
         }
 
         $renderedType = $this->renderType($element);
@@ -135,7 +177,6 @@ class FormElement extends Helper\FormElement
     protected function renderType(ElementInterface $element): ?string
     {
         $type = $element->getAttribute('type');
-        $isDateRnage = $element->getOption('isDateRange');
 
         if (isset($this->typeMap[$type])) {
             //Produce the label

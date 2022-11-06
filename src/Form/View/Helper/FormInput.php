@@ -14,7 +14,7 @@ final class FormInput extends Helper\FormInput
         }
 
         if (\count($element->getMessages()) > 0) {
-            $element->setAttribute('class', 'form-control is-invalid');
+            $element->setAttribute('class', $element->getAttribute('class') . ' is-invalid');
         }
 
         if (null === $element->getAttribute('id')) {
