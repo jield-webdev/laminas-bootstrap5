@@ -96,19 +96,20 @@ class FormElement extends Helper\FormElement
         if ($this->isSelectPicker && !$this->isRendered) {
             $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/bootstrap-select.min.css');
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/bootstrap-select.min.js', 'text/javascript');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/bootstrap-select/main.js', 'text/javascript');
+
             $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/ajax-bootstrap-select.min.css');
             $this->view->headScript()->appendFile(
                 'laminas-bootstrap5/js/ajax-bootstrap-select.min.js',
                 'text/javascript'
             );
 
-            $this->view->inlineScript()->appendScript(
-                "$('.selectpicker').data('abs-ajax-url', $('.selectpicker').data('abs-ajax-url'));
-             $('.selectpicker').selectpicker().ajaxSelectPicker();",
-                'text/javascript'
-            );
-
             $this->isRendered = true;
+        }
+
+        if ($this->isSelectPicker) {
+            $element->setAttribute('class', 'form-control selectpicker');
+            $element->setAttribute('data-live-search', 'true');
         }
 
         if ($element->getOption('isDateRange')) {
