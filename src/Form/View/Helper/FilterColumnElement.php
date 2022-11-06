@@ -26,7 +26,6 @@ class FilterColumnElement extends FormElement
         $type = self::TYPE_HORIZONTAL,
         bool $formElementOnly = false
     ): FilterColumnElement|string|FormElement|static {
-
         $this->appendScript();
         $this->appendStyle();
 
@@ -46,6 +45,11 @@ class FilterColumnElement extends FormElement
     {
         $this->getContainer(self::HEADSCRIPT)->appendFile('laminas-bootstrap5/js/simple-load-more.js');
         $this->getContainer(self::HEADSCRIPT)->appendFile('laminas-bootstrap5/js/filter-column.js');
+        $this->getContainer(self::HEADSCRIPT)->appendFile(
+            'laminas-bootstrap5/js/bootstrap-slider.min.js',
+            'text/javascript'
+        );
+        $this->getContainer(self::HEADLINK)->appendStylesheet('laminas-bootstrap5/css/bootstrap-slider.min.css');
     }
 
     private function appendStyle(): void
@@ -116,13 +120,12 @@ class FilterColumnElement extends FormElement
                 $sortedValueOptions = [];
                 $currentValueOptions = $element->getValueOptions();
 
-                foreach($element->getValue() ?? [] as $value) {
+                foreach ($element->getValue() ?? [] as $value) {
                     $sortedValueOptions[$value] = $currentValueOptions[$value];
                     unset($currentValueOptions[$value]);
                 }
 
                 $element->setValueOptions(array_merge($sortedValueOptions, $currentValueOptions));
-
 
                 return $formMultiCheckbox->render($element);
             case 'checkbox':

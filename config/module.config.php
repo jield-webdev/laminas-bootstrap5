@@ -104,6 +104,9 @@ return [
                 'laminas-bootstrap5/css/highlight.js/github.css' => __DIR__ . '/../public/highlight.js/github.css',
                 'laminas-bootstrap5/js/highlight.js/highlight.min.js' => __DIR__ . '/../public/highlight.js/highlight.min.js',
 
+                'laminas-bootstrap5/css/bootstrap-slider.min.css' => __DIR__ . '/../public/bootstrap-slider/css/bootstrap-slider.min.css',
+                'laminas-bootstrap5/js/bootstrap-slider.min.js' => __DIR__ . '/../public/bootstrap-slider/bootstrap-slider.min.js',
+
             ],
         ],
     ]
