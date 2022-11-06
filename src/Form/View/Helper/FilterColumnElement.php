@@ -26,8 +26,12 @@ class FilterColumnElement extends FormElement
         $type = self::TYPE_HORIZONTAL,
         bool $formElementOnly = false
     ): FilterColumnElement|string|FormElement|static {
+
+        $this->appendScript();
+        $this->appendStyle();
+
         if ($element) {
-            return $this->renderFilterColumn($element);
+            return $this->renderFacets($element);
         }
 
         return $this;
@@ -47,22 +51,6 @@ class FilterColumnElement extends FormElement
     private function appendStyle(): void
     {
         $this->getContainer(self::HEADLINK)->appendStylesheet('laminas-bootstrap5/css/filter-column.css');
-    }
-
-    private function renderFilterColumn(Form|ElementInterface $form): string
-    {
-        $this->appendScript();
-        $this->appendStyle();
-
-        $wrapper = '%s                       
-        <style>
-       
-        </style>';
-
-        return sprintf(
-            $wrapper,
-            $this->renderFacets($form),
-        );
     }
 
     private function renderFacets(Form $form): string
@@ -123,6 +111,18 @@ class FilterColumnElement extends FormElement
                 $formMultiCheckbox->setTemplate(
                     '<div class="form-check form-check-search" data-other="%s">%s%s%s%s</div>'
                 );
+
+                //Reset the options so the checked one is always on top
+                $sortedValueOptions = [];
+                $currentValueOptions = $element->getValueOptions();
+
+                foreach($element->getValue() ?? [] as $value) {
+                    $sortedValueOptions[$value] = $currentValueOptions[$value];
+                    unset($currentValueOptions[$value]);
+                }
+
+                $element->setValueOptions(array_merge($sortedValueOptions, $currentValueOptions));
+
 
                 return $formMultiCheckbox->render($element);
             case 'checkbox':
