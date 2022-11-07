@@ -8,6 +8,9 @@ $(document).ready(function () {
     $('.search-toggle').change(function () {
         $('#search-form').submit();
     });
+    $('.form-multi-slider').on('change', function() {
+        $('#search-form').submit();
+    });
     $('.submitButton').on('click', function () {
         $('#search-form').submit();
     });
