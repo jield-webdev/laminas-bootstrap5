@@ -74,14 +74,13 @@ return [
                 'laminas-bootstrap5/css/filter-column.css' => __DIR__ . '/../public/filter-column/filter-column.css',
 
                 'laminas-bootstrap5/js/form-submit.js' => __DIR__ . '/../public/main/form-submit.js',
-                'laminas-bootstrap5/js/form-datepicker.js' => __DIR__ . '/../public/main/form-datepicker.js',
                 'laminas-bootstrap5/css/style.css' => __DIR__ . '/../public/main/style.css',
 
                 'laminas-bootstrap5/js/simple-load-more.js' => __DIR__ . '/../public/simple-load-more/jquery.simpleLoadMore.min.js',
 
                 'laminas-bootstrap5/js/moment.js' => __DIR__ . '/../public/date-range-picker/moment.min.js',
                 'laminas-bootstrap5/js/date-range-picker.js' => __DIR__ . '/../public/date-range-picker/daterangepicker.js',
-                'laminas-bootstrap5/js/date-range-picker-main.js' => __DIR__ . '/../public/date-range-picker/main.js',
+                'laminas-bootstrap5/js/date-range-picker-main.js' => __DIR__ . '/../public/main/form-datepicker.js',
                 'laminas-bootstrap5/css/date-range-picker.css' => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
 
                 'laminas-bootstrap5/js/codemirror.js' => __DIR__ . '/../public/codemirror/codemirror.js',
