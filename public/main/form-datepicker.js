@@ -1,17 +1,23 @@
 $(document).ready(function () {
-    $('input[type=date]').datepicker({
-        addSliderAccess: true,
-        regional: 'nl',
-        firstDay: 1,
-        sliderAccessArgs: {touchonly: false},
-        dateFormat: 'yy-mm-dd'
+
+    const dateRangePicker = $('.daterangepicker-element');
+    const format = 'DD-MM-YYYY';
+
+    dateRangePicker.daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            format: format,
+            cancelLabel: 'Clear'
+        }
     });
-    $('input[type=datetime]').datetimepicker({
-        addSliderAccess: true,
-        firstDay: 1,
-        regional: 'nl',
-        sliderAccessArgs: {touchonly: false},
-        timeFormat: 'HH:mm',
-        dateFormat: 'yy-mm-dd'
+
+    dateRangePicker.on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+        $('#search-form').submit();
+    });
+
+    dateRangePicker.on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
+        $('#search-form').submit();
     });
 });

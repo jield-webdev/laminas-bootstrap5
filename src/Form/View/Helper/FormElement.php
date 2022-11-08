@@ -135,6 +135,7 @@ class FormElement extends Helper\FormElement
             $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/date-range-picker.css');
 
             $element->setAttribute('class', 'daterangepicker-element form-control');
+            $element->setAttribute('placeholder', 'Click to set a date interval');
         }
 
         if ($element->getOption('has-codemirror')) {
