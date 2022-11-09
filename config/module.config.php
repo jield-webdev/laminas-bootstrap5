@@ -38,7 +38,7 @@ return [
             'lbs5formselect' => View\Helper\FormSelect::class,
             'lbs5formmulticheckbox' => View\Helper\FormMultiCheckbox::class,
             'lbs5alert' => Helper\Alert::class,
-            'initHightlightJs' => Helper\InitHighlightJS::class,
+            'initHighlightJs' => Helper\InitHighlightJS::class,
         ],
     ],
     ConfigAbstractFactory::class => [
