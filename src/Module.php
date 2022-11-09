@@ -5,6 +5,7 @@ namespace LaminasBootstrap5;
 use Laminas\EventManager\EventInterface;
 use Laminas\ModuleManager\Feature\BootstrapListenerInterface;
 use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\DependencyIndicatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use LaminasBootstrap5\Event\InjectJavascriptAndCss;
 
@@ -12,7 +13,7 @@ use LaminasBootstrap5\Event\InjectJavascriptAndCss;
  * Class Module
  * @package LaminasBootstrap5
  */
-final class Module implements ConfigProviderInterface, BootstrapListenerInterface
+final class Module implements ConfigProviderInterface, BootstrapListenerInterface, DependencyIndicatorInterface
 {
     public function getConfig(): array
     {
@@ -27,5 +28,10 @@ final class Module implements ConfigProviderInterface, BootstrapListenerInterfac
 
         $setTitle = $sm->get(InjectJavascriptAndCss::class);
         $setTitle->attach($app->getEventManager());
+    }
+
+    public function getModuleDependencies(): array
+    {
+        return ['AssetManager'];
     }
 }
