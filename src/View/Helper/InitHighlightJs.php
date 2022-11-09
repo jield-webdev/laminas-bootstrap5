@@ -9,7 +9,7 @@ use Laminas\View\Helper\AbstractHelper;
  */
 class InitHighlightJs extends AbstractHelper
 {
-    public function __invoke()
+    public function __invoke(): static
     {
         $this->getView()->headScript()->appendFile('laminas-bootstrap5/js/highlight.js/highlight.min.js');
         $this->getView()->headLink()->appendStylesheet('laminas-bootstrap5/css/highlight.js/default.min.css');

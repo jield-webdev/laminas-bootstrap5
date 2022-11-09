@@ -12,6 +12,7 @@ return [
             'ztbalert' => 'lbs5alert',
             'ztbformelement' => 'lbs5formelement',
             'filterbarelement' => 'lbs5filterbarelement',
+            'initHighlightJs' => 'lbs5initHighlightJs',
 
             'lbs5navigation' => Helper\Navigation::class,
             'lbs5filterbarelement' => View\Helper\FilterBarElement::class,
