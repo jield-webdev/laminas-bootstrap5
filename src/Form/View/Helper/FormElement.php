@@ -196,7 +196,7 @@ class FormElement extends Helper\FormElement
             }
 
             $this->elementCols = self::ELEMENT_COLS_DEFAULT;
-            if (in_array($type, ['date', 'datetimelocal'])) {
+            if (in_array($type, ['date', 'datetime-local'])) {
                 $this->elementCols = self::ELEMENT_COLS_SMALL;
             }
 
