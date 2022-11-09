@@ -23,9 +23,14 @@ class FormElement extends Helper\FormElement
     public const TYPE_FLOATING_LABEL = 'floating_label';
     public const TYPE_ELEMENT_ONLY = 'element_only';
 
+    public const ELEMENT_COLS_DEFAULT = 9;
+    public const ELEMENT_COLS_SMALL = 3;
+
     protected bool $isSelectPicker = false;
 
     protected bool $isRendered = false;
+
+    private int $elementCols = self::ELEMENT_COLS_DEFAULT;
 
     protected $typeMap
         = [
@@ -190,6 +195,11 @@ class FormElement extends Helper\FormElement
                 return sprintf('%s%s', $renderedElement, $error);
             }
 
+            $this->elementCols = self::ELEMENT_COLS_DEFAULT;
+            if (in_array($type, ['date', 'datetimelocal'])) {
+                $this->elementCols = self::ELEMENT_COLS_SMALL;
+            }
+
             switch ($type) {
                 case 'radio':
                     return $this->getRadioElement($label, $renderedElement, $error, $description);
@@ -247,13 +257,14 @@ class FormElement extends Helper\FormElement
                 return sprintf(
                     '<fieldset class="row mb-3">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-%d">
                                         %s
                                         %s
                                         %s
                                     </div>
                              </fieldset>',
                     $label,
+                    $this->elementCols,
                     $element,
                     $error,
                     $description
@@ -275,13 +286,14 @@ class FormElement extends Helper\FormElement
                 return sprintf(
                     '<fieldset class="row mb-3">
                                     <legend class="col-form-label col-sm-3 pt-0">%s</legend>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-%d">
                                         %s
                                         %s
                                         %s
                                     </div>
                              </fieldset>',
                     $label,
+                    $this->elementCols,
                     $element,
                     $error,
                     $description
@@ -304,12 +316,13 @@ class FormElement extends Helper\FormElement
             default:
                 return sprintf(
                     '<div class="row mb-3">
-                                    <div class="col-sm-9 offset-sm-3">
+                                    <div class="col-sm-%d offset-sm-3">
                                         %s
                                         %s
                                         %s
                                     </div>
                              </div>',
+                    $this->elementCols,
                     $element,
                     $error,
                     $description
@@ -348,8 +361,9 @@ class FormElement extends Helper\FormElement
             case self::TYPE_HORIZONTAL:
             default:
                 return sprintf(
-                    '<div class="row mb-3">%s<div class="col-sm-9">%s%s%s</div></div>',
+                    '<div class="row mb-3">%s<div class="col-sm-%d">%s%s%s</div></div>',
                     $label,
+                    $this->elementCols,
                     $element,
                     $error,
                     $description
