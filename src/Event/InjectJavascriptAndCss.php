@@ -34,7 +34,7 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
     public function setHeadScript(): void
     {
         $this->renderer->headScript()->appendFile(
-            '//cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js',
+            'https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js',
             'text/javascript',
             [
                 'crossorigin' => 'anonymous',
@@ -42,7 +42,7 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
             ]
         );
         $this->renderer->headScript()->appendFile(
-            '//code.jquery.com/ui/1.13.1/jquery-ui.min.js',
+            'https://code.jquery.com/ui/1.13.1/jquery-ui.min.js',
             'text/javascript',
             [
                 'crossorigin' => 'anonymous',
@@ -50,7 +50,7 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
             ]
         );
         $this->renderer->headScript()->appendFile(
-            '//cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js',
             'text/javascript',
             [
                 'crossorigin' => 'anonymous',
