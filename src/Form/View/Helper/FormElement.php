@@ -154,6 +154,7 @@ class FormElement extends Helper\FormElement
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/css.js', 'text/javascript');
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/sql.js', 'text/javascript');
             $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/html.js', 'text/javascript');
+            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/twig.js', 'text/javascript');
             $this->view->headScript()->appendFile(
                 'laminas-bootstrap5/js/codemirror/mode/markdown.js',
                 'text/javascript'

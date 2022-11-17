@@ -92,6 +92,7 @@ return [
                 'laminas-bootstrap5/js/codemirror/mode/javascript.js' => __DIR__ . '/../public/codemirror/mode/javascript/javascript.js',
                 'laminas-bootstrap5/js/codemirror/mode/sql.js' => __DIR__ . '/../public/codemirror/mode/sql/sql.js',
                 'laminas-bootstrap5/js/codemirror/mode/markdown.js' => __DIR__ . '/../public/codemirror/mode/markdown/markdown.js',
+                'laminas-bootstrap5/js/codemirror/mode/twig.js' => __DIR__ . '/../public/codemirror/mode/twig/twig.js',
                 'laminas-bootstrap5/css/codemirror.css' => __DIR__ . '/../public/codemirror/codemirror.css',
 
                 'laminas-bootstrap5/js/bootstrap-select.min.js' => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
