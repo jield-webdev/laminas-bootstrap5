@@ -117,7 +117,7 @@ class FilterColumnElement extends FormElement
                 );
 
                 //Reset the options so the checked one is always on top
-                $sortedValueOptions = [];
+                $sortedValueOptions  = [];
                 $currentValueOptions = $element->getValueOptions();
 
                 foreach ($element->getValue() ?? [] as $value) {
@@ -128,7 +128,7 @@ class FilterColumnElement extends FormElement
                     }
                 }
 
-                $element->setValueOptions(array_merge($sortedValueOptions, $currentValueOptions));
+                $element->setValueOptions($sortedValueOptions + $currentValueOptions);
 
                 return $formMultiCheckbox->render($element);
             case 'checkbox':
