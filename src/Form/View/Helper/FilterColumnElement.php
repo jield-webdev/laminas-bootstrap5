@@ -120,7 +120,7 @@ class FilterColumnElement extends FormElement
                 $sortedValueOptions  = [];
                 $currentValueOptions = $element->getValueOptions();
 
-                foreach ($element->getValue() ?? [] as $value) {
+                foreach ((array)($element->getValue() ?? []) as $value) {
                     //We can only unset the value if it is in the value options
                     if (array_key_exists($value, $currentValueOptions)) {
                         $sortedValueOptions[$value] = $currentValueOptions[$value];
