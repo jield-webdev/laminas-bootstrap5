@@ -17,24 +17,13 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
 
     public function attach(EventManagerInterface $events, $priority = 1): void
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, $this->setHeadLink(...), 1000);
         $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, $this->setHeadScript(...), 1000);
-    }
-
-    public function setHeadLink(): void
-    {
-        $this->renderer->headLink()->appendStylesheet(
-            '/laminas-bootstrap5/css/style.css',
-            'all',
-            null,
-            null
-        );
     }
 
     public function setHeadScript(): void
     {
-        $injectJquery    = $this->config['laminas-bootstrap5']['inject_jquery'] ?? true;
-        $injectJqueryUI  = $this->config['laminas-bootstrap5']['inject_jquery_ui'] ?? true;
+        $injectJquery      = $this->config['laminas-bootstrap5']['inject_jquery'] ?? true;
+        $injectJqueryUI    = $this->config['laminas-bootstrap5']['inject_jquery_ui'] ?? true;
         $injectBootstrapJS = $this->config['laminas-bootstrap5']['inject_bootstrap_js'] ?? true;
 
         if ($injectJquery) {
@@ -71,11 +60,12 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
         }
 
         $this->renderer->headScript()->appendFile(
-            '/laminas-bootstrap5/js/form-submit.js',
+            'assets/js/laminas-bootstrap5/main.js',
             'text/javascript',
             [
                 'crossorigin' => 'anonymous',
             ]
         );
+        $this->renderer->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/main.css');
     }
 }

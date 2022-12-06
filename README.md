@@ -2,6 +2,12 @@
 
 Repository to use Bootstrap 5 code in Laminas Framework (based on zfc-twitter-bootstrap)
 
+## Installation
+
+Create a writeable directory `assets` in your project public folder (for example ```public/assets```).
+
+```bash
+
 ## Forced injection of Bootstrap JS, Jquery and Jquery UI
 
 This module default injects the latest versions of Bootstrap JS (including Popper), Jquery and JqueryUI as these

@@ -76,47 +76,146 @@ return [
     ],
     'asset_manager'              => [
         'resolver_configs' => [
-            'map' => [
-                'laminas-bootstrap5/js/filter-column.js'   => __DIR__ . '/../public/filter-column/filter-column.js',
-                'laminas-bootstrap5/css/filter-column.css' => __DIR__ . '/../public/filter-column/filter-column.css',
-
-                'laminas-bootstrap5/js/form-submit.js' => __DIR__ . '/../public/main/form-submit.js',
-                'laminas-bootstrap5/css/style.css'     => __DIR__ . '/../public/main/style.css',
-
-                'laminas-bootstrap5/js/simple-load-more.js' => __DIR__ . '/../public/simple-load-more/jquery.simpleLoadMore.min.js',
-
-                'laminas-bootstrap5/js/moment.js'                 => __DIR__ . '/../public/date-range-picker/moment.min.js',
-                'laminas-bootstrap5/js/date-range-picker.js'      => __DIR__ . '/../public/date-range-picker/daterangepicker.js',
-                'laminas-bootstrap5/js/date-range-picker-main.js' => __DIR__ . '/../public/main/form-datepicker.js',
-                'laminas-bootstrap5/css/date-range-picker.css'    => __DIR__ . '/../public/date-range-picker/daterangepicker.css',
-
-                'laminas-bootstrap5/js/codemirror.js'                 => __DIR__ . '/../public/codemirror/codemirror.js',
-                'laminas-bootstrap5/js/codemirror/main.js'            => __DIR__ . '/../public/main/form-codemirror.js',
-                'laminas-bootstrap5/js/codemirror/mode/xml.js'        => __DIR__ . '/../public/codemirror/mode/xml/xml.js',
-                'laminas-bootstrap5/js/codemirror/mode/html.js'       => __DIR__ . '/../public/codemirror/mode/htmlmixed/htmlmixed.js',
-                'laminas-bootstrap5/js/codemirror/mode/css.js'        => __DIR__ . '/../public/codemirror/mode/css/css.js',
-                'laminas-bootstrap5/js/codemirror/mode/javascript.js' => __DIR__ . '/../public/codemirror/mode/javascript/javascript.js',
-                'laminas-bootstrap5/js/codemirror/mode/sql.js'        => __DIR__ . '/../public/codemirror/mode/sql/sql.js',
-                'laminas-bootstrap5/js/codemirror/mode/markdown.js'   => __DIR__ . '/../public/codemirror/mode/markdown/markdown.js',
-                'laminas-bootstrap5/js/codemirror/mode/twig.js'       => __DIR__ . '/../public/codemirror/mode/twig/twig.js',
-                'laminas-bootstrap5/css/codemirror.css'               => __DIR__ . '/../public/codemirror/codemirror.css',
-
-                'laminas-bootstrap5/js/bootstrap-select.min.js'        => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
-                'laminas-bootstrap5/js/bootstrap-select/main.js'       => __DIR__ . '/../public/main/form-bootstrap-select.js',
-                'laminas-bootstrap5/css/bootstrap-select.min.css'      => __DIR__ . '/../public/bootstrap-select-1.14-dev/dist/css/bootstrap-select.min.css',
-                'laminas-bootstrap5/js/ajax-bootstrap-select.min.js'   => __DIR__ . '/../public/ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
-                'laminas-bootstrap5/css/ajax-bootstrap-select.min.css' => __DIR__ . '/../public/ajax-bootstrap-select/dist/css/ajax-bootstrap-select.css',
-
-                'laminas-bootstrap5/css/highlight.js/default.min.css' => __DIR__ . '/../public/highlight.js/default.min.css',
-                'laminas-bootstrap5/css/highlight.js/github.css'      => __DIR__ . '/../public/highlight.js/github.css',
-                'laminas-bootstrap5/js/highlight.js/highlight.min.js' => __DIR__ . '/../public/highlight.js/highlight.min.js',
-
-                'laminas-bootstrap5/css/bootstrap-slider.min.css' => __DIR__ . '/../public/bootstrap-slider/css/bootstrap-slider.min.css',
-                'laminas-bootstrap5/js/bootstrap-slider.min.js'   => __DIR__ . '/../public/bootstrap-slider/bootstrap-slider.min.js',
-
-                'laminas-bootstrap5/js/sortable.min.js' => __DIR__ . '/../public/sortable-js/Sortable.min.js',
-
+            'collections' => [
+                'assets/js/laminas-bootstrap5/main.js'               => [
+                    'main/form-submit.js',
+                    'simple-load-more/jquery.simpleLoadMore.min.js',
+                    'bootstrap-slider/bootstrap-slider.min.js',
+                ],
+                'assets/css/laminas-bootstrap5/main.css'             => [
+                    'bootstrap-slider/css/bootstrap-slider.min.css',
+                ],
+                'assets/js/laminas-bootstrap5/filter-column.js'      => [
+                    'filter-column/filter-column.js',
+                ],
+                'assets/css/laminas-bootstrap5/filter-column.css'    => [
+                    'filter-column/filter-column.css',
+                ],
+                'assets/js/laminas-bootstrap5/daterangepicker.js'    => [
+                    'date-range-picker/moment.min.js',
+                    'date-range-picker/daterangepicker.js',
+                    'main/form-datepicker.js',
+                ],
+                'assets/css/laminas-bootstrap5/daterangepicker.css'  => [
+                    'date-range-picker/daterangepicker.css',
+                ],
+                'assets/js/laminas-bootstrap5/codemirror.js'         => [
+                    'codemirror/codemirror.js',
+                    'main/form-codemirror.js',
+                    'codemirror/mode/xml/xml.js',
+                    'codemirror/mode/htmlmixed/htmlmixed.js',
+                    'codemirror/mode/css/css.js',
+                    'codemirror/mode/javascript/javascript.js',
+                    'codemirror/mode/sql/sql.js',
+                    'codemirror/mode/markdown/markdown.js',
+                    'codemirror/mode/twig/twig.js',
+                ],
+                'assets/css/laminas-bootstrap5/codemirror.css'       => [
+                    'public/codemirror/codemirror.css'
+                ],
+                'assets/js/laminas-bootstrap5/bootstrap-select.js'   => [
+                    'bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
+                    'main/form-bootstrap-select.js',
+                    'ajax-bootstrap-select/dist/js/ajax-bootstrap-select.min.js',
+                ],
+                'assets/css/laminas-bootstrap5/bootstrap-select.css' => [
+                    'bootstrap-select-1.14-dev/dist/css/bootstrap-select.min.css',
+                    'ajax-bootstrap-select/dist/css/ajax-bootstrap-select.css',
+                ],
+                'assets/js/laminas-bootstrap5/highlight.js'          => [
+                    'highlight.js/highlight.min.js'
+                ],
+                'assets/css/laminas-bootstrap5/highlight.css'        => [
+                    'highlight.js/default.min.css',
+                    'highlight.js/github.css',
+                ],
+                'assets/js/laminas-bootstrap5/sortable.js'           => [
+                    'sortable-js/Sortable.min.js'
+                ],
+            ],
+            'paths'       => [
+                __DIR__ . '/../public',
             ],
         ],
-    ]
+        'caching'          => [
+            'assets/js/laminas-bootstrap5/main.js'               => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/css/laminas-bootstrap5/main.css'             => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/js/laminas-bootstrap5/filter-column.js'      => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/css/laminas-bootstrap5/filter-column.css'    => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/js/laminas-bootstrap5/daterangepicker.js'    => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/css/laminas-bootstrap5/daterangepicker.css'  => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/js/laminas-bootstrap5/codemirror.js'         => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/css/laminas-bootstrap5/codemirror.css'       => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/js/laminas-bootstrap5/bootstrap-select.js'   => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/css/laminas-bootstrap5/bootstrap-select.css' => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/js/laminas-bootstrap5/highlight.js'          => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/css/laminas-bootstrap5/highlight.css'        => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+            'assets/js/laminas-bootstrap5/sortable.js'           => [
+                'cache'   => 'FilePath',
+                'options' => [
+                    'dir' => __DIR__ . '/../../../../public',
+                ],
+            ],
+        ],
+    ],
 ];
