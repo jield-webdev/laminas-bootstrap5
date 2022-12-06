@@ -46,7 +46,7 @@ class FilterColumnElement extends FormElement
             'assets/js/laminas-bootstrap5/filter-column.js',
             'text/javascript'
         );
-        $this->getContainer(self::HEADLINK)->appendStylesheet('css/laminas-bootstrap5/filter-column.css');
+        $this->getContainer(self::HEADLINK)->appendStylesheet('assets/css/laminas-bootstrap5/filter-column.css');
     }
 
     private function renderFacets(Form $form): string
