@@ -111,7 +111,7 @@ return [
                     'codemirror/mode/twig/twig.js',
                 ],
                 'assets/css/laminas-bootstrap5/codemirror.css'       => [
-                    'public/codemirror/codemirror.css'
+                    'codemirror/codemirror.css'
                 ],
                 'assets/js/laminas-bootstrap5/bootstrap-select.js'   => [
                     'bootstrap-select-1.14-dev/dist/js/bootstrap-select.min.js',
