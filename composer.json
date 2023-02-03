@@ -70,7 +70,7 @@
       "@cs-fix"
     ],
     "php-lint": "./vendor/bin/parallel-lint src",
-    "phpstan": "./vendor/bin/phpstan analyse src/ --level=1",
+    "phpstan": "./vendor/bin/phpstan analyse src/ --level=1 --memory-limit=2G",
     "cs": "./vendor/bin/phpcs -n -p --standard=PSR2 --extensions=php,twig src",
     "cbf": "./vendor/bin/phpcbf src --standard=PSR2",
     "cs-fix": "./vendor/bin/php-cs-fixer fix -v src",
