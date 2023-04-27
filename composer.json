@@ -29,7 +29,7 @@
     "jield-webdev/jield-search": "dev-main"
   },
   "require-dev": {
-    "iteaoffice/testing": "^3.5-dev"
+    "iteaoffice/testing": "^3.5-dev || ^4.0"
   },
   "autoload": {
     "psr-4": {
