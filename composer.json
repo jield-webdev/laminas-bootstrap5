@@ -25,7 +25,7 @@
     "laminas/laminas-modulemanager": "^2.15",
     "laminas/laminas-servicemanager": "^3.21",
     "laminas/laminas-i18n": "^2.24",
-    "jield-webdev/laminas-assetmanager": "^2.0",
+    "jield-webdev/laminas-assetmanager": "^3.0",
     "jield-webdev/jield-search": "dev-main"
   },
   "require-dev": {
