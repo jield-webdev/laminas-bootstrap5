@@ -23,13 +23,13 @@
     "laminas/laminas-navigation": "^2.19",
     "laminas/laminas-view": "^2.29",
     "laminas/laminas-modulemanager": "^2.15",
-    "laminas/laminas-servicemanager": "^3.22",
+    "laminas/laminas-servicemanager": "^3.21",
     "laminas/laminas-i18n": "^2.24",
     "jield-webdev/laminas-assetmanager": "^2.0",
     "jield-webdev/jield-search": "dev-main"
   },
   "require-dev": {
-    "iteaoffice/testing": "^3.5-dev"
+    "iteaoffice/testing": "^4.1-dev"
   },
   "autoload": {
     "psr-4": {
