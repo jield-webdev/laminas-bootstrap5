@@ -34,20 +34,20 @@ class FormElement extends Helper\FormElement
 
     protected $typeMap
         = [
-            'text' => 'lbs5forminput',
-            'email' => 'lbs5forminput',
-            'number' => 'lbs5forminput',
-            'color' => 'lbs5forminput',
-            'password' => 'lbs5forminput',
-            'url' => 'lbs5forminput',
-            'checkbox' => 'lbs5formcheckbox',
-            'file' => 'lbs5formfile',
-            'textarea' => 'lbs5formtextarea',
+            'text'           => 'lbs5forminput',
+            'email'          => 'lbs5forminput',
+            'number'         => 'lbs5forminput',
+            'color'          => 'lbs5forminput',
+            'password'       => 'lbs5forminput',
+            'url'            => 'lbs5forminput',
+            'checkbox'       => 'lbs5formcheckbox',
+            'file'           => 'lbs5formfile',
+            'textarea'       => 'lbs5formtextarea',
             'datetime-local' => 'lbs5formdatetimelocal',
-            'radio' => 'lbs5formradio',
-            'datetime' => 'lbs5forminput',
-            'date' => 'lbs5forminput',
-            'select' => 'lbs5formselect',
+            'radio'          => 'lbs5formradio',
+            'datetime'       => 'lbs5forminput',
+            'date'           => 'lbs5forminput',
+            'select'         => 'lbs5formselect',
             'multi_checkbox' => 'lbs5formmulticheckbox',
         ];
 
@@ -65,9 +65,9 @@ class FormElement extends Helper\FormElement
 
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
-        $this->formLabel = $viewHelperManager->get('formlabel');
-        $this->escapeHtml = $viewHelperManager->get('escapehtml');
-        $this->formDescription = $viewHelperManager->get('lbs5formdescription');
+        $this->formLabel         = $viewHelperManager->get('formlabel');
+        $this->escapeHtml        = $viewHelperManager->get('escapehtml');
+        $this->formDescription   = $viewHelperManager->get('lbs5formdescription');
         $this->formElementErrors = $viewHelperManager->get('formelementerrors');
 
         $this->translator = $translator;
@@ -108,21 +108,8 @@ class FormElement extends Helper\FormElement
             }
 
             if ($this->isSelectPicker && !$this->isRendered) {
-                $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/bootstrap-select.min.css');
-                $this->view->headScript()->appendFile(
-                    'laminas-bootstrap5/js/bootstrap-select.min.js',
-                    'text/javascript'
-                );
-                $this->view->headScript()->appendFile(
-                    'laminas-bootstrap5/js/bootstrap-select/main.js',
-                    'text/javascript'
-                );
-
-                $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/ajax-bootstrap-select.min.css');
-                $this->view->headScript()->appendFile(
-                    'laminas-bootstrap5/js/ajax-bootstrap-select.min.js',
-                    'text/javascript'
-                );
+                $this->view->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/bootstrap-select.css');
+                $this->view->headScript()->appendFile('assets/js/laminas-bootstrap5/bootstrap-select.js', 'text/javascript');
 
                 $this->isRendered = true;
             }
@@ -134,35 +121,16 @@ class FormElement extends Helper\FormElement
         }
 
         if ($element->getOption('is-date-range')) {
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/moment.js', 'text/javascript');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/date-range-picker.js', 'text/javascript');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/date-range-picker-main.js', 'text/javascript');
-            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/date-range-picker.css');
+            $this->view->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/daterangepicker.css');
+            $this->view->headScript()->appendFile('assets/js/laminas-bootstrap5/daterangepicker.js', 'text/javascript');
 
             $element->setAttribute('class', 'daterangepicker-element form-control');
             $element->setAttribute('placeholder', 'Click to set a date interval');
         }
 
         if ($element->getOption('has-codemirror')) {
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror.js', 'text/javascript');
-
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/xml.js', 'text/javascript');
-            $this->view->headScript()->appendFile(
-                'laminas-bootstrap5/js/codemirror/mode/javascript.js',
-                'text/javascript'
-            );
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/css.js', 'text/javascript');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/sql.js', 'text/javascript');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/html.js', 'text/javascript');
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/mode/twig.js', 'text/javascript');
-            $this->view->headScript()->appendFile(
-                'laminas-bootstrap5/js/codemirror/mode/markdown.js',
-                'text/javascript'
-            );
-
-            $this->view->headScript()->appendFile('laminas-bootstrap5/js/codemirror/main.js', 'text/javascript');
-
-            $this->view->headLink()->appendStylesheet('laminas-bootstrap5/css/codemirror.css');
+            $this->view->headScript()->appendFile('assets/js/laminas-bootstrap5/codemirror.js', 'text/javascript');
+            $this->view->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/codemirror.css');
 
             $element->setAttribute('class', 'codemirror-element form-control');
             $element->setAttribute('data-mode', $element->getOption('mode'));
@@ -187,10 +155,10 @@ class FormElement extends Helper\FormElement
 
         if (isset($this->typeMap[$type])) {
             //Produce the label
-            $label = $this->findLabel($element);
+            $label           = $this->findLabel($element);
             $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
-            $description = $this->parseDescription($element);
-            $error = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
+            $description     = $this->parseDescription($element);
+            $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
 
             if ($this->type === self::TYPE_ELEMENT_ONLY) {
                 return sprintf('%s%s', $renderedElement, $error);

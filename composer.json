@@ -19,17 +19,17 @@
   "minimum-stability": "dev",
   "require": {
     "php": "~8.1.0 || ~8.2.0",
-    "laminas/laminas-form": "^3.8",
-    "laminas/laminas-navigation": "^2.17",
-    "laminas/laminas-view": "^2.26",
+    "laminas/laminas-form": "^3.12",
+    "laminas/laminas-navigation": "^2.19",
+    "laminas/laminas-view": "^2.29",
     "laminas/laminas-modulemanager": "^2.15",
     "laminas/laminas-servicemanager": "^3.21",
-    "laminas/laminas-i18n": "^2.22",
-    "jield-webdev/laminas-assetmanager": "^2.1",
+    "laminas/laminas-i18n": "^2.24",
+    "jield-webdev/laminas-assetmanager": "^3.0",
     "jield-webdev/jield-search": "dev-main"
   },
   "require-dev": {
-    "iteaoffice/testing": "^3.5-dev"
+    "iteaoffice/testing": "^4.1-dev"
   },
   "autoload": {
     "psr-4": {
@@ -54,8 +54,8 @@
       "module": "LaminasBootstrap5"
     },
     "branch-alias": {
-      "dev-master": "1.0-dev",
-      "dev-develop": "1.1-dev"
+      "dev-master": "1.2-dev",
+      "dev-develop": "1.3-dev"
     }
   },
   "scripts": {
@@ -70,7 +70,7 @@
       "@cs-fix"
     ],
     "php-lint": "./vendor/bin/parallel-lint src",
-    "phpstan": "./vendor/bin/phpstan analyse src/ --level=1",
+    "phpstan": "./vendor/bin/phpstan analyse src/ --level=1 --memory-limit=2G",
     "cs": "./vendor/bin/phpcs -n -p --standard=PSR2 --extensions=php,twig src",
     "cbf": "./vendor/bin/phpcbf src --standard=PSR2",
     "cs-fix": "./vendor/bin/php-cs-fixer fix -v src",

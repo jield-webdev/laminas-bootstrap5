@@ -1,5 +1,4 @@
 $(function () {
-
     $('.form-check-search > input[type="checkbox"]').on('click', function () {
         $('#search').submit();
     });

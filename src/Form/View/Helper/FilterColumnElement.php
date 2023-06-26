@@ -27,7 +27,6 @@ class FilterColumnElement extends FormElement
         bool $formElementOnly = false
     ): FilterColumnElement|string|FormElement|static {
         $this->appendScript();
-        $this->appendStyle();
 
         if ($element) {
             return $this->renderFacets($element);
@@ -43,18 +42,11 @@ class FilterColumnElement extends FormElement
 
     private function appendScript(): void
     {
-        $this->getContainer(self::HEADSCRIPT)->appendFile('laminas-bootstrap5/js/simple-load-more.js');
-        $this->getContainer(self::HEADSCRIPT)->appendFile('laminas-bootstrap5/js/filter-column.js');
         $this->getContainer(self::HEADSCRIPT)->appendFile(
-            'laminas-bootstrap5/js/bootstrap-slider.min.js',
+            'assets/js/laminas-bootstrap5/filter-column.js',
             'text/javascript'
         );
-        $this->getContainer(self::HEADLINK)->appendStylesheet('laminas-bootstrap5/css/bootstrap-slider.min.css');
-    }
-
-    private function appendStyle(): void
-    {
-        $this->getContainer(self::HEADLINK)->appendStylesheet('laminas-bootstrap5/css/filter-column.css');
+        $this->getContainer(self::HEADLINK)->appendStylesheet('assets/css/laminas-bootstrap5/filter-column.css');
     }
 
     private function renderFacets(Form $form): string

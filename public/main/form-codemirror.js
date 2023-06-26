@@ -15,6 +15,7 @@ $(document).ready(function () {
                 mode: mode,
                 indentUnit: 4,
                 indentWithTabs: false,
+                lineWrapping: true,
                 matchBrackets: true,
                 theme: 'default',
                 extraKeys: {

@@ -2,6 +2,7 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
+use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\LabelAwareInterface;
 use Laminas\Form\View\Helper;
@@ -23,7 +24,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
 {
     private string $template = '<div class="form-check %s">%s%s%s%s</div>';
 
-    public function render(ElementInterface $element): string
+    public function render(ElementInterface|MultiCheckbox $element): string
     {
         $name = static::getName($element);
 
@@ -117,7 +118,7 @@ class FormMultiCheckbox extends Helper\FormMultiCheckbox
                 $selected = true;
             }
 
-            $elementId                = md5($element->getName() . $label);
+            $elementId                = md5($element->getName() . $label . $value);
             $inputAttributes['class'] = 'form-check-input';
 
             if (count($element->getMessages()) > 0) {

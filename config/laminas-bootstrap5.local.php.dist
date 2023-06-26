@@ -1,0 +1,12 @@
+<?php
+
+//Store this file in your local config to avoid injection of query, jqueryUI or bootstrap.
+//To do this set the value to false
+
+return [
+    'laminas-bootstrap5'         => [
+        'inject_jquery'    => true,
+        'inject_jquery_ui' => true,
+        'inject_bootstrap_js' => true,
+    ],
+];
