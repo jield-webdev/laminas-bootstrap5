@@ -209,7 +209,7 @@ class FormElement extends Helper\FormElement
         return '' !== $this->parseFormElementError(element: $element);
     }
 
-    private function parseFormElementError(ElementInterface $element): string
+    protected function parseFormElementError(ElementInterface $element): string
     {
         $this->formElementErrors->setMessageOpenFormat(messageOpenFormat: '<div class="invalid-feedback"><span%s>');
         $this->formElementErrors->setMessageSeparatorString(messageSeparatorString: '<br>');
