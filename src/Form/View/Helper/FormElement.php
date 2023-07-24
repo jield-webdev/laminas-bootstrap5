@@ -8,7 +8,6 @@ use Laminas\Form\View\Helper;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\View\Helper\EscapeHtml;
 use Laminas\View\HelperPluginManager;
-
 use function sprintf;
 
 /**
@@ -75,9 +74,10 @@ class FormElement extends Helper\FormElement
 
     public function __invoke(
         ElementInterface $element = null,
-        $type = self::TYPE_HORIZONTAL,
-        bool $formElementOnly = false
-    ) {
+                         $type = self::TYPE_HORIZONTAL,
+        bool             $formElementOnly = false
+    )
+    {
         //We previously has the type a boolean with $inline
         if ($type === true) {
             $type = self::TYPE_DEFAULT;
@@ -244,11 +244,12 @@ class FormElement extends Helper\FormElement
     }
 
     private function getMultiCheckboxElement(
-        string $label,
-        string $element,
+        string  $label,
+        string  $element,
         ?string $error,
-        string $description
-    ): string {
+        string  $description
+    ): string
+    {
         switch ($this->type) {
             case self::TYPE_HORIZONTAL:
             default:
@@ -314,6 +315,11 @@ class FormElement extends Helper\FormElement
         if ($this->type === self::TYPE_HORIZONTAL) {
             $openTagAttributes['class'] = 'col-sm-3 col-form-label';
         }
+
+        if ($element->hasAttribute(key: 'required')) {
+            $openTagAttributes['class'] .= ' required';
+        }
+
 
         $openTag = $this->formLabel->openTag(attributesOrElement: $openTagAttributes);
 
