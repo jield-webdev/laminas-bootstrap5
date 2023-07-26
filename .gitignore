@@ -3,3 +3,4 @@ vendor/
 composer.phar
 /.php-cs-fixer.cache
 /.phpunit.cache/test-results
+composer.lock
