@@ -16,6 +16,7 @@
       "homepage": "https://jield.nl"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
     "laminas/laminas-form": "^3.14",
