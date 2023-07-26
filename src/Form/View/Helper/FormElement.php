@@ -8,7 +8,6 @@ use Laminas\Form\View\Helper;
 use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\View\Helper\EscapeHtml;
 use Laminas\View\HelperPluginManager;
-
 use function sprintf;
 
 /**
@@ -65,19 +64,20 @@ class FormElement extends Helper\FormElement
 
     public function __construct(HelperPluginManager $viewHelperManager, TranslatorInterface $translator)
     {
-        $this->formLabel         = $viewHelperManager->get('formlabel');
-        $this->escapeHtml        = $viewHelperManager->get('escapehtml');
-        $this->formDescription   = $viewHelperManager->get('lbs5formdescription');
-        $this->formElementErrors = $viewHelperManager->get('formelementerrors');
+        $this->formLabel         = $viewHelperManager->get(name: 'formlabel');
+        $this->escapeHtml        = $viewHelperManager->get(name: 'escapehtml');
+        $this->formDescription   = $viewHelperManager->get(name: 'lbs5formdescription');
+        $this->formElementErrors = $viewHelperManager->get(name: 'formelementerrors');
 
         $this->translator = $translator;
     }
 
     public function __invoke(
         ElementInterface $element = null,
-        $type = self::TYPE_HORIZONTAL,
-        bool $formElementOnly = false
-    ) {
+                         $type = self::TYPE_HORIZONTAL,
+        bool             $formElementOnly = false
+    )
+    {
         //We previously has the type a boolean with $inline
         if ($type === true) {
             $type = self::TYPE_DEFAULT;
@@ -90,7 +90,7 @@ class FormElement extends Helper\FormElement
         $this->type = $type;
 
         if ($element) {
-            return $this->render($element);
+            return $this->render(element: $element);
         }
 
         return $this;
@@ -98,13 +98,13 @@ class FormElement extends Helper\FormElement
 
     public function render(ElementInterface $element): string
     {
-        if ($element->getAttribute('type') === 'select') {
-            if ($element->getOption('searchable')) {
-                $element->setAttribute('class', 'form-control selectpicker');
-                $element->setAttribute('data-live-search', 'true');
+        if ($element->getAttribute(key: 'type') === 'select') {
+            if ($element->getOption(option: 'searchable')) {
+                $element->setAttribute(key: 'class', value: 'form-control selectpicker');
+                $element->setAttribute(key: 'data-live-search', value: 'true');
 
                 //Enable the selectpicker
-                $this->setIsSelectPicker(true);
+                $this->setIsSelectPicker(isSelectPicker: true);
             }
 
             if ($this->isSelectPicker && !$this->isRendered) {
@@ -115,74 +115,74 @@ class FormElement extends Helper\FormElement
             }
 
             if ($this->isSelectPicker) {
-                $element->setAttribute('class', 'form-control selectpicker');
-                $element->setAttribute('data-live-search', 'true');
+                $element->setAttribute(key: 'class', value: 'form-control selectpicker');
+                $element->setAttribute(key: 'data-live-search', value: 'true');
             }
         }
 
-        if ($element->getOption('is-date-range')) {
+        if ($element->getOption(option: 'is-date-range')) {
             $this->view->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/daterangepicker.css');
             $this->view->headScript()->appendFile('assets/js/laminas-bootstrap5/daterangepicker.js', 'text/javascript');
 
-            $element->setAttribute('class', 'daterangepicker-element form-control');
-            $element->setAttribute('placeholder', 'Click to set a date interval');
+            $element->setAttribute(key: 'class', value: 'daterangepicker-element form-control');
+            $element->setAttribute(key: 'placeholder', value: 'Click to set a date interval');
         }
 
-        if ($element->getOption('has-codemirror')) {
+        if ($element->getOption(option: 'has-codemirror')) {
             $this->view->headScript()->appendFile('assets/js/laminas-bootstrap5/codemirror.js', 'text/javascript');
             $this->view->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/codemirror.css');
 
-            $element->setAttribute('class', 'codemirror-element form-control');
-            $element->setAttribute('data-mode', $element->getOption('mode'));
-            $element->setAttribute('data-line-numbers', $element->getOption('line-numbers'));
-            $element->setAttribute('data-height', $element->getOption('height'));
+            $element->setAttribute(key: 'class', value: 'codemirror-element form-control');
+            $element->setAttribute(key: 'data-mode', value: $element->getOption(option: 'mode'));
+            $element->setAttribute(key: 'data-line-numbers', value: $element->getOption(option: 'line-numbers'));
+            $element->setAttribute(key: 'data-height', value: $element->getOption(option: 'height'));
         }
 
-        $renderedType = $this->renderType($element);
+        $renderedType = $this->renderType(element: $element);
 
         if ($renderedType !== null) {
             return $renderedType;
         }
 
-        $element->setValue($this->translator->translate($element->getValue()));
+        $element->setValue(value: $this->translator->translate(message: $element->getValue()));
 
-        return parent::render($element);
+        return parent::render(element: $element);
     }
 
     protected function renderType(ElementInterface $element): ?string
     {
-        $type = $element->getAttribute('type');
+        $type = $element->getAttribute(key: 'type');
 
         if (isset($this->typeMap[$type])) {
             //Produce the label
-            $label           = $this->findLabel($element);
-            $renderedElement = $this->renderHelper($this->typeMap[$type], $element);
-            $description     = $this->parseDescription($element);
-            $error           = $this->hasFormElementError($element) ? $this->parseFormElementError($element) : null;
+            $label           = $this->findLabel(element: $element);
+            $renderedElement = $this->renderHelper(name: $this->typeMap[$type], element: $element);
+            $description     = $this->parseDescription(element: $element);
+            $error           = $this->hasFormElementError(element: $element) ? $this->parseFormElementError(element: $element) : null;
 
             if ($this->type === self::TYPE_ELEMENT_ONLY) {
                 return sprintf('%s%s', $renderedElement, $error);
             }
 
             $this->elementCols = self::ELEMENT_COLS_DEFAULT;
-            if (in_array($type, ['date', 'datetime-local'])) {
+            if (in_array(needle: $type, haystack: ['date', 'datetime-local'])) {
                 $this->elementCols = self::ELEMENT_COLS_SMALL;
             }
 
             switch ($type) {
                 case 'radio':
-                    return $this->getRadioElement($label, $renderedElement, $error, $description);
+                    return $this->getRadioElement(label: $label, element: $renderedElement, error: $error, description: $description);
                 case 'multi_checkbox':
-                    return $this->getMultiCheckboxElement($label, $renderedElement, $error, $description);
+                    return $this->getMultiCheckboxElement(label: $label, element: $renderedElement, error: $error, description: $description);
                 case 'checkbox':
-                    return $this->getCheckboxElement($renderedElement, $error, $description);
+                    return $this->getCheckboxElement(element: $renderedElement, error: $error, description: $description);
                 case 'submit':
                 case 'button':
                     return $renderedElement;
             }
 
-            $label = $this->parseLabel($element);
-            return $this->getDefaultElement($label, $renderedElement, $error, $description);
+            $label = $this->parseLabel(element: $element);
+            return $this->getDefaultElement(label: $label, element: $renderedElement, error: $error, description: $description);
         }
 
         return null;
@@ -190,32 +190,32 @@ class FormElement extends Helper\FormElement
 
     private function findLabel(ElementInterface $element): ?string
     {
-        $label = $element->getAttribute('label') ?? $element->getLabel();
+        $label = $element->getAttribute(key: 'label') ?? $element->getLabel();
 
         if (null !== ($translator = $this->formLabel->getTranslator())) {
-            $label = $translator->translate($label);
+            $label = $translator->translate(message: $label);
         }
 
         return $label;
     }
 
-    private function parseDescription(ElementInterface $element): string
+    protected function parseDescription(ElementInterface $element): string
     {
-        return $this->formDescription->__invoke($element);
+        return $this->formDescription->__invoke(element: $element);
     }
 
-    private function hasFormElementError(ElementInterface $element): bool
+    protected function hasFormElementError(ElementInterface $element): bool
     {
-        return '' !== $this->parseFormElementError($element);
+        return '' !== $this->parseFormElementError(element: $element);
     }
 
-    private function parseFormElementError(ElementInterface $element): string
+    protected function parseFormElementError(ElementInterface $element): string
     {
-        $this->formElementErrors->setMessageOpenFormat('<div class="invalid-feedback"><span%s>');
-        $this->formElementErrors->setMessageSeparatorString('<br>');
-        $this->formElementErrors->setMessageCloseString('</span></div>');
+        $this->formElementErrors->setMessageOpenFormat(messageOpenFormat: '<div class="invalid-feedback"><span%s>');
+        $this->formElementErrors->setMessageSeparatorString(messageSeparatorString: '<br>');
+        $this->formElementErrors->setMessageCloseString(messageCloseString: '</span></div>');
 
-        return $this->formElementErrors->__invoke($element);
+        return $this->formElementErrors->__invoke(element: $element);
     }
 
     private function getRadioElement(string $label, string $element, ?string $error, string $description): string
@@ -244,11 +244,12 @@ class FormElement extends Helper\FormElement
     }
 
     private function getMultiCheckboxElement(
-        string $label,
-        string $element,
+        string  $label,
+        string  $element,
         ?string $error,
-        string $description
-    ): string {
+        string  $description
+    ): string
+    {
         switch ($this->type) {
             case self::TYPE_HORIZONTAL:
             default:
@@ -303,7 +304,7 @@ class FormElement extends Helper\FormElement
 
     protected function parseLabel(ElementInterface $element): string
     {
-        $label = $this->findLabel($element);
+        $label = $this->findLabel(element: $element);
 
         if (null === $label) {
             return '';
@@ -315,10 +316,15 @@ class FormElement extends Helper\FormElement
             $openTagAttributes['class'] = 'col-sm-3 col-form-label';
         }
 
-        $openTag = $this->formLabel->openTag($openTagAttributes);
+        if ($element->hasAttribute(key: 'required')) {
+            $openTagAttributes['class'] .= ' required';
+        }
 
-        if (!$element instanceof LabelAwareInterface || !$element->getLabelOption('disable_html_escape')) {
-            $label = $this->escapeHtml->__invoke($label);
+
+        $openTag = $this->formLabel->openTag(attributesOrElement: $openTagAttributes);
+
+        if (!$element instanceof LabelAwareInterface || !$element->getLabelOption(key: 'disable_html_escape')) {
+            $label = $this->escapeHtml->__invoke(value: $label);
         }
 
         return $openTag . $label . $this->formLabel->closeTag();

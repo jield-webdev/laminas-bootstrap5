@@ -17,7 +17,7 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
 
     public function attach(EventManagerInterface $events, $priority = 1): void
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, $this->setHeadScript(...), 1000);
+        $this->listeners[] = $events->attach(eventName: MvcEvent::EVENT_RENDER, listener: $this->setHeadScript(...), priority: 1000);
     }
 
     public function setHeadScript(): void
@@ -28,33 +28,33 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
 
         if ($injectJquery) {
             $this->renderer->headScript()->appendFile(
-                '//cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js',
+                '//code.jquery.com/jquery-3.7.0.min.js',
                 'text/javascript',
                 [
                     'crossorigin' => 'anonymous',
-                    'integrity'   => 'sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=',
+                    'integrity'   => 'sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=',
                 ]
             );
         }
 
         if ($injectJqueryUI) {
             $this->renderer->headScript()->appendFile(
-                '//code.jquery.com/ui/1.13.1/jquery-ui.min.js',
+                '//code.jquery.com/ui/1.13.2/jquery-ui.min.js',
                 'text/javascript',
                 [
                     'crossorigin' => 'anonymous',
-                    'integrity'   => 'sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=',
+                    'integrity'   => 'sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=',
                 ]
             );
         }
 
         if ($injectBootstrapJS) {
             $this->renderer->headScript()->appendFile(
-                '//cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js',
+                '//cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
                 'text/javascript',
                 [
                     'crossorigin' => 'anonymous',
-                    'integrity'   => 'sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3',
+                    'integrity'   => 'sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz',
                 ]
             );
         }
