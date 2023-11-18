@@ -60,12 +60,12 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
         }
 
         $this->renderer->headScript()->appendFile(
-            'assets/js/laminas-bootstrap5/main.js',
+            '/assets/js/laminas-bootstrap5/main.js',
             'text/javascript',
             [
                 'crossorigin' => 'anonymous',
             ]
         );
-        $this->renderer->headLink()->appendStylesheet('assets/css/laminas-bootstrap5/main.css');
+        $this->renderer->headLink()->appendStylesheet('/assets/css/laminas-bootstrap5/main.css');
     }
 }
