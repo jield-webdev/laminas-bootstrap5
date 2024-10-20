@@ -17,9 +17,9 @@ final class FormDescription extends AbstractHelper
 
     public function __invoke(
         ?ElementInterface $element = null,
-        string            $blockWrapper = null,
-        string            $inlineWrapper = null
-    )
+        ?string           $blockWrapper = null,
+        ?string           $inlineWrapper = null
+    ): string|FormDescription
     {
         if ($element) {
             return $this->render($element, $blockWrapper, $inlineWrapper);
