@@ -4,7 +4,7 @@ namespace LaminasBootstrap5\Form\View\Helper;
 
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\Helper;
-use Laminas\I18n\Translator\TranslatorInterface;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\View\HelperPluginManager;
 
 use function count;
