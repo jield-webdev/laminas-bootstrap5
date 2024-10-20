@@ -4,7 +4,6 @@ namespace LaminasBootstrap5\Form\View\Helper;
 
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\Helper\AbstractHelper;
-
 use function sprintf;
 
 /**
@@ -14,13 +13,14 @@ use function sprintf;
 final class FormDescription extends AbstractHelper
 {
     private string $inlineWrapper = '<small class="form-text">%s</small>';
-    private string $blockWrapper = '<small class="form-text">%s</small>';
+    private string $blockWrapper  = '<small class="form-text">%s</small>';
 
     public function __invoke(
-        ElementInterface $element = null,
-        string $blockWrapper = null,
-        string $inlineWrapper = null
-    ) {
+        ?ElementInterface $element = null,
+        string            $blockWrapper = null,
+        string            $inlineWrapper = null
+    )
+    {
         if ($element) {
             return $this->render($element, $blockWrapper, $inlineWrapper);
         }
@@ -28,7 +28,7 @@ final class FormDescription extends AbstractHelper
         return $this;
     }
 
-    public function render(ElementInterface $element, string $blockWrapper = null, string $inlineWrapper = null): string
+    public function render(ElementInterface $element, ?string $blockWrapper = null, ?string $inlineWrapper = null): string
     {
         $blockWrapper  = $blockWrapper ?: $this->blockWrapper;
         $inlineWrapper = $inlineWrapper ?: $this->inlineWrapper;

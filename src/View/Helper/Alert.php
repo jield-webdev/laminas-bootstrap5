@@ -3,7 +3,6 @@
 namespace LaminasBootstrap5\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
-
 use function sprintf;
 use function trim;
 
@@ -77,7 +76,7 @@ class Alert extends AbstractHelper
         return $this->render($alert, 'dark', $isDismissible);
     }
 
-    public function __invoke(string $alert = null, string $class = 'info', bool $isDismissible = false)
+    public function __invoke(?string $alert = null, string $class = 'info', bool $isDismissible = false)
     {
         if (null !== $alert) {
             return $this->render($alert, $class, $isDismissible);

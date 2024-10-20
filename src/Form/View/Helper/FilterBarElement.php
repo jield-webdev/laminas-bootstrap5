@@ -5,22 +5,21 @@ namespace LaminasBootstrap5\Form\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-
 use function implode;
 use function sprintf;
 
 class FilterBarElement extends FormElement
 {
-    public function __invoke(ElementInterface $element = null, $type = false, bool $formElementOnly = false)
+    public function __invoke(?ElementInterface $element = null, $type = false, bool $formElementOnly = false)
     {
-        if ($element) {
+        if ($element instanceof Form) {
             return $this->renderFilterBar($element);
         }
 
         return $this;
     }
 
-    private function renderFilterBar(Form $element)
+    private function renderFilterBar(Form $element): string
     {
         $wrapper = '
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -104,8 +103,8 @@ class FilterBarElement extends FormElement
                     $facet->get('yesNo')->setLabel('Exclude');
                 }
                 $yesNo = '<div class="dropdown-item"><div class="form-check">' . $this->renderRaw(
-                    $facet->get('yesNo')
-                ) . '</div></div>';
+                        $facet->get('yesNo')
+                    ) . '</div></div>';
             }
 
             $andOr = '';
@@ -116,8 +115,8 @@ class FilterBarElement extends FormElement
                     $facet->get('andOr')->setLabel('And');
                 }
                 $andOr = '<div class="dropdown-item"><div class="form-check">' . $this->renderRaw(
-                    $facet->get('andOr')
-                ) . '</div></div>';
+                        $facet->get('andOr')
+                    ) . '</div></div>';
             }
 
             $facets[] = sprintf(

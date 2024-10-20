@@ -6,7 +6,6 @@ use Jield\Search\ValueObject\FacetField;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
-
 use function implode;
 use function sprintf;
 
@@ -22,13 +21,14 @@ class FilterColumnElement extends FormElement
     protected bool $rendered = false;
 
     public function __invoke(
-        ElementInterface $element = null,
-        $type = self::TYPE_HORIZONTAL,
-        bool $formElementOnly = false
-    ): FilterColumnElement|string|FormElement|static {
+        ?ElementInterface $element = null,
+                          $type = self::TYPE_HORIZONTAL,
+        bool              $formElementOnly = false
+    ): FilterColumnElement|string|FormElement|static
+    {
         $this->appendScript();
 
-        if ($element) {
+        if ($element instanceof Form) {
             return $this->renderFacets($element);
         }
 

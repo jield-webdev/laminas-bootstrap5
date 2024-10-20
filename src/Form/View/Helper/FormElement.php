@@ -73,9 +73,9 @@ class FormElement extends Helper\FormElement
     }
 
     public function __invoke(
-        ElementInterface $element = null,
-                         $type = self::TYPE_HORIZONTAL,
-        bool             $formElementOnly = false
+        ?ElementInterface $element = null,
+        string            $type = self::TYPE_HORIZONTAL,
+        bool              $formElementOnly = false
     )
     {
         //We previously has the type a boolean with $inline
