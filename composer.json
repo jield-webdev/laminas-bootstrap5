@@ -21,10 +21,10 @@
     "php": "~8.3.0 || ~8.4.0",
     "laminas/laminas-form": "^3.22",
     "laminas/laminas-navigation": "^2.21 ",
-    "laminas/laminas-view": "^2.36",
+    "laminas/laminas-view": "^2.40",
     "laminas/laminas-modulemanager": "^2.18",
     "laminas/laminas-servicemanager": "^3.23 || ^4.0",
-    "laminas/laminas-i18n": "^2.29",
+    "laminas/laminas-i18n": "^2.31",
     "jield-webdev/laminas-assetmanager": "^4.0",
     "jield-webdev/jield-search": "^2.1"
   },

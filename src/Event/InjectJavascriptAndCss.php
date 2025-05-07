@@ -28,33 +28,33 @@ class InjectJavascriptAndCss extends AbstractListenerAggregate
 
         if ($injectJquery) {
             $this->renderer->headScript()->appendFile(
-                '//code.jquery.com/jquery-3.7.1.min.js',
+                '//cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js',
                 'text/javascript',
                 [
                     'crossorigin' => 'anonymous',
-                    'integrity'   => 'sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=',
+                    'integrity'   => 'sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==',
                 ]
             );
         }
 
         if ($injectJqueryUI) {
             $this->renderer->headScript()->appendFile(
-                '//code.jquery.com/ui/1.13.2/jquery-ui.min.js',
+                '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js',
                 'text/javascript',
                 [
                     'crossorigin' => 'anonymous',
-                    'integrity'   => 'sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=',
+                    'integrity'   => 'sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==',
                 ]
             );
         }
 
         if ($injectBootstrapJS) {
             $this->renderer->headScript()->appendFile(
-                '//cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+                '//cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js',
                 'text/javascript',
                 [
                     'crossorigin' => 'anonymous',
-                    'integrity'   => 'sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz',
+                    'integrity'   => 'sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO',
                 ]
             );
         }
