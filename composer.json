@@ -19,6 +19,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": "~8.3.0 || ~8.4.0",
+    "twbs/bootstrap": "~5.3",
     "laminas/laminas-form": "^3.22",
     "laminas/laminas-navigation": "^2.21 ",
     "laminas/laminas-view": "^2.40",
