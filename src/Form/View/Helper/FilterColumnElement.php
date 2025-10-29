@@ -2,6 +2,7 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
+use Jield\Search\Enum\FacetFieldVisibilityEnum;
 use Jield\Search\ValueObject\FacetField;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
@@ -58,6 +59,11 @@ class FilterColumnElement extends FormElement
         $facets = [];
         /** @var Fieldset $facet */
         foreach ($form->get('facet')->getFieldsets() as $id => $facet) {
+
+            if ($facet->getOption('visibility') === FacetFieldVisibilityEnum::FILTER_BAR) {
+                continue;
+            }
+
             $facets[] = '<div class="simple-load-more">';
             $facets[] = sprintf('<strong>%s</strong>', $facet->get('values')->getLabel());
 

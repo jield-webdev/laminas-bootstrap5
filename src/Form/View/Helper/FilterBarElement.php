@@ -2,6 +2,8 @@
 
 namespace LaminasBootstrap5\Form\View\Helper;
 
+use Jield\Search\Enum\FacetFieldVisibilityEnum;
+use Jield\Search\ValueObject\FacetField;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
@@ -95,6 +97,11 @@ class FilterBarElement extends FormElement
 
         /** @var Fieldset $facet */
         foreach ($form->get('facet')->getFieldsets() as $counter => $facet) {
+
+            if ($facet->getOption('visibility') === FacetFieldVisibilityEnum::FILTER_COLUMN) {
+                continue;
+            }
+
             $yesNo = '';
             if ($facet->has('yesNo')) {
                 $facet->get('yesNo')->setAttribute('class', 'form-check-search form-check-yes-no');
@@ -139,6 +146,15 @@ class FilterBarElement extends FormElement
 
         switch ($type) {
             case 'multi_checkbox':
+                //Based om the type we can choose to render a multi-checkbox as a slider
+                if ($element->getOption('type') === FacetField::TYPE_SLIDER) {
+                    //Get the helper
+                    /** @var FormMultiCheckbox $formMultiCheckbox */
+                    $formMultiCheckbox = $this->getView()?->plugin('lbs5formmultislider');
+
+                    return $formMultiCheckbox->render($element);
+                }
+
                 //Get the helper
                 /** @var FormMultiCheckbox $formMultiCheckbox */
                 $formMultiCheckbox = $this->getView()->plugin('lbs5formmulticheckbox');

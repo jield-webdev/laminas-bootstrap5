@@ -27,7 +27,7 @@
     "laminas/laminas-servicemanager": "^3.23 || ^4.0",
     "laminas/laminas-i18n": "^2.31",
     "jield-webdev/laminas-assetmanager": "^4.0",
-    "jield-webdev/jield-search": "^2.1"
+    "jield-webdev/jield-search": "dev-develop"
   },
   "require-dev": {
     "iteaoffice/testing": "^5.1-dev"
