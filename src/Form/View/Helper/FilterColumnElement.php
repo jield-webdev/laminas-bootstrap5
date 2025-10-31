@@ -56,14 +56,8 @@ class FilterColumnElement extends FormElement
             return 'no facets found';
         }
 
-        $facets = [];
-
-        if ($form->has(elementOrFieldset: 'filter') && $form->get(elementOrFieldset: 'filter')->has(elementOrFieldset: 'general')) {
-            $facets[] = '<div class="mb-3">';
-            $facets[] = sprintf('<strong>%s</strong>', ucfirst(string: $form->get(elementOrFieldset: 'filter')->get(elementOrFieldset: 'general')->getLabel()));
-            $facets[] = $this->renderRaw(element: $form->get(elementOrFieldset: 'filter')->get(elementOrFieldset: 'general'));
-            $facets[] = '</div>';
-        }
+        $facets   = [];
+        $facets[] = $this->renderGeneralFilter(form: $form);
 
         /** @var Fieldset $facet */
         foreach ($form->get(elementOrFieldset: 'facet')->getFieldsets() as $id => $facet) {
@@ -99,6 +93,33 @@ class FilterColumnElement extends FormElement
 
         return implode(separator: PHP_EOL, array: $facets);
     }
+
+    private function renderGeneralFilter(Form $form): string
+    {
+        $generalFilter = [];
+
+        if ($form->has(elementOrFieldset: 'filter') && $form->get(elementOrFieldset: 'filter')->has(elementOrFieldset: 'general')) {
+
+            $element = $form->get(elementOrFieldset: 'filter')->get(elementOrFieldset: 'general');
+
+            $generalFilter[] = '<div class="mb-3">';
+            $generalFilter[] = sprintf('<strong>%s</strong>', ucfirst(string: $element->getLabel()));
+
+            //Get the helper
+            /** @var FormMultiCheckbox $formMultiCheckbox */
+            $formMultiCheckbox = $this->getView()?->plugin(name: 'lbs5formmulticheckbox');
+            $formMultiCheckbox->setTemplate(
+                template: '<div class="form-check form-check-search" data-other="%s">%s%s%s%s</div>'
+            );
+
+            $generalFilter[] = $formMultiCheckbox->render(element: $element);
+
+            $generalFilter[] = '</div>';
+        }
+
+        return implode(separator: PHP_EOL, array: $generalFilter);
+    }
+
 
     private function renderRaw(ElementInterface $element): ?string
     {
