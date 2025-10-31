@@ -4,6 +4,7 @@ namespace LaminasBootstrap5\Form\View\Helper;
 
 use Jield\Search\Enum\FacetFieldVisibilityEnum;
 use Jield\Search\ValueObject\FacetField;
+use Laminas\Form\Element\MultiCheckbox;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\Fieldset;
 use Laminas\Form\Form;
@@ -33,6 +34,7 @@ class FilterBarElement extends FormElement
         
                 <div class="collapse navbar-collapse" id="filterBar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                         %s
                          %s                   
                     </ul>
                     <div class="d-flex">
@@ -70,6 +72,7 @@ class FilterBarElement extends FormElement
 
         return sprintf(
             $wrapper,
+            $this->renderGeneralFilter($element->get('filter')->get('general')),
             $this->renderFacets($element),
             $this->renderRaw($element->get('query')),
             $this->renderRaw($element->get('search')),
@@ -138,6 +141,26 @@ class FilterBarElement extends FormElement
         }
 
         return implode(PHP_EOL, $facets);
+    }
+
+    private function renderGeneralFilter(MultiCheckbox $generalFilter): string
+    {
+        $facetWrapper
+            = '<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-general-filter" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            %s
+                        </a>                        
+                        <div class="dropdown-menu inactive dropdown-menu-filter-bar" aria-labelledby="searchDropdown-general-filter">
+                            %s
+                                                                        
+                    </li>';
+
+        return sprintf(
+            $facetWrapper,
+            $generalFilter->getLabel(),
+            $this->renderRaw($generalFilter)
+        );
     }
 
     private function renderRaw(ElementInterface $element): ?string
