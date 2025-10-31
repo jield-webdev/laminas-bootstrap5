@@ -62,7 +62,7 @@ class FilterColumnElement extends FormElement
         /** @var Fieldset $facet */
         foreach ($form->get(elementOrFieldset: 'facet')->getFieldsets() as $id => $facet) {
 
-            if ($facet->getOption(option: 'visibility') === FacetFieldVisibilityEnum::FILTER_BAR) {
+            if ($facet->getOption(option: 'visibility') !== FacetFieldVisibilityEnum::FILTER_COLUMN) {
                 continue;
             }
 

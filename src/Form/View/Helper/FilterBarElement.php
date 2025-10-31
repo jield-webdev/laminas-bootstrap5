@@ -145,7 +145,7 @@ class FilterBarElement extends FormElement
 
     private function renderGeneralFilter(MultiCheckbox $generalFilter): string
     {
-        if ($generalFilter->getOption('visibility') === FacetFieldVisibilityEnum::FILTER_COLUMN) {
+        if ($generalFilter->getOption('visibility') !== FacetFieldVisibilityEnum::FILTER_BAR) {
             return '';
         }
 
