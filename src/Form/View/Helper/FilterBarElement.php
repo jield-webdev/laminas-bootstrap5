@@ -162,7 +162,7 @@ class FilterBarElement extends FormElement
 
         return sprintf(
             $facetWrapper,
-            $generalFilter->getLabel(),
+            ucfirst($generalFilter->getLabel()),
             $this->renderRaw($generalFilter)
         );
     }
