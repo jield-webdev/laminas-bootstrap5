@@ -72,7 +72,7 @@ class FilterBarElement extends FormElement
 
         return sprintf(
             $wrapper,
-            $this->renderGeneralFilter($element->get('filter')->get('general')),
+            $element->has('filter') && $element->get('filter')->has('general') ? $this->renderGeneralFilter($element->get('filter')->get('general')) : '',
             $this->renderFacets($element),
             $this->renderRaw($element->get('query')),
             $this->renderRaw($element->get('search')),
@@ -145,6 +145,10 @@ class FilterBarElement extends FormElement
 
     private function renderGeneralFilter(MultiCheckbox $generalFilter): string
     {
+        if ($generalFilter->getOption('visibility') === FacetFieldVisibilityEnum::FILTER_COLUMN) {
+            return '';
+        }
+
         $facetWrapper
             = '<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-general-filter" role="button"
