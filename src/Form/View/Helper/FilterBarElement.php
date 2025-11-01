@@ -25,7 +25,7 @@ class FilterBarElement extends FormElement
     private function renderFilterBar(Form $element): string
     {
         $wrapper = '
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filterBar"
                         aria-controls="filterBar" aria-expanded="false" aria-label="Toggle Filter">
