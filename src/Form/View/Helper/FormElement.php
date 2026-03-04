@@ -169,6 +169,10 @@ class FormElement extends Helper\FormElement
                 $this->elementCols = self::ELEMENT_COLS_SMALL;
             }
 
+            if ($element->hasAttribute(key: 'cols')) {
+                $this->elementCols = min(self::ELEMENT_COLS_DEFAULT, max(self::ELEMENT_COLS_SMALL, (int)$element->getAttribute(key: 'cols')));
+            }
+
             switch ($type) {
                 case 'radio':
                     return $this->getRadioElement(label: $label, element: $renderedElement, error: $error, description: $description);
