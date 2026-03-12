@@ -1,0 +1,9 @@
+services:
+  php:
+    image: php:8.5-cli
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      COMPOSER_ALLOW_SUPERUSER: "1"
+    tty: true
