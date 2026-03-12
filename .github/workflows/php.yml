@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - allow-php85
   pull_request:
     branches:
       - main
@@ -20,8 +21,9 @@ jobs:
         php:
           - 8.3
           - 8.4
+          - 8.5
         include:
-          - php-version: 8.4
+          - php-version: 8.5
             composer-options: "--ignore-platform-reqs"
 
     runs-on: ubuntu-latest
