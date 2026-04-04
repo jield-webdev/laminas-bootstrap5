@@ -33,20 +33,29 @@ class FilterBarElement extends FormElement
                 </button>
         
                 <div class="collapse navbar-collapse" id="filterBar">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                         %s
-                         %s                   
-                    </ul>
-                    <div class="d-flex">
-                    <div class="input-group">
-                            %s
-                            %s
-                            %s
-                            </div>
+                    <div class="filter-bar-row">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 filter-bar-facets">
+                             %s
+                             %s                   
+                        </ul>
+                        <div class="input-group filter-bar-search">
+                                %s
+                                %s
+                                %s
+                        </div>
                     </div>
                 </div>
             </div>
         </nav>
+        <style type="text/css">
+            .filter-bar-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: nowrap; width: 100%%; min-width: 0; }
+            .filter-bar-facets { flex: 1 1 auto; flex-wrap: nowrap; overflow: hidden; min-width: 0; }
+            .filter-bar-facet-item { white-space: nowrap; }
+            .filter-bar-search { flex: 0 1 auto; flex-wrap: nowrap; width: auto; max-width: 100%%; overflow: hidden; }
+            .filter-bar-search > .btn { flex: 0 0 auto; white-space: nowrap; }
+            .filter-bar-search > .form-control { flex: 0 1 auto; min-width: 0; }
+            .filter-bar-query { min-width: 6ch; }
+        </style>
         
         <script type="text/javascript">
             $(\'.dropdown-menu-filter-bar\').on(\'click\', function(e) {
@@ -64,6 +73,80 @@ class FilterBarElement extends FormElement
                     $(\'input[name="query"]\').val(\'\');
                     $(\'#search\').submit();
                 });
+            });
+
+            $(function () {
+                var $row = $(\'#filterBar .filter-bar-row\');
+                var $input = $(\'.filter-bar-query\');
+                var $inputGroup = $(\'.filter-bar-search\');
+                var $nav = $(\'.filter-bar-facets\');
+                var $items = $nav.find(\'.filter-bar-facet-item\');
+                var canvas = document.createElement(\'canvas\');
+                var context = canvas.getContext(\'2d\');
+
+                if (!$row.length || !$input.length || !$nav.length) {
+                    return;
+                }
+
+                function measureTextWidth(text, font) {
+                    if (!context) {
+                        return text.length * 8;
+                    }
+                    context.font = font;
+                    return context.measureText(text).width;
+                }
+
+                function inputTargetWidth() {
+                    var inputEl = $input.get(0);
+                    var style = window.getComputedStyle(inputEl);
+                    var value = $input.val() || $input.attr(\'placeholder\') || \' \';
+                    var font = style.font || (style.fontStyle + \' \' + style.fontVariant + \' \' + style.fontWeight + \' \' + style.fontSize + \'/\' + style.lineHeight + \' \' + style.fontFamily);
+                    var padding = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight) + 2;
+                    var maxWidth = measureTextWidth(\'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\', font) + padding;
+                    var minWidth = measureTextWidth(\'MMMMMM\', font) + padding;
+                    var target = measureTextWidth(value, font) + padding;
+                    return Math.max(minWidth, Math.min(target, maxWidth));
+                }
+
+                function fitFilterBar() {
+                    $items.removeClass(\'d-none\');
+                    var rowWidth = $row.width();
+                    if (!rowWidth) {
+                        return;
+                    }
+
+                    var buttonsWidth = 0;
+                    $inputGroup.children().not($input).each(function () {
+                        buttonsWidth += $(this).outerWidth(true);
+                    });
+
+                    var maxInputWidth = Math.max(80, rowWidth - buttonsWidth - 8);
+                    var targetWidth = Math.min(inputTargetWidth(), maxInputWidth);
+                    $input.css(\'width\', targetWidth + \'px\');
+
+                    $inputGroup.css(\'max-width\', rowWidth + \'px\');
+                    var available = rowWidth - $inputGroup.outerWidth(true) - 8;
+                    if (available <= 0) {
+                        return;
+                    }
+
+                    while ($nav.get(0).scrollWidth > available && $items.filter(\':not(.d-none)\').length) {
+                        $items.filter(\':not(.d-none)\').last().addClass(\'d-none\');
+                    }
+
+                    var $hidden = $items.filter(\'.d-none\');
+                    for (var i = 0; i < $hidden.length; i += 1) {
+                        var $candidate = $hidden.eq(i).removeClass(\'d-none\');
+                        if ($nav.get(0).scrollWidth > available) {
+                            $candidate.addClass(\'d-none\');
+                            break;
+                        }
+                    }
+                }
+
+                $input.on(\'input\', fitFilterBar);
+                $(window).on(\'resize\', fitFilterBar);
+                setTimeout(fitFilterBar, 0);
             });
         </script>
         
@@ -85,7 +168,7 @@ class FilterBarElement extends FormElement
         $facets = [];
 
         $facetWrapper
-            = '<li class="nav-item dropdown">
+            = '<li class="nav-item dropdown filter-bar-facet-item">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-%d" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
@@ -150,7 +233,7 @@ class FilterBarElement extends FormElement
         }
 
         $facetWrapper
-            = '<li class="nav-item dropdown">
+            = '<li class="nav-item dropdown filter-bar-facet-item">
                         <a class="nav-link dropdown-toggle" href="#" id="searchDropdown-general-filter" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             %s
@@ -213,6 +296,12 @@ class FilterBarElement extends FormElement
                 return $formMultiCheckbox->render($element);
             case 'text':
             case 'search':
+                if ($element->getName() === 'query') {
+                    $element->setAttribute(
+                        'class',
+                        'filter-bar-query ' . $element->getAttribute('class')
+                    );
+                }
                 $element->setAttribute(
                     'class',
                     'form-control ' . $element->getAttribute('class')

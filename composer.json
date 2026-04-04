@@ -1,6 +1,7 @@
 {
   "name": "jield-webdev/laminas-bootstrap5",
   "description": "Laminas Module that provides helper functions for Bootstrap 5",
+  "version": "3.0.0",
   "type": "library",
   "keywords": [
     "bootstrap",
@@ -55,8 +56,8 @@
       "module": "LaminasBootstrap5"
     },
     "branch-alias": {
-      "dev-master": "2.0-dev",
-      "dev-develop": "2.1-dev"
+      "dev-master": "3.0-dev",
+      "dev-develop": "3.1-dev"
     }
   },
   "scripts": {
