@@ -49,7 +49,7 @@ class FilterBarElement extends FormElement
         </nav>
         <style type="text/css">
             .filter-bar-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: nowrap; width: 100%%; min-width: 0; }
-            .filter-bar-facets { flex: 1 1 auto; flex-wrap: nowrap; overflow: hidden; min-width: 0; }
+            .filter-bar-facets { flex: 1 1 auto; flex-wrap: nowrap; overflow: visible; min-width: 0; }
             .filter-bar-facet-item { white-space: nowrap; }
             .filter-bar-search { flex: 0 1 auto; flex-wrap: nowrap; width: auto; max-width: 100%%; overflow: hidden; }
             .filter-bar-search > .btn { flex: 0 0 auto; white-space: nowrap; }
@@ -177,7 +177,7 @@ class FilterBarElement extends FormElement
                             %s
                             %s
                             %s
-                                                                        
+                        </div>
                     </li>';
 
 
@@ -240,7 +240,7 @@ class FilterBarElement extends FormElement
                         </a>                        
                         <div class="dropdown-menu inactive dropdown-menu-filter-bar" aria-labelledby="searchDropdown-general-filter">
                             %s
-                                                                        
+                        </div>
                     </li>';
 
         return sprintf(
